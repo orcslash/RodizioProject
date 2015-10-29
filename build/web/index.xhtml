@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Rodizio Booking</title>
+    </h:head>
+    <h:body>
+        <h:graphicImage library="resources" name="logo.png" />
+        <h:form>
+            <h:outputLabel value="Name:"/>
+            &nbsp;
+            <h:inputText value="#{reservation.name}"/>
+            <br/>
+            <h:outputLabel value="Email:"/>
+            &nbsp;
+            <h:inputText value="#{reservation.email}"/>
+            <br/>
+            <h:outputLabel value="Phone:"/>
+            &nbsp;
+            <h:inputText value="#{reservation.name}"/>
+            <br/>
+            <h:outputLabel value="Date:"/>
+            &nbsp;
+            <p:calendar id="Date" value="#{reservation.date}" />
+            <br/>
+            <h:outputLabel value="Time"/>
+            &nbsp;
+            <p:calendar id="time" value="#{reservation.time}" pattern="HH:mm" timeOnly="true" />
+            <br/>
+            <h:outputLabel value="Birthday"/>
+            &nbsp;
+            <h:selectBooleanCheckbox value="#{reservation.isBirthday}"/>
+            <br/>
+            <h:outputLabel value="Additional notes:"/>
+            &nbsp;
+            <h:inputTextarea value="#{reservation.additionalNotes}"/>
+            <br/>
+            <h:commandButton value="Submit" type="submit" action="sumbit"/>
+        </h:form>
+        <br />
+    </h:body>
+</html>
+
