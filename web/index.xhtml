@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-        <title>Rodizio Booking</title>
+        <title>#{msgs.title}</title>
 
         <!--        <style>
                     body {
@@ -21,35 +21,39 @@
     <h:body>
         <h:graphicImage library="resources" name="logo.png" />
         <h:form>
-            <h:outputLabel value="Name:"/>
+            <h:outputLabel value="#{msgs.name}"/>
             &nbsp;
-            <h:inputText value="#{reservation.name}"/>
+            <h:inputText value="#{reservation.name}" />
             <br/>
-            <h:outputLabel value="Email:"/>
+            <h:outputLabel value="#{msgs.email}"/>
             &nbsp;
             <h:inputText value="#{reservation.email}"/>
             <br/>
-            <h:outputLabel value="Phone:"/>
+            <h:outputLabel value="#{msgs.phone}:"/>
             &nbsp;
-            <h:inputText value="#{reservation.name}"/>
+            <h:inputText value="#{reservation.phoneNum}"/>
             <br/>
-            <h:outputLabel value="Date:"/>
+            <h:outputLabel value="#{msgs.date}:"/>
             &nbsp;
             <p:calendar id="Date" value="#{reservation.date}" />
             <br/>
-            <h:outputLabel value="Time"/>
+            <h:outputLabel value="#{msgs.time}:"/>
             &nbsp;
             <p:calendar id="time" value="#{reservation.time}" pattern="HH:mm" timeOnly="true" />
             <br/>
-            <h:outputLabel value="Birthday"/>
+            <h:outputLabel value="#{msgs.people}:"/>
+            &nbsp;
+            <h:inputText value="#{reservation.people}"/>
+            &nbsp;
+            <h:outputLabel value="#{msgs.bday}"/>
             &nbsp;
             <h:selectBooleanCheckbox value="#{reservation.isBirthday}"/>
             <br/>
-            <h:outputLabel value="Additional notes:"/>
+            <h:outputLabel value="#{msgs.additionalNotes}:"/>
             &nbsp;
             <h:inputTextarea value="#{reservation.additionalNotes}"/>
             <br/>
-            <h:commandButton value="Submit" action="submit"/>
+            <h:commandButton value="#{msgs.submit}" action="submit"/>
         </h:form>
         <br />
     </h:body>

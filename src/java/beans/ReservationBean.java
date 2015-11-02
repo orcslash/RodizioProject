@@ -8,8 +8,7 @@ package beans;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 
 /**
  *
@@ -22,12 +21,45 @@ public class ReservationBean implements Serializable
 
     private String name;
     private String email;
-    private LocalDate date;
-    private LocalTime time;
+    private Date date;
+    private Date time;
     private int people;
     private String additionalNotes;
     private boolean isBirthday;
     private String phoneNum;
+
+    @Override
+    public String toString()
+    {
+        return "Name - " + name
+                + "\nEmail -  " + email
+                + "\nDate: " + date
+                + "\nTime: " + time
+                + "\n amount: " + people
+                + "\n| notes " + additionalNotes
+                + "\nisbday : " + isBirthday
+                + "\nphone " + phoneNum;
+    }
+
+    public Date getDate()
+    {
+        return date;
+    }
+
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+
+    public Date getTime()
+    {
+        return time;
+    }
+
+    public void setTime(Date time)
+    {
+        this.time = time;
+    }
 
     public String getName()
     {
@@ -47,26 +79,6 @@ public class ReservationBean implements Serializable
     public void setEmail(String email)
     {
         this.email = email;
-    }
-
-    public LocalDate getDate()
-    {
-        return date;
-    }
-
-    public void setDate(LocalDate date)
-    {
-        this.date = date;
-    }
-
-    public LocalTime getTime()
-    {
-        return time;
-    }
-
-    public void setTime(LocalTime time)
-    {
-        this.time = time;
     }
 
     public int getPeople()
