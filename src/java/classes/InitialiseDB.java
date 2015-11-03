@@ -21,13 +21,12 @@ public class InitialiseDB
 {
 
     /*
-    If your this is not working for you, you need to add SQLITE libarary to your libraries.
+    If  this is not working for you, you need to add SQLITE libarary to your libraries.
     Get the latest one from here https://bitbucket.org/xerial/sqlite-jdbc/downloads
     More thorough instructions here - http://www.tutorialspoint.com/sqlite/sqlite_java.htm
 
     To make a new database file, if it's not passed with git or if you dropped the tables,
     uncomment createTable();
-
      */
     public static void main(String[] args)
     {
