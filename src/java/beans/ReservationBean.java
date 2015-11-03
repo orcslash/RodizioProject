@@ -8,6 +8,7 @@ package beans;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -41,14 +42,26 @@ public class ReservationBean implements Serializable
                 + "\nphone " + phoneNum;
     }
 
-    public Date getDate()
+    public String printDate()
     {
-        return date;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
+    }
+
+    public String printTime()
+    {
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+        return format.format(time);
     }
 
     public void setDate(Date date)
     {
         this.date = date;
+    }
+
+    public Date getDate()
+    {
+        return date;
     }
 
     public Date getTime()
