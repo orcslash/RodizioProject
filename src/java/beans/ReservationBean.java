@@ -50,7 +50,7 @@ public class ReservationBean implements Serializable
 
     public String printTime()
     {
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         return format.format(time);
     }
 

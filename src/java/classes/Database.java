@@ -26,7 +26,7 @@ public class Database
     public static void main(String[] args)
     {
         insertQuery("lukas", "emaik", "888", new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())),
-                new SimpleDateFormat("hh:mm").format(new Date(System.currentTimeMillis())), 0, null, true);
+                new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis())), 0, "some note", true);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Database
                 + " '" + phone + "' ,"
                 + " '" + date + " " + time + "' ,"
                 + " '" + amount + "' ,"
-                + " '" + notes + "' ,"
+                + " " + (notes == null ? "null" : "'" + notes + "'") + " ,"
                 + " '" + (bday ? 1 : 0) + "' "; // SQLite does not allow bool values, only 0 or 1
         System.out.println(query);
         insert(query);
@@ -68,8 +68,6 @@ public class Database
      */
     private static void insert(String query)
     {
-        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat timeF = new SimpleDateFormat("hh:mm");
         Connection c = null;
         Statement stmt = null;
         try
@@ -79,7 +77,7 @@ public class Database
             c.setAutoCommit(false);
 
             stmt = c.createStatement();
-            String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATETIME,AMOUNT,NOTES,BDAY) "
+            String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
                     + "VALUES(" + query + ")";
             System.out.println(sql);
             stmt.executeUpdate(sql);

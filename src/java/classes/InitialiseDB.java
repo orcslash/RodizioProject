@@ -30,16 +30,13 @@ public class InitialiseDB
      */
     public static void main(String[] args)
     {
+//        dropTable();
 //        createTable();
-//        addDummyValues();
+        addDummyValues();
         dumpTable();
-//        dropTables();
     }
 
-    /**
-     * Creates a new reservations table
-     */
-    public static void createTable()
+    public static void executeCommand(String command)
     {
         Connection c = null;
         Statement stmt = null;
@@ -48,28 +45,38 @@ public class InitialiseDB
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:RodizioDB.db");
             c.setAutoCommit(false);
-            System.out.println("Databse file created and/or opened");
 
             stmt = c.createStatement();
-            String sql = "CREATE TABLE RESERVATIONS "
-                    + "(ID INT PRIMARY KEY,"
-                    + " NAME           VARCHAR(25)    NOT NULL, "
-                    + "EMAIL           VARCHAR(25)    NOT NULL, "
-                    + "PHONE           VARCHAR(12)    NOT NULL, "
-                    + "DATETIME           DATETIME NOT NULL,"
-                    + " AMOUNT            INT     NOT NULL, "
-                    + " NOTES        TEXT, "
-                    + " BDAY        BOOLEAN NOT NULL )";
-            stmt.executeUpdate(sql);
+            System.out.println(command);
+            stmt.executeUpdate(command);
+
             stmt.close();
+            c.commit();
             c.close();
         } catch (ClassNotFoundException | SQLException e)
         {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+    }
 
-        System.out.println("Table created successfully");
+    /**
+     * Creates a new reservations table
+     */
+    public static void createTable()
+    {
+        String sql = "CREATE TABLE RESERVATIONS "
+                + "(ID INTEGER PRIMARY KEY,"
+                + "NAME           VARCHAR(25)    NOT NULL, "
+                + "EMAIL           VARCHAR(25)    NOT NULL, "
+                + "PHONE           VARCHAR(12)    NOT NULL, "
+                + "DATE_TIME           DATETIME NOT NULL,"
+                + " AMOUNT            INT     NOT NULL, "
+                + " NOTES        TEXT, "
+                + " BDAY        BOOLEAN NOT NULL)";
+        executeCommand(sql);
+
+        System.out.println("\nTable created successfully");
     }
 
     /**
@@ -84,7 +91,6 @@ public class InitialiseDB
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:RodizioDB.db");
             c.setAutoCommit(false);
-            System.out.println("Databse file created and/or opened");
 
             stmt = c.createStatement();
 
@@ -95,7 +101,7 @@ public class InitialiseDB
                 String name = rs.getString("name");
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
-                String date = rs.getString("datetime");
+                String date = rs.getString("date_time");
                 int amount = rs.getInt("amount");
                 String notes = rs.getString("notes");
                 boolean bday = rs.getBoolean("bday");
@@ -104,7 +110,7 @@ public class InitialiseDB
                 System.out.println("NAME = " + name);
                 System.out.println("EMAIL = " + email);
                 System.out.println("PHONE = " + phone);
-                System.out.println("datetime = " + date);
+                System.out.println("date_time = " + date);
                 System.out.println("amount = " + amount);
                 System.out.println("notes = " + notes);
                 System.out.println("bday = " + bday);
@@ -127,31 +133,13 @@ public class InitialiseDB
     public static void addDummyValues()
     {
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat timeF = new SimpleDateFormat("hh:mm");
-        Connection c = null;
-        Statement stmt = null;
-        try
-        {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:RodizioDB.db");
-            c.setAutoCommit(false);
+        SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
 
-            stmt = c.createStatement();
-            String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATETIME,AMOUNT,NOTES,BDAY) "
-                    + "VALUES ( 'Paul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + " " + timeF.format(new Date(System.currentTimeMillis()))
-                    + "', 5, null, 0  );";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-
-            stmt.close();
-            c.commit();
-            c.close();
-        } catch (ClassNotFoundException | SQLException e)
-        {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Records created successfully");
+        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
+                + "VALUES ( 'Paul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + " " + timeF.format(new Date(System.currentTimeMillis()))
+                + "', 5, null, 0  );";
+        executeCommand(sql);
+        System.out.println("\nRecord created successfully");
     }
 
     /**
@@ -159,26 +147,8 @@ public class InitialiseDB
      */
     public static void dropTable()
     {
-        Connection c = null;
-        Statement stmt = null;
-        try
-        {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:RodizioDB.db");
-            c.setAutoCommit(false);
-            System.out.println("Databse file created and/or opened");
-
-            stmt = c.createStatement();
-            String sql = "drop table reservations";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            c.close();
-        } catch (ClassNotFoundException | SQLException e)
-        {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
-        System.out.println("Tables dropped");
+        String sql = "DROP TABLE IF EXISTS RESERVATIONS";
+        executeCommand(sql);
+        System.out.println("\nTable dropped");
     }
 }
