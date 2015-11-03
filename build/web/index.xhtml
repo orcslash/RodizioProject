@@ -4,57 +4,53 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+        <link href="css/layout.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="css/Colors.css" />
         <title>#{msgs.title}</title>
 
-        <!--        <style>
-                    body {
-                        background-color: black;
-                    }
-                    label
-                    {
-                        color:white;
-                    }
-
-                </style>-->
     </h:head>
-    <h:body>
-        <h:graphicImage library="resources" name="logo.png" />
-        <h:form>
-            <h:outputLabel value="#{msgs.name}"/>
+    <h:body class="Dark">
+         
+        <h:panelGrid  columns="2" class="col-md-12 col-xs-12 col-sm-12 center clearPadding">
+            <h:graphicImage class = "brand" library="resources" name="logo.png" />
+             &nbsp;
+            <h:outputLabel class="white" value="#{msgs.name}"/>
             &nbsp;
             <h:inputText value="#{reservation.name}" />
             <br/>
-            <h:outputLabel value="#{msgs.email}"/>
+            <h:outputLabel class="white"  value="#{msgs.email}"/>
             &nbsp;
             <h:inputText value="#{reservation.email}"/>
             <br/>
-            <h:outputLabel value="#{msgs.phone}:"/>
+            <h:outputLabel class="white"  value="#{msgs.phone}:"/>
             &nbsp;
             <h:inputText value="#{reservation.phoneNum}"/>
             <br/>
-            <h:outputLabel value="#{msgs.date}:"/>
+            <h:outputLabel class="white"  value="#{msgs.date}:"/>
             &nbsp;
             <p:calendar id="Date" value="#{reservation.date}" pattern="yyyy-mm-dd" />
             <br/>
-            <h:outputLabel value="#{msgs.time}:"/>
+            <h:outputLabel class="white" value="#{msgs.time}:"/>
             &nbsp;
             <p:calendar id="time" value="#{reservation.time}" pattern="HH:mm" timeOnly="true" />
             <br/>
-            <h:outputLabel value="#{msgs.people}:"/>
+            <h:outputLabel class="white"  value="#{msgs.people}:"/>
             &nbsp;
-            <h:inputText value="#{reservation.people}"/>
+            <h:inputText  value="#{reservation.people}"/>
             &nbsp;
-            <h:outputLabel value="#{msgs.bday}"/>
+            <br/>
+            <h:outputLabel class="white"  value="#{msgs.bday}"/>
             &nbsp;
             <h:selectBooleanCheckbox value="#{reservation.isBirthday}"/>
             <br/>
-            <h:outputLabel value="#{msgs.additionalNotes}:"/>
+            <h:outputLabel class="white"  value="#{msgs.additionalNotes}:"/>
             &nbsp;
             <h:inputTextarea value="#{reservation.additionalNotes}"/>
             <br/>
-            <h:commandButton value="#{msgs.submit}" action="submit"/>
-        </h:form>
+            <h:commandButton  class="btn btn-default Orange" value="#{msgs.submit}" action="submit"/>
+        </h:panelGrid>
         <br />
     </h:body>
 </html>
