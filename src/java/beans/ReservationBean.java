@@ -6,7 +6,7 @@
 package beans;
 
 import Services.Database;
-import Services.InitialiseDB;
+import Services.Database;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -46,12 +46,9 @@ public class ReservationBean implements Serializable
 
     public void createReservation()
     {
-        System.out.println(toString());
         Database.insertQuery(name, email, phoneNum, printDate(), printTime(), people, additionalNotes, isBirthday);
 
-//        InitialiseDB.createTable();
-//        InitialiseDB.addDummyValues();
-        InitialiseDB.dumpTable();
+        Database.dumpTable();
     }
 
     public String printDate()
@@ -151,6 +148,10 @@ public class ReservationBean implements Serializable
      */
     public ReservationBean()
     {
+        // try to create new table
+//        Database.dropTable();
+        Database.createTable();
+
     }
 
 }
