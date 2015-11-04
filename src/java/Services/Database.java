@@ -3,13 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package Services;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,6 +23,8 @@ public class Database
     {
         insertQuery("lukas", "emaik", "888", new SimpleDateFormat("dd-MM-yyyy").format(new Date(System.currentTimeMillis())),
                 new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis())), 0, "some note", true);
+
+        InitialiseDB.dumpTable();
     }
 
     /**
@@ -51,7 +49,6 @@ public class Database
                 + " '" + amount + "' ,"
                 + " " + (notes == null ? "null" : "'" + notes + "'") + " ,"
                 + " '" + (bday ? 1 : 0) + "' "; // SQLite does not allow bool values, only 0 or 1
-        System.out.println(query);
         insert(query);
     }
 
@@ -68,28 +65,11 @@ public class Database
      */
     private static void insert(String query)
     {
-        Connection c = null;
-        Statement stmt = null;
-        try
-        {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:RodizioDB.db");
-            c.setAutoCommit(false);
 
-            stmt = c.createStatement();
-            String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
-                    + "VALUES(" + query + ")";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
+        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
+                + "VALUES(" + query + ")";
+        InitialiseDB.executeCommand(sql);
 
-            stmt.close();
-            c.commit();
-            c.close();
-        } catch (ClassNotFoundException | SQLException e)
-        {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Records created successfully");
+        System.out.println("\nRecords created successfully");
     }
 }

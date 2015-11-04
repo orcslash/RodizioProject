@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package Services;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,7 +32,7 @@ public class InitialiseDB
     {
 //        dropTable();
 //        createTable();
-        addDummyValues();
+//        addDummyValues();
         dumpTable();
     }
 
@@ -145,7 +145,7 @@ public class InitialiseDB
     /**
      * Drops the reservation table
      */
-    public static void dropTable()
+    private static void dropTable()
     {
         String sql = "DROP TABLE IF EXISTS RESERVATIONS";
         executeCommand(sql);
