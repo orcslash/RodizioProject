@@ -20,6 +20,8 @@ import java.util.Date;
 public class Database
 {
 
+    static Connection c = null;
+    static Statement stmt = null;
     private static final String CONNECTION = "jdbc:sqlite:RodizioDB.db";
 
     /*
@@ -32,8 +34,8 @@ public class Database
      */
     public static void main(String[] args)
     {
-//        dropTable();
-//        createTable();
+        dropTable();
+        createTable();
         addDummyValues();
         dumpTable();
     }
@@ -73,8 +75,6 @@ public class Database
 
     public static void executeCommand(String command)
     {
-        Connection c = null;
-        Statement stmt = null;
         try
         {
             Class.forName("org.sqlite.JDBC");
@@ -120,8 +120,7 @@ public class Database
      */
     public static void dumpTable()
     {
-        Connection c = null;
-        Statement stmt = null;
+
         try
         {
             Class.forName("org.sqlite.JDBC");

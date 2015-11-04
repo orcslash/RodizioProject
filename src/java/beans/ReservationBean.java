@@ -44,11 +44,12 @@ public class ReservationBean implements Serializable
                 + "\nphone " + phoneNum;
     }
 
-    public void createReservation()
+    public String createReservation()
     {
         Database.insertQuery(name, email, phoneNum, printDate(), printTime(), people, additionalNotes, isBirthday);
-
         Database.dumpTable();
+        return "success";
+
     }
 
     public String printDate()
