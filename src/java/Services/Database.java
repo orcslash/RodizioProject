@@ -5,6 +5,7 @@
  */
 package Services;
 
+import static Services.Database.c;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -34,13 +35,14 @@ public class Database
      */
     public static void main(String[] args)
     {
-        dropTable();
-        createTable();
-        addDummyValues();
+//        dropTable();
+//        createTable();
+//        addDummyValues();
+        System.out.println(transactionTest());
         dumpTable();
     }
 
-    public static void insertQuery(String name, String email, String phone, String date, String time, int amount, String notes, boolean bday)
+    public static int insertQuery(String name, String email, String phone, String date, String time, int amount, String notes, boolean bday)
     {
         String query = " '" + name + "',"
                 + " '" + email + "',"
@@ -49,7 +51,7 @@ public class Database
                 + " '" + amount + "' ,"
                 + " " + (notes == null ? "null" : "'" + notes + "'") + " ,"
                 + " '" + (bday ? 1 : 0) + "' "; // SQLite does not allow bool values, only 0 or 1
-        insert(query);
+        return insert(query);
     }
 
     public static ResultSet selectQuery()
@@ -63,28 +65,36 @@ public class Database
      *
      * @param query
      */
-    private static void insert(String query)
+    private static int insert(String query)
     {
 
         String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
                 + "VALUES(" + query + ")";
-        Database.executeCommand(sql);
 
-        System.out.println("\nRecords created successfully");
+        return Database.executeCommand(sql);
     }
 
-    public static void executeCommand(String command)
+    public static int executeCommand(String command)
     {
+        int id = 0;
         try
         {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection(CONNECTION);
+
+            // this means that this whole query is going to be executed as a transaction
             c.setAutoCommit(false);
 
             stmt = c.createStatement();
 
+            // insert values in the DB
             System.out.println(command);
             stmt.executeUpdate(command);
+
+            // return the ID of the last inserted record
+            ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid() AS id;");
+
+            id = rs.getInt("id");
 
             stmt.close();
             c.commit();
@@ -94,6 +104,7 @@ public class Database
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+        return id;
     }
 
     /**
@@ -120,7 +131,6 @@ public class Database
      */
     public static void dumpTable()
     {
-
         try
         {
             Class.forName("org.sqlite.JDBC");
@@ -185,5 +195,41 @@ public class Database
         String sql = "DROP TABLE IF EXISTS RESERVATIONS";
         executeCommand(sql);
         System.out.println("\nTable dropped");
+    }
+
+    public static int transactionTest()
+    {
+        int id = 0;
+        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
+        try
+        {
+
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection(CONNECTION);
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            stmt.executeUpdate("INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
+                    + "VALUES ( 'Pa5ul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + " " + timeF.format(new Date(System.currentTimeMillis()))
+                    + "', 5, null, 0  );");
+            ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid() AS id;");
+
+            while (rs.next())
+            {
+                id = rs.getInt("id");
+
+                System.out.println("ID = " + id);
+            }
+            rs.close();
+            c.commit();
+            stmt.close();
+            c.close();
+        } catch (ClassNotFoundException | SQLException e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return id;
     }
 }

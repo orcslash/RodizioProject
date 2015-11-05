@@ -11,30 +11,32 @@
         <ui:composition>
 
             <div class="form">
-                <h:form>
+                <h:form >
                     <h3>#{msgs.title}</h3>
-                    <table>
+                    <table >
                         <tr>
                             <td>#{msgs.name}: </td>
-                            <td><h:inputText value="#{reservation.name}"/></td>
+                            <td><h:inputText class="form-control" value="#{reservation.name}"/></td>
                         </tr>
                         <tr>
                             <td>#{msgs.email}: </td>
-                            <td><h:inputText value="#{reservation.email}"/></td>
+                            <td><h:inputText class="form-control" value="#{reservation.email}"/></td>
                         </tr>
                         <tr>
                             <td>#{msgs.phone}: </td>
-                            <td><h:inputText value="#{reservation.phoneNum}">
+                            <td><h:inputText  class="form-control" value="#{reservation.phoneNum}">
                                 </h:inputText></td>
                             <tr>
                                 <td>#{msgs.people}: </td>
-                                <td><h:inputText value="#{reservation.people}">
+                                <td><h:inputText class="form-control" value="#{reservation.people}">
                                         <f:convertNumber integerOnly="true"/>
                                     </h:inputText></td>
                             </tr>
+
+                            <!--TODO find out how to style these input fields-->
                             <tr>
                                 <td>#{msgs.date}: </td>
-                                <td> <p:calendar value="#{reservation.date}"  pattern="dd-MM-yyyy" /></td>
+                                <td> <p:calendar   value="#{reservation.date}"  pattern="dd-MM-yyyy" /></td>
                             </tr>
                             <tr>
                                 <td>#{msgs.time}: </td>
@@ -44,7 +46,7 @@
                             <tr>
                                 <td>#{msgs.additionalNotes}: </td>
                                 <td>
-                                    <h:inputTextarea value="#{reservation.additionalNotes}" cols="30" rows="10" />
+                                    <h:inputTextarea class="form-control" value="#{reservation.additionalNotes}" cols="30" rows="10" />
                                 </td>
                             </tr>
                             <tr>
@@ -54,7 +56,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <h:commandButton value="#{msgs.submit}" action="submit"/>
+                                <h:commandButton class="btn btn-secondary" value="#{msgs.submit}" action="submit"/>
                             </td>
 
                         </tr>

@@ -6,7 +6,6 @@
 package beans;
 
 import Services.Database;
-import Services.Database;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -26,10 +25,21 @@ public class ReservationBean implements Serializable
     private String email;
     private Date date;
     private Date time;
-    private int people;
+    private int people = 1;
     private String additionalNotes;
     private boolean isBirthday;
     private String phoneNum;
+    private int id = 0;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     @Override
     public String toString()
@@ -46,10 +56,30 @@ public class ReservationBean implements Serializable
 
     public String createReservation()
     {
-        Database.insertQuery(name, email, phoneNum, printDate(), printTime(), people, additionalNotes, isBirthday);
-        Database.dumpTable();
+        id = Database.insertQuery(name, email, phoneNum, printDate(), printTime(), people, additionalNotes, isBirthday);
+//        Database.dumpTable();
+
         return "success";
 
+    }
+
+    public String goToHome()
+    {
+        resetValues();
+        return "home";
+    }
+
+    private void resetValues()
+    {
+        name = null;
+        email = null;
+        date = null;
+        time = null;
+        people = 1;
+        additionalNotes = null;
+        isBirthday = false;
+        phoneNum = null;
+        id = 0;
     }
 
     public String printDate()
