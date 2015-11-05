@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"   >
+
+    <head><title>IGNORED</title></head>
+    <body>
+        <ui:composition>
+
+            <div class="form">
+                <h:form>
+                    <h3>#{msgs.title}</h3>
+                    <table>
+                        <tr>
+                            <td>#{msgs.name}: </td>
+                            <td><h:inputText value="#{reservation.name}"/></td>
+                        </tr>
+                        <tr>
+                            <td>#{msgs.email}: </td>
+                            <td><h:inputText value="#{reservation.email}"/></td>
+                        </tr>
+                        <tr>
+                            <td>#{msgs.phone}: </td>
+                            <td><h:inputText value="#{reservation.phoneNum}">
+                                </h:inputText></td>
+                            <tr>
+                                <td>#{msgs.people}: </td>
+                                <td><h:inputText value="#{reservation.people}">
+                                        <f:convertNumber integerOnly="true"/>
+                                    </h:inputText></td>
+                            </tr>
+                            <tr>
+                                <td>#{msgs.date}: </td>
+                                <td> <p:calendar value="#{reservation.date}"  pattern="dd-MM-yyyy" /></td>
+                            </tr>
+                            <tr>
+                                <td>#{msgs.time}: </td>
+                                <td><p:calendar value="#{reservation.time}" pattern="HH:mm" timeOnly="true"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#{msgs.additionalNotes}: </td>
+                                <td>
+                                    <h:inputTextarea value="#{reservation.additionalNotes}" cols="30" rows="10" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#{msgs.bday}: </td>
+                                <td><h:selectBooleanCheckbox value="#{reservation.isBirthday}"/></td>
+                            </tr>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <h:commandButton value="#{msgs.submit}" action="submit"/>
+                            </td>
+
+                        </tr>
+                    </table>
+                </h:form>
+                <br />
+            </div>
+
+        </ui:composition>
+    </body>
+</html>

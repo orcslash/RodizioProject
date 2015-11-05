@@ -2,69 +2,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
     <h:head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
-        <link href="resources/css/layout.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" type="text/css" href="resources/css/Colors.css" />
-        <title>#{msgs.title}</title>
-
+        <!--title is provided by the template-->
+        <title>IGNORED</title>
     </h:head>
-    <h:body>
+    <h:body >
 
-        <div class="logo">
-            <h:graphicImage class = "brand" library="resources" name="logo.png" />
-        </div>
+        <!--use the template-->
+        <ui:composition template="MainLayout.xhtml">
 
-        <div class="form">
-            <h:form>
-                <h3>#{msgs.title}</h3>
-                <table>
-                    <tr>
-                        <td>#{msgs.name}: </td>
-                        <td><h:inputText value="#{reservation.name}"/></td>
-                    </tr>
-                    <tr>
-                        <td>#{msgs.email}: </td>
-                        <td><h:inputText value="#{reservation.email}"/></td>
-                    </tr>
-                    <tr>
-                        <td>#{msgs.phone}: </td>
-                        <td><h:inputText value="#{reservation.phoneNum}">
-                            </h:inputText></td>
-                        <tr>
-                            <td>#{msgs.people}: </td>
-                            <td><h:inputText value="#{reservation.people}">
-                                    <f:convertNumber integerOnly="true"/>
-                                </h:inputText></td>
-                        </tr>
-                        <tr>
-                            <td>#{msgs.date}: </td>
-                            <td> <p:calendar value="#{reservation.date}"  pattern="dd-MM-yyyy" /></td>
-                        </tr>
-                        <tr>
-                            <td>#{msgs.time}: </td>
-                            <td><p:calendar value="#{reservation.time}" pattern="HH:mm" timeOnly="true"  />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#{msgs.additionalNotes}: </td>
-                            <td>
-                                <h:inputTextarea value="#{reservation.additionalNotes}" cols="30" rows="10" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#{msgs.bday}: </td>
-                            <td><h:selectBooleanCheckbox value="#{reservation.isBirthday}"/></td>
-                        </tr>
-                    </tr>
-                </table>
-                <p><h:commandButton value="#{msgs.submit}" action="submit"/></p>
-            </h:form>
-            <br />
-        </div>
+            <!--define the title from messages-->
+            <ui:define name="title">
+                #{msgs.title}
+            </ui:define>
+
+            <!--add the form that is saved as a custom component in a different file-->
+            <ui:define name="content">
+                <ui:include src="resources/ezcomp/reservationForm.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
     </h:body>
 </html>
 

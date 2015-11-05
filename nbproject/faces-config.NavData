@@ -2,10 +2,11 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="submit.xhtml" x="650" y="150" zoom="true"/>
-        <Node id="success.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="index.xhtml" x="150" y="300" zoom="true"/>
-        <Node id="index2.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="submit.xhtml" x="334" y="262" zoom="true"/>
+        <Node id="success.xhtml" x="38" y="163" zoom="true"/>
+        <Node id="index.xhtml" x="384" y="25" zoom="true"/>
+        <Node id="resources/ezcomp/reservationForm.xhtml" x="52" y="347" zoom="true"/>
+        <Node id="MainLayout.xhtml" x="51" y="376" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
