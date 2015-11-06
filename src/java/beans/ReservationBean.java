@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import model.Reservation;
 
 /**
  *
@@ -56,8 +57,9 @@ public class ReservationBean implements Serializable
 
     public String createReservation()
     {
-        id = Database.insertQuery(name, email, phoneNum, printDate(), printTime(), people, additionalNotes, isBirthday);
-//        Database.dumpTable();
+
+        id = Database.createReservation(new Reservation(name, email, phoneNum, (printDate() + " " + printTime()), people, additionalNotes, isBirthday));
+        Database.dumpTable();
 
         return "success";
 

@@ -6,6 +6,19 @@ body {
 
 
 }
+/*.evenRow
+{
+    background-color: #ccccff
+}
+.oddRow
+{
+    background-color: darkgrey;
+}*/
+.caption
+{
+    color: black;
+    text-align: center;
+}
 #body
 {
     background-color: gray;

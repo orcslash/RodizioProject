@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="reservations" type="java.util.ArrayList"/>
+        <cc:attribute name="title" type="String"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:dataTable value="#{cc.attrs.reservations}" var="res"
+                     captionClass="caption"
+                     style="width: 80%; "
+                     rowClasses="oddRow,evenRow"
+                     styleClass="table table-hover  table-responsive">
+
+            <!--Table name-->
+            <f:facet  name="caption">All the reservations</f:facet>
+
+            <!--Declaration of columns with headers-->
+            <!--ID-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.id}</f:facet>
+                    #{res.getId()}
+            </h:column>
+
+            <!--Name-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.name}</f:facet>
+                    #{res.getName()}
+            </h:column>
+
+            <!--phone-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.phone}</f:facet>
+                    #{res.getPhoneNum()}
+            </h:column>
+
+            <!--Email-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.email}</f:facet>
+                    #{res.getEmail()}
+            </h:column>
+
+            <!--Date&time-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.date_time}</f:facet>
+                    #{res.getDate_time()}
+            </h:column>
+
+            <!--Amount-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.people}</f:facet>
+                    #{res.getPeople()}
+            </h:column>
+
+            <!--Birthday-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.bday}</f:facet>
+                    #{res.isIsBirthday()}
+            </h:column>
+
+            <!--Additional notes-->
+            <h:column headerClass="header">
+                <f:facet name="header">#{msgs.additionalNotes}</f:facet>
+                    #{res.getAdditionalNotes()}
+            </h:column>
+
+        </h:dataTable>
+    </cc:implementation>
+</html>

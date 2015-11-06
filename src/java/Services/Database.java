@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Services;
 
 import static Services.Database.c;
@@ -12,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import model.Reservation;
 
 /**
  *
@@ -29,7 +26,6 @@ public class Database
     If  this is not working for you, you need to add SQLITE libarary to your libraries.
     Get the latest one from here https://bitbucket.org/xerial/sqlite-jdbc/downloads
     More thorough instructions here - http://www.tutorialspoint.com/sqlite/sqlite_java.htm
-
     To make a new database file, if it's not passed with git or if you dropped the tables,
     uncomment createTable();
      */
@@ -38,26 +34,39 @@ public class Database
 //        dropTable();
 //        createTable();
 //        addDummyValues();
-        System.out.println(transactionTest());
+
+        createReservation(new Reservation("Lukas", "email", "8888", "04-11-2015 11:00", 0, null, true));
         dumpTable();
     }
 
-    public static int insertQuery(String name, String email, String phone, String date, String time, int amount, String notes, boolean bday)
+    /**
+     * Returns all the reservations from the DB
+     *
+     * @return
+     */
+    public static ArrayList<Reservation> getAllReservations()
     {
-        String query = " '" + name + "',"
-                + " '" + email + "',"
-                + " '" + phone + "' ,"
-                + " '" + date + " " + time + "' ,"
-                + " '" + amount + "' ,"
-                + " " + (notes == null ? "null" : "'" + notes + "'") + " ,"
-                + " '" + (bday ? 1 : 0) + "' "; // SQLite does not allow bool values, only 0 or 1
-        return insert(query);
+        return query("SELECT * FROM RESERVATIONS;");
     }
 
-    public static ResultSet selectQuery()
+    /**
+     * Creates reservation in the DB returns the ID of the newly created
+     * reservation
+     *
+     * @param res
+     * @return
+     */
+    public static int createReservation(Reservation res)
     {
-        //TODO
-        return null;
+        String query = " '" + res.getName() + "',"
+                + " '" + res.getEmail() + "',"
+                + " '" + res.getPhoneNum() + "' ,"
+                + " '" + res.getDate_time() + "',"
+                + " '" + res.getPeople() + "' ,"
+                + " " + (res.getAdditionalNotes() == null ? "null" : "'" + res.getAdditionalNotes() + "'") + " ,"
+                + " '" + (res.isIsBirthday() ? 1 : 0) + "' "; // SQLite does not allow bool values, only 0 or 1
+
+        return insert(query);
     }
 
     /**
@@ -127,10 +136,25 @@ public class Database
     }
 
     /**
-     * Prints all the values of the reservations table
+     * Prints all the reservations returned from the DB
      */
     public static void dumpTable()
     {
+        for (Reservation r : getAllReservations())
+        {
+            System.out.println(r.toString());
+        }
+    }
+
+    /**
+     * Prints all the values of the reservations table
+     *
+     * @param query
+     * @return
+     */
+    public static ArrayList<Reservation> query(String query)
+    {
+        ArrayList<Reservation> reservations = new ArrayList<>();
         try
         {
             Class.forName("org.sqlite.JDBC");
@@ -151,15 +175,9 @@ public class Database
                 String notes = rs.getString("notes");
                 boolean bday = rs.getBoolean("bday");
 
-                System.out.println("ID = " + id);
-                System.out.println("NAME = " + name);
-                System.out.println("EMAIL = " + email);
-                System.out.println("PHONE = " + phone);
-                System.out.println("date_time = " + date);
-                System.out.println("amount = " + amount);
-                System.out.println("notes = " + notes);
-                System.out.println("bday = " + bday);
-                System.out.println();
+                Reservation tmp = new Reservation(name, email, phone, date, amount, notes, bday);
+                tmp.setId(id);
+                reservations.add(tmp);
             }
 
             rs.close();
@@ -170,6 +188,7 @@ public class Database
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+        return reservations;
     }
 
     /**
@@ -195,41 +214,5 @@ public class Database
         String sql = "DROP TABLE IF EXISTS RESERVATIONS";
         executeCommand(sql);
         System.out.println("\nTable dropped");
-    }
-
-    public static int transactionTest()
-    {
-        int id = 0;
-        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
-        try
-        {
-
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection(CONNECTION);
-            c.setAutoCommit(false);
-
-            stmt = c.createStatement();
-            stmt.executeUpdate("INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
-                    + "VALUES ( 'Pa5ul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + " " + timeF.format(new Date(System.currentTimeMillis()))
-                    + "', 5, null, 0  );");
-            ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid() AS id;");
-
-            while (rs.next())
-            {
-                id = rs.getInt("id");
-
-                System.out.println("ID = " + id);
-            }
-            rs.close();
-            c.commit();
-            stmt.close();
-            c.close();
-        } catch (ClassNotFoundException | SQLException e)
-        {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        return id;
     }
 }
