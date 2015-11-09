@@ -14,64 +14,82 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
 
-        <h:dataTable value="#{cc.attrs.reservations}" var="res"
-                     captionClass="caption"
-                     style="width: 80%; "
-                     rowClasses="oddRow,evenRow"
-                     styleClass="table table-hover  table-responsive">
+        <h:form>
+            <h:dataTable id="reservations" value="#{cc.attrs.reservations}" var="res"
+                         captionClass="caption"
+                         style="width: 80%; "
+                         rowClasses="oddRow,evenRow"
+                         styleClass="table table-hover  table-responsive">
 
-            <!--Table name-->
-            <f:facet  name="caption">All the reservations</f:facet>
+                <!--Table name-->
+                <f:facet  name="caption">All the reservations</f:facet>
 
-            <!--Declaration of columns with headers-->
-            <!--ID-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.id}</f:facet>
-                    #{res.getId()}
-            </h:column>
+                <!--Declaration of columns with headers-->
+                <!--ID-->
+                <h:column headerClass="header">
+                    <f:facet name="header">#{msgs.id}</f:facet>
+                        #{res.getId()}
+                </h:column>
 
-            <!--Name-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.name}</f:facet>
-                    #{res.getName()}
-            </h:column>
+                <!--Name-->
+                <h:column>
+                    <f:facet name="header">#{msgs.name}</f:facet>
 
-            <!--phone-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.phone}</f:facet>
-                    #{res.getPhoneNum()}
-            </h:column>
+                    <h:inputText value="#{res.name}" rendered="#{res.editable}" />
 
-            <!--Email-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.email}</f:facet>
-                    #{res.getEmail()}
-            </h:column>
+                    <h:outputText value="#{res.name}" rendered="#{not res.editable}" />
 
-            <!--Date&time-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.date_time}</f:facet>
-                    #{res.getDate_time()}
-            </h:column>
+                </h:column>
 
-            <!--Amount-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.people}</f:facet>
-                    #{res.getPeople()}
-            </h:column>
+                <!--phone-->
+                <h:column>
+                    <f:facet name="header">#{msgs.phone}</f:facet>
+                        #{res.getPhoneNum()}
+                </h:column>
 
-            <!--Birthday-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.bday}</f:facet>
-                    #{res.isIsBirthday()}
-            </h:column>
+                <!--Email-->
+                <h:column>
+                    <f:facet name="header">#{msgs.email}</f:facet>
+                        #{res.getEmail()}
+                </h:column>
 
-            <!--Additional notes-->
-            <h:column headerClass="header">
-                <f:facet name="header">#{msgs.additionalNotes}</f:facet>
-                    #{res.getAdditionalNotes()}
-            </h:column>
+                <!--Date&time-->
+                <h:column headerClass="header">
+                    <f:facet name="header">#{msgs.date_time}</f:facet>
+                        #{res.getDate_time()}
+                </h:column>
 
-        </h:dataTable>
+                <!--Amount-->
+                <h:column headerClass="header">
+                    <f:facet name="header">#{msgs.people}</f:facet>
+                        #{res.getPeople()}
+                </h:column>
+
+                <!--Birthday-->
+                <h:column headerClass="header">
+                    <f:facet name="header">#{msgs.bday}</f:facet>
+                        #{res.isIsBirthday()}
+                </h:column>
+
+                <!--Additional notes-->
+                <h:column headerClass="header">
+                    <f:facet name="header">#{msgs.additionalNotes}</f:facet>
+                        #{res.getAdditionalNotes()}
+                </h:column>
+
+                <!--update button-->
+                <h:column>
+                    <h:commandButton styleClass="btn btn-success-outline" value="#{msgs.update}" action="#{staff.editReservation(res)}" rendered="#{not res.editable}"  />
+                    <h:commandButton styleClass="btn btn-success-outline" value="#{msgs.save}"  rendered="#{res.editable}" action="#{staff.saveReservation(res)}" />
+                </h:column>
+
+                <!--delete button-->
+                <h:column>
+                    <h:commandButton styleClass="btn btn-success-outline" value="#{msgs.delete}" action="#{staff.deleteReservation(res)}" />
+                </h:column>
+
+
+            </h:dataTable>
+        </h:form>
     </cc:implementation>
 </html>

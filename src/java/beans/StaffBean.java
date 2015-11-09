@@ -21,6 +21,42 @@ import model.Reservation;
 public class StaffBean implements Serializable
 {
 
+    private Reservation reservation;
+    private ArrayList<Reservation> reservations;
+
+    public String deleteReservation(Reservation res)
+    {
+        Database.deleteReservation(res);
+        getAllReservations();
+        return null;
+    }
+
+    public String saveReservation(Reservation res)
+    {
+        res.setEditable(false);
+        if (res.isEdited())
+        {
+            Database.updateReservation(res);
+        }
+        return null;
+    }
+
+    public String editReservation(Reservation res)
+    {
+        res.setEditable(true);
+        return null;
+    }
+
+    public Reservation getReservation()
+    {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation)
+    {
+        this.reservation = reservation;
+    }
+
     public Reservation getRes()
     {
         return new Reservation("Lukas", "email", "8888", "04-11-2015 11:00", 0, null, true);
@@ -28,7 +64,8 @@ public class StaffBean implements Serializable
 
     public ArrayList<Reservation> getAllReservations()
     {
-        return Database.getAllReservations();
+        reservations = Database.getAllReservations();
+        return reservations;
     }
 
     /**
@@ -43,6 +80,18 @@ public class StaffBean implements Serializable
         {
             Database.addDummyValues();
         }
+
+        getAllReservations();
+    }
+
+    public ArrayList<Reservation> getReservations()
+    {
+        return reservations;
+    }
+
+    public void setReservations(ArrayList<Reservation> reservations)
+    {
+        this.reservations = reservations;
     }
 
 }

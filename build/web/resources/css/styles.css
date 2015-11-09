@@ -3,8 +3,6 @@ body {
     margin:0;
     padding:0;
     height:100%;
-
-
 }
 /*.evenRow
 {
@@ -14,6 +12,11 @@ body {
 {
     background-color: darkgrey;
 }*/
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #F7941E;
+}
+
 .caption
 {
     color: black;
@@ -42,6 +45,8 @@ body {
 table
 {
     margin: 0 auto;
+    /*    font-weight: 100;
+        font-family: 'Lato';*/
 }
 
 td

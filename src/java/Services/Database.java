@@ -34,9 +34,25 @@ public class Database
 //        dropTable();
 //        createTable();
 //        addDummyValues();
-
-        createReservation(new Reservation("Lukas", "email", "8888", "04-11-2015 11:00", 0, null, true));
+        Reservation res = (new Reservation("Lukas", "email", "8888", "04-11-2015 11:00", 0, null, true));
+        res.setId(createReservation(res));
+        res.setName("ble");
+        updateReservation(res);
         dumpTable();
+    }
+
+    public static void deleteReservation(Reservation res)
+    {
+        executeCommand("DELETE FROM RESERVATIONS WHERE ID = " + res.getId());
+    }
+
+    public static void updateReservation(Reservation res)
+    {
+        executeCommand("UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "' ,PHONE='" + res.getPhoneNum()
+                + "',DATE_TIME='" + res.getDate_time() + "',AMOUNT='" + res.getPeople()
+                + "',NOTES='" + res.getAdditionalNotes() + "',BDAY='" + (res.isIsBirthday() ? 1 : 0)
+                + "' WHERE ID=" + res.getId()
+        );
     }
 
     /**
@@ -163,7 +179,7 @@ public class Database
 
             stmt = c.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM RESERVATIONS;");
+            ResultSet rs = stmt.executeQuery(query);
             while (rs.next())
             {
                 int id = rs.getInt("id");

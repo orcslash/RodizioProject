@@ -22,10 +22,10 @@ and open the template in the editor.
                 #{msgs.staffPage}
             </ui:define>
 
-            <!--add the form that is saved as a custom component in a different file-->
+            <!--add the list that is saved as a custom component in a different file-->
             <ui:define name="content">
 
-                <ez:ReservationTable reservations="#{staff.allReservations}" title="#{msgs.allReservations}"/>
+                <ez:ReservationTable reservations="#{staff.reservations}" title="#{msgs.allReservations}"/>
 
             </ui:define>
 

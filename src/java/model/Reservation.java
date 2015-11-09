@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.util.Date;
-
 /**
  *
  * @author L
@@ -22,6 +20,28 @@ public class Reservation
     private boolean isBirthday;
     private String phoneNum;
     private int id = 0;
+    private boolean editable;
+    private boolean edited;
+
+    public boolean isEditable()
+    {
+        return editable;
+    }
+
+    public boolean isEdited()
+    {
+        return edited;
+    }
+
+    public void setEdited(boolean edited)
+    {
+        this.edited = edited;
+    }
+
+    public void setEditable(boolean editable)
+    {
+        this.editable = editable;
+    }
 
     public Reservation(String name, String email, String phoneNum, String date_time, int people, String additionalNotes, boolean isBirthday)
     {
@@ -39,8 +59,14 @@ public class Reservation
         return date_time;
     }
 
+    private void edited()
+    {
+        edited = true;
+    }
+
     public void setDate_time(String date_time)
     {
+        edited();
         this.date_time = date_time;
     }
 
@@ -51,6 +77,7 @@ public class Reservation
 
     public void setName(String name)
     {
+        edited();
         this.name = name;
     }
 
@@ -61,6 +88,7 @@ public class Reservation
 
     public void setEmail(String email)
     {
+        edited();
         this.email = email;
     }
 
@@ -71,6 +99,7 @@ public class Reservation
 
     public void setPeople(int people)
     {
+        edited();
         this.people = people;
     }
 
@@ -81,6 +110,7 @@ public class Reservation
 
     public void setAdditionalNotes(String additionalNotes)
     {
+        edited();
         this.additionalNotes = additionalNotes;
     }
 
@@ -91,6 +121,7 @@ public class Reservation
 
     public void setIsBirthday(boolean isBirthday)
     {
+        edited();
         this.isBirthday = isBirthday;
     }
 
@@ -101,6 +132,7 @@ public class Reservation
 
     public void setPhoneNum(String phoneNum)
     {
+        edited();
         this.phoneNum = phoneNum;
     }
 
