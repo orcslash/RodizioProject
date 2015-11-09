@@ -66,6 +66,10 @@ public class Reservation
 
     public void setDate_time(String date_time)
     {
+        if (this.date_time.equals(date_time))
+        {
+            return;
+        }
         edited();
         this.date_time = date_time;
     }
@@ -77,6 +81,10 @@ public class Reservation
 
     public void setName(String name)
     {
+        if (this.name.equals(name))
+        {
+            return;
+        }
         edited();
         this.name = name;
     }
@@ -88,6 +96,10 @@ public class Reservation
 
     public void setEmail(String email)
     {
+        if (this.email.equals(email))
+        {
+            return;
+        }
         edited();
         this.email = email;
     }
@@ -99,6 +111,10 @@ public class Reservation
 
     public void setPeople(int people)
     {
+        if (this.people == people)
+        {
+            return;
+        }
         edited();
         this.people = people;
     }
@@ -110,6 +126,16 @@ public class Reservation
 
     public void setAdditionalNotes(String additionalNotes)
     {
+
+        if (this.additionalNotes == null && additionalNotes == null)
+        {
+            return;
+        }
+
+        if ((compare(this.additionalNotes, additionalNotes)))
+        {
+            return;
+        }
         edited();
         this.additionalNotes = additionalNotes;
     }
@@ -121,6 +147,10 @@ public class Reservation
 
     public void setIsBirthday(boolean isBirthday)
     {
+        if (this.isBirthday == isBirthday)
+        {
+            return;
+        }
         edited();
         this.isBirthday = isBirthday;
     }
@@ -132,6 +162,10 @@ public class Reservation
 
     public void setPhoneNum(String phoneNum)
     {
+        if (this.phoneNum.equals(phoneNum))
+        {
+            return;
+        }
         edited();
         this.phoneNum = phoneNum;
     }
@@ -144,6 +178,11 @@ public class Reservation
     public void setId(int id)
     {
         this.id = id;
+    }
+
+    public static boolean compare(String str1, String str2)
+    {
+        return (str1 == null ? str2 == null : str1.equals(str2));
     }
 
     @Override

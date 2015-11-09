@@ -25,7 +25,7 @@
                 <f:facet  name="caption">All the reservations</f:facet>
 
                 <!--Declaration of columns with headers-->
-                <!--ID-->
+                <!--ID not editable-->
                 <h:column headerClass="header">
                     <f:facet name="header">#{msgs.id}</f:facet>
                         #{res.getId()}
@@ -34,60 +34,61 @@
                 <!--Name-->
                 <h:column>
                     <f:facet name="header">#{msgs.name}</f:facet>
-
-                    <h:inputText value="#{res.name}" rendered="#{res.editable}" />
-
+                    <h:inputText class="form-control" size="8" value="#{res.name}" rendered="#{res.editable}" />
                     <h:outputText value="#{res.name}" rendered="#{not res.editable}" />
-
                 </h:column>
 
                 <!--phone-->
                 <h:column>
                     <f:facet name="header">#{msgs.phone}</f:facet>
-                        #{res.getPhoneNum()}
+                    <h:inputText class="form-control" size="3" value="#{res.phoneNum}" rendered="#{res.editable}" />
+                    <h:outputText value="#{res.phoneNum}" rendered="#{not res.editable}" />
                 </h:column>
 
                 <!--Email-->
                 <h:column>
                     <f:facet name="header">#{msgs.email}</f:facet>
-                        #{res.getEmail()}
+                    <h:inputText class="form-control" size="3" value="#{res.email}" rendered="#{res.editable}" />
+                    <h:outputText value="#{res.email}" rendered="#{not res.editable}" />
                 </h:column>
 
                 <!--Date&time-->
                 <h:column headerClass="header">
                     <f:facet name="header">#{msgs.date_time}</f:facet>
-                        #{res.getDate_time()}
+                    <h:inputText class="form-control" size="3" value="#{res.date_time}" rendered="#{res.editable}" />
+                    <h:outputText value="#{res.date_time}" rendered="#{not res.editable}" />
                 </h:column>
 
                 <!--Amount-->
                 <h:column headerClass="header">
                     <f:facet name="header">#{msgs.people}</f:facet>
-                        #{res.getPeople()}
+                    <h:inputText class="form-control" size="3" value="#{res.people}" rendered="#{res.editable}" />
+                    <h:outputText value="#{res.people}" rendered="#{not res.editable}" />
                 </h:column>
 
                 <!--Birthday-->
-                <h:column headerClass="header">
+                <h:column>
                     <f:facet name="header">#{msgs.bday}</f:facet>
-                        #{res.isIsBirthday()}
+                    <h:selectBooleanCheckbox  styleClass="bdayCheck" value="#{res.isBirthday}" disabled="#{not res.editable}" />
                 </h:column>
 
                 <!--Additional notes-->
                 <h:column headerClass="header">
                     <f:facet name="header">#{msgs.additionalNotes}</f:facet>
-                        #{res.getAdditionalNotes()}
+                    <h:inputText class="form-control" size="3" value="#{res.additionalNotes}" rendered="#{res.editable}" />
+                    <h:outputText value="#{res.additionalNotes}" rendered="#{not res.editable}" />
                 </h:column>
 
-                <!--update button-->
+                <!--update/save button-->
                 <h:column>
-                    <h:commandButton styleClass="btn btn-success-outline" value="#{msgs.update}" action="#{staff.editReservation(res)}" rendered="#{not res.editable}"  />
-                    <h:commandButton styleClass="btn btn-success-outline" value="#{msgs.save}"  rendered="#{res.editable}" action="#{staff.saveReservation(res)}" />
+                    <h:commandButton value=" #{msgs.update}"  action="#{staff.editReservation(res)}" rendered="#{not res.editable}" styleClass="btn btn-primary-outline" />
+                    <h:commandButton value="#{msgs.save}" action="#{staff.saveReservation(res)}" rendered="#{res.editable}" styleClass="btn"   />
                 </h:column>
 
                 <!--delete button-->
                 <h:column>
-                    <h:commandButton styleClass="btn btn-success-outline" value="#{msgs.delete}" action="#{staff.deleteReservation(res)}" />
+                    <h:commandButton value="#{msgs.delete}" action="#{staff.deleteReservation(res)}"  styleClass="btn"/>
                 </h:column>
-
 
             </h:dataTable>
         </h:form>

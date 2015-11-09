@@ -17,6 +17,10 @@ body {
     background-color: #F7941E;
 }
 
+.bdayCheck
+{
+    text-align: center;
+}
 .caption
 {
     color: black;
@@ -45,8 +49,6 @@ body {
 table
 {
     margin: 0 auto;
-    /*    font-weight: 100;
-        font-family: 'Lato';*/
 }
 
 td

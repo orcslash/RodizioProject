@@ -38,6 +38,7 @@ public class StaffBean implements Serializable
         {
             Database.updateReservation(res);
         }
+        res.setEdited(false);
         return null;
     }
 
@@ -75,6 +76,7 @@ public class StaffBean implements Serializable
     {
         // for testing only
 
+        Database.dropTable();
         Database.createTable();
         for (int i = 0; i < 15; i++)
         {
