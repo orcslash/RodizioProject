@@ -10,6 +10,9 @@
 
         <!--added stylesheets for the whole project to use-->
 
+        <!--reset css values so it looks the same cross-browser-->
+        <h:outputStylesheet library="css" name="normalise.css"/>
+
         <!--jQuery-->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -19,8 +22,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
 
         <!--locals-->
-        <h:outputStylesheet library="css" name="styles.css"/>
+
         <h:outputScript library="js" name="js.js" />
+        <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
 
     <h:body>
