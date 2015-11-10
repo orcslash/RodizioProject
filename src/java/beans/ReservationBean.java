@@ -10,7 +10,6 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import model.Reservation;
 
 /**
@@ -24,8 +23,8 @@ public class ReservationBean implements Serializable
 
     private String name;
     private String email;
-    private Date date;
-    private Date time;
+    private String date;
+    private String time;
     private int people = 1;
     private String additionalNotes;
     private boolean isBirthday;
@@ -58,7 +57,7 @@ public class ReservationBean implements Serializable
     public String createReservation()
     {
 
-        id = Database.createReservation(new Reservation(name, email, phoneNum, (printDate() + " " + printTime()), people, additionalNotes, isBirthday));
+        id = Database.createReservation(new Reservation(name, email, phoneNum, (date + " " + time), people, additionalNotes, isBirthday));
         Database.dumpTable();
 
         return "success";
@@ -84,34 +83,22 @@ public class ReservationBean implements Serializable
         id = 0;
     }
 
-    public String printDate()
-    {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        return dateFormat.format(date);
-    }
-
-    public String printTime()
-    {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        return format.format(time);
-    }
-
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }
-
-    public Date getDate()
+    public String getDate()
     {
         return date;
     }
 
-    public Date getTime()
+    public void setDate(String date)
+    {
+        this.date = date;
+    }
+
+    public String getTime()
     {
         return time;
     }
 
-    public void setTime(Date time)
+    public void setTime(String time)
     {
         this.time = time;
     }

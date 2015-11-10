@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"   >
 
     <head><title>IGNORED</title></head>
@@ -36,16 +35,14 @@
                             <!--TODO find out how to style these input fields-->
                             <tr>
                                 <td>#{msgs.date}: </td>
-                                <td> 
-                                    <input type="text" class="form-control datepicker" value="12-02-2012"/>
-                                
+                                <td>
+                                    <h:inputText styleClass="form-control datepicker" value="#{reservation.date}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>#{msgs.time}: </td>
-                                <td> 
-                                    <input type="text" class="form-control clockpicker" value="09:30"/>
-                                
+                                <td>
+                                    <h:inputText styleClass="form-control timepicker" value="#{reservation.time}"/>
                                 </td>
                             </tr>
                             <tr>

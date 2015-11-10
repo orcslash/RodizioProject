@@ -8,12 +8,12 @@
     <Scope Scope="Project">
         <Node id="submit.xhtml" x="150" y="300" zoom="true"/>
         <Node id="index.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="resources/ezcomp/inlineNewResForm.xhtml" x="137" y="120" zoom="true"/>
         <Node id="resources/ezcomp/ReservationTable.xhtml" x="150" y="150" zoom="true"/>
         <Node id="success.xhtml" x="150" y="450" zoom="true"/>
-        <Node id="update.xhtml" x="637" y="252" zoom="true"/>
         <Node id="resources/ezcomp/reservationForm.xhtml" x="152" y="97" zoom="true"/>
+        <Node id="StaffPage.xhtml" x="664" y="296" zoom="true"/>
         <Node id="MainLayout.xhtml" x="159" y="65" zoom="true"/>
-        <Node id="StaffPage.xhtml" x="625" y="359" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations">
         <Node id="submit.xhtml" x="334" y="262" zoom="true"/>

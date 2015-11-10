@@ -41,7 +41,10 @@ table
 {
     margin: 0 auto;
 }
-
+th
+{
+    font-weight: normal;
+}
 td
 {
     text-align: left;
@@ -123,6 +126,16 @@ td
     background: gray;
     outline: none;
     border: none;
+}
+.inlineres
+{
+    width: 100%;
+}
+
+*
+{
+    font-family: lato;
+    font-size: medium
 }
 
 

@@ -5,34 +5,31 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <h:head>
+
+        <!--Libraries for the project-->
+
+        <!--jQuery-->
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+        <!--Bootstrap css and js-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <!--locals-->
+        <!--reset css values so it looks the same cross-browser-->
+        <h:outputStylesheet library="css" name="normalize.css"/>
+        <h:outputStylesheet library="css" name="styles.css"/>
+        <h:outputStylesheet library="css" name="jquery.timepicker.css"/>
+        <!--timepicker-->
+        <h:outputScript library="js" name="js.js" />
+        <h:outputScript library="js" name="jquery.timepicker.min.js" />
+
         <!--starts every pages title with 'Rodizio" and the current pages title is appended to that-->
         <title>Rodizio<ui:insert name="title"/></title>
 
-        <!--added stylesheets for the whole project to use-->
-
-        <!--reset css values so it looks the same cross-browser-->
-        <h:outputStylesheet library="css" name="normalise.css"/>
-        
-
-        <!--jQuery-->
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-        <!--Bootstrap-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>    
-        
-        <!--locals-->
-
-        
-        <h:outputStylesheet library="css" name="styles.css"/>
-        <h:outputStylesheet library="css" name="datapicker.css"/>
-        <h:outputStylesheet library="css" name="clockpicker.css"/>
-        <h:outputScript library="js" name="bootstrap-datepicker.js" />
-        <h:outputScript library="js" name="clockpicker.js" />
-        <h:outputScript library="js" name="js.js" />
-       
     </h:head>
 
     <h:body>

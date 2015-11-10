@@ -4,15 +4,31 @@ $(function () {
         active: false,
         collapsible: true
     });
-
+    $("#accordion").accordion({
+        heightStyle: "content",
+        autoHeight: false,
+        clearStyle: true
+    });
 });
 
-$(function () 
+/**
+ * Init datepicker and time picker, set date and time format
+ */
+$(function ()
 {
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker(
+            {
+                dateFormat: "dd-mm-yy"
+            });
+
+    // min and max selectable time
+    $('.timepicker').timepicker({
+        'minTime': '16:00',
+        'maxTime': '23:30',
+        'timeFormat': 'H:i'
+    }
+    );
 });
 
-$(function () 
-{
-    $('.clockpicker').clockpicker();
-});
+
+
