@@ -36,11 +36,9 @@
                             <!--TODO find out how to style these input fields-->
                             <tr>
                                 <td>#{msgs.date}: </td>
-                                <td> <p:calendar   value="#{reservation.date}"  pattern="dd-MM-yyyy" /></td>
-                            </tr>
-                            <tr>
-                                <td>#{msgs.time}: </td>
-                                <td><p:calendar value="#{reservation.time}" pattern="HH:mm" timeOnly="true"  />
+                                <td> 
+                                    <input type="text" class="form-control datepicker" value="12-02-2012"/>
+                                
                                 </td>
                             </tr>
                             <tr>
