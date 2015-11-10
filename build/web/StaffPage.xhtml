@@ -25,6 +25,18 @@ and open the template in the editor.
             <!--add the list that is saved as a custom component in a different file-->
             <ui:define name="content">
 
+                <div id="accordion">
+                    <h3>#{msgs.addNew}</h3>
+                    <div>
+                        <p>
+                            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                        </p>
+                    </div>
+                </div>
+
                 <ez:ReservationTable reservations="#{staff.reservations}" title="#{msgs.allReservations}"/>
 
             </ui:define>

@@ -7,9 +7,20 @@
     <h:head>
         <!--starts every pages title with 'Rodizio" and the current pages title is appended to that-->
         <title>Rodizio<ui:insert name="title"/></title>
-        <!--added stylesheets for the whole page to use-->
+
+        <!--added stylesheets for the whole project to use-->
+
+        <!--jQuery-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <!--Bootstrap-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+
+        <!--locals-->
         <h:outputStylesheet library="css" name="styles.css"/>
+        <h:outputScript library="js" name="js.js" />
     </h:head>
 
     <h:body>
