@@ -11,3 +11,8 @@ $(function ()
 {
     $('.datepicker').datepicker();
 });
+
+$(function () 
+{
+    $('.clockpicker').clockpicker();
+});
