@@ -4,14 +4,15 @@ body {
     padding:0;
     height:100%;
 }
-/*.evenRow
+
+#wrapper
 {
-    background-color: #ccccff
+    /*display: table;*/
+    min-height:100%;
+    position:relative;
+    min-width:100%;
+    background-color: gray;
 }
-.oddRow
-{
-    background-color: darkgrey;
-}*/
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
     background-color: #F7941E;
@@ -21,25 +22,12 @@ body {
 {
     text-align: center;
 }
+
 .caption
 {
     color: black;
     text-align: center;
 }
-#body
-{
-    background-color: gray;
-}
-
-#wrapper
-{
-    /*display: table;*/
-    min-height:100%;
-    position:relative;
-    width:100%;
-    background-color: gray;
-}
-
 
 .form
 {
@@ -64,28 +52,24 @@ td
     height: 125px;
 }
 
-
 #top img
 {
-    width: 20%;
-    height: auto;
+    max-width:100%;
+    max-height:100%;
+    position: relative;
 
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 
 #content
 {
-    /*display:table-row;*/
     height:100%;
     padding-bottom:125px;
     text-align: center;
-    /*    background-color: gray;*/
-    /*height: 100%;*/
     margin: auto;
     top: 0;
     left: 0;

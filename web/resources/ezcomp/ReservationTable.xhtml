@@ -81,7 +81,7 @@
 
                 <!--update/save button-->
                 <h:column>
-                    <h:commandButton value=" #{msgs.update}"  action="#{staff.editReservation(res)}" rendered="#{not res.editable}" styleClass="btn btn-primary-outline" />
+                    <h:commandButton value=" #{msgs.update}"  action="#{staff.editReservation(res)}" rendered="#{not res.editable}" styleClass="btn-primary-outline btn" />
                     <h:commandButton value="#{msgs.save}" action="#{staff.saveReservation(res)}" rendered="#{res.editable}" styleClass="btn"   />
                 </h:column>
 
