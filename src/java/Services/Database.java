@@ -166,6 +166,7 @@ public class Database
             ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid() AS id;");
 
             id = rs.getInt("id");
+            System.out.println("returned id " + id);
 
             stmt.close();
             c.commit();

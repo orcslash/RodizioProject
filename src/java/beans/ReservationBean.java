@@ -9,7 +9,6 @@ import Services.Database;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import model.Reservation;
 
 /**
@@ -56,13 +55,36 @@ public class ReservationBean implements Serializable
 
     public String createReservation()
     {
-        System.out.println("creating");
+        if (!validate())
+        {
+            return "home";
+        }
+        System.out.println("leng" + name.length());
         id = Database.createReservation(new Reservation(name, email, phoneNum, date, time, people, additionalNotes, isBirthday));
         resetValues();
 
-        Database.dumpReservationTable();
+//        Database.dumpReservationTable();
         return "success";
 
+    }
+
+    /**
+     * checks if all the required fields are not null or empty
+     *
+     * @return
+     */
+    private boolean validate()
+    {
+        return !(name == null
+                || email == null
+                || phoneNum == null
+                || date == null
+                || time == null)
+                && !(name.length() == 0
+                || email.length() == 0
+                || phoneNum.length() == 0
+                || date.length() == 0
+                || time.length() == 0);
     }
 
     public String goToHome()
@@ -81,7 +103,7 @@ public class ReservationBean implements Serializable
         additionalNotes = null;
         isBirthday = false;
         phoneNum = null;
-        id = 0;
+
     }
 
     public String getDate()
@@ -92,6 +114,8 @@ public class ReservationBean implements Serializable
     public void setDate(String date)
     {
         this.date = date;
+        System.out.println(date);
+
     }
 
     public String getTime()
@@ -171,7 +195,7 @@ public class ReservationBean implements Serializable
     {
         // try to create new table
 //        Database.dropTable();
-        Database.createReservationsTable();
+//        Database.createReservationsTable();
 
     }
 

@@ -98,12 +98,12 @@ public class StaffBean implements Serializable
         resBean = new ReservationBean();
         // for testing only
 
-        Database.dropReservationTable();
-        Database.createReservationsTable();
-        for (int i = 0; i < 15; i++)
-        {
-            Database.addDummyValues();
-        }
+//        Database.dropReservationTable();
+//        Database.createReservationsTable();
+//        for (int i = 0; i < 15; i++)
+//        {
+//            Database.addDummyValues();
+//        }
         getAllReservations();
     }
 
