@@ -51,11 +51,18 @@
                     <h:outputText value="#{res.email}" rendered="#{not res.editable}" />
                 </h:column>
 
-                <!--Date&time-->
+                <!--date-->
                 <h:column headerClass="header">
-                    <f:facet name="header">#{msgs.date_time}</f:facet>
-                    <h:inputText class="form-control" size="3" value="#{res.date_time}" rendered="#{res.editable}" />
-                    <h:outputText value="#{res.date_time}" rendered="#{not res.editable}" />
+                    <f:facet name="header">#{msgs.date}</f:facet>
+                    <h:inputText class="form-control datepicker"  value="#{res.date}" rendered="#{res.editable}" />
+                    <h:outputText value="#{res.date}" rendered="#{not res.editable}" />
+                </h:column>
+
+                <!--Time-->
+                <h:column headerClass="header">
+                    <f:facet name="header">#{msgs.time}</f:facet>
+                    <h:inputText class="form-control timepicker" value="#{res.time}" rendered="#{res.editable}" />
+                    <h:outputText value="#{res.time}" rendered="#{not res.editable}" />
                 </h:column>
 
                 <!--Amount-->

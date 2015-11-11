@@ -34,7 +34,7 @@ public class Database
 //        dropTable();
 //        createTable();
 //        addDummyValues();
-        Reservation res = (new Reservation("Lukas", "email", "8888", "04-11-2015 11:00", 0, null, true));
+        Reservation res = (new Reservation("Lukas", "email", "8888", "04-11-2015", "11:00", 0, null, true));
         res.setId(createReservation(res));
         res.setName("ble");
         updateReservation(res);
@@ -49,7 +49,7 @@ public class Database
     public static void updateReservation(Reservation res)
     {
         executeCommand("UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "' ,PHONE='" + res.getPhoneNum()
-                + "',DATE_TIME='" + res.getDate_time() + "',AMOUNT='" + res.getPeople()
+                + "',DATE='" + res.getDate() + "',TIME='" + res.getTime() + "',AMOUNT='" + res.getPeople()
                 + "',NOTES='" + res.getAdditionalNotes() + "',BDAY='" + (res.isIsBirthday() ? 1 : 0)
                 + "' WHERE ID=" + res.getId()
         );
@@ -77,7 +77,8 @@ public class Database
         String query = " '" + res.getName() + "',"
                 + " '" + res.getEmail() + "',"
                 + " '" + res.getPhoneNum() + "' ,"
-                + " '" + res.getDate_time() + "',"
+                + " '" + res.getDate() + "',"
+                + " '" + res.getTime() + "',"
                 + " '" + res.getPeople() + "' ,"
                 + " " + (res.getAdditionalNotes() == null ? "null" : "'" + res.getAdditionalNotes() + "'") + " ,"
                 + " '" + (res.isIsBirthday() ? 1 : 0) + "' "; // SQLite does not allow bool values, only 0 or 1
@@ -93,7 +94,7 @@ public class Database
     private static int insert(String query)
     {
 
-        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
+        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE, TIME,AMOUNT,NOTES,BDAY) "
                 + "VALUES(" + query + ")";
 
         return Database.executeCommand(sql);
@@ -142,7 +143,8 @@ public class Database
                 + "NAME           VARCHAR(25)    NOT NULL, "
                 + "EMAIL           VARCHAR(25)    NOT NULL, "
                 + "PHONE           VARCHAR(12)    NOT NULL, "
-                + "DATE_TIME           DATETIME NOT NULL,"
+                + "DATE           VARCHAR(9) NOT NULL,"
+                + "TIME           VARCHAR(5) NOT NULL,"
                 + " AMOUNT            INT     NOT NULL, "
                 + " NOTES        TEXT, "
                 + " BDAY        BOOLEAN NOT NULL)";
@@ -186,12 +188,13 @@ public class Database
                 String name = rs.getString("name");
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
-                String date = rs.getString("date_time");
+                String date = rs.getString("date");
+                String time = rs.getString("time");
                 int amount = rs.getInt("amount");
                 String notes = rs.getString("notes");
                 boolean bday = rs.getBoolean("bday");
 
-                Reservation tmp = new Reservation(name, email, phone, date, amount, notes, bday);
+                Reservation tmp = new Reservation(name, email, phone, date, time, amount, notes, bday);
                 tmp.setId(id);
                 reservations.add(tmp);
             }
@@ -215,8 +218,8 @@ public class Database
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
 
-        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE_TIME,AMOUNT,NOTES,BDAY) "
-                + "VALUES ( 'Paul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + " " + timeF.format(new Date(System.currentTimeMillis()))
+        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
+                + "VALUES ( 'Paul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + "','" + timeF.format(new Date(System.currentTimeMillis()))
                 + "', 5, null, 0  );";
         executeCommand(sql);
         System.out.println("\nRecord created successfully");

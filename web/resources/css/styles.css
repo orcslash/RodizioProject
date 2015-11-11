@@ -8,6 +8,10 @@ body {
     height:100%;
 }
 
+.datetimeInput
+{
+    width: 10px;;
+}
 #wrapper
 {
     /*display: table;*/
@@ -92,14 +96,14 @@ td
 }
 
 
-#wrapper  #accordion {
+#accordionWrapper  #accordion {
     width: 80%;
     margin: 50px auto;
 }
 
 /*--------------------------------------------------------------*/
 
-#wrapper .accordion .ui-accordion-header, .noStyleAccordion .ui-accordion-content {
+#accordionWrapper .accordion .ui-accordion-header, .noStyleAccordion .ui-accordion-content {
     padding: 0;
     background: none;
     border: none;
@@ -108,19 +112,19 @@ td
 :focus, :active {
     outline: 0;
 }
-#wrapper .accordion  .ui-accordion-icons .ui-state-active
+#accordionWrapper .accordion  .ui-accordion-icons .ui-state-active
 {
     outline: black;
 }
 
-#wrapper  .ui-accordion .ui-accordion-header
+#accordionWrapper  .ui-accordion .ui-accordion-header
 {
     background-color: #F7941E;
     height: 35px;
     padding-top: 10px;
 
 }
-#wrapper .ui-accordion .ui-accordion-content
+#accordionWrapper .ui-accordion .ui-accordion-content
 {
     background-color: pink;
     background: gray;

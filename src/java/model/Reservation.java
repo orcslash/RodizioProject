@@ -14,7 +14,8 @@ public class Reservation
 
     private String name;
     private String email;
-    private String date_time;
+    private String date;
+    private String time;
     private int people;
     private String additionalNotes;
     private boolean isBirthday;
@@ -43,35 +44,41 @@ public class Reservation
         this.editable = editable;
     }
 
-    public Reservation(String name, String email, String phoneNum, String date_time, int people, String additionalNotes, boolean isBirthday)
+    public String getDate()
+    {
+        return date;
+    }
+
+    public void setDate(String date)
+    {
+        this.date = date;
+    }
+
+    public String getTime()
+    {
+        return time;
+    }
+
+    public void setTime(String time)
+    {
+        this.time = time;
+    }
+
+    public Reservation(String name, String email, String phoneNum, String date, String time, int people, String additionalNotes, boolean isBirthday)
     {
         this.name = name;
         this.email = email;
-        this.date_time = date_time;
+        this.date = date;
+        this.time = time;
         this.people = people;
         this.additionalNotes = additionalNotes;
         this.isBirthday = isBirthday;
         this.phoneNum = phoneNum;
     }
 
-    public String getDate_time()
-    {
-        return date_time;
-    }
-
     private void edited()
     {
         edited = true;
-    }
-
-    public void setDate_time(String date_time)
-    {
-        if (this.date_time.equals(date_time))
-        {
-            return;
-        }
-        edited();
-        this.date_time = date_time;
     }
 
     public String getName()
@@ -136,6 +143,10 @@ public class Reservation
         {
             return;
         }
+        if (additionalNotes == null)
+        {
+            return;
+        }
         edited();
         this.additionalNotes = additionalNotes;
     }
@@ -188,7 +199,7 @@ public class Reservation
     @Override
     public String toString()
     {
-        return "Reservation{" + "name=" + name + ", email=" + email + ", date_time=" + date_time + ", people=" + people + ", additionalNotes=" + additionalNotes + ", isBirthday=" + isBirthday + ", phoneNum=" + phoneNum + ", id=" + id + '}';
+        return "Reservation{" + "name=" + name + ", email=" + email + ", date=" + date + ", time=" + time + ", people=" + people + ", additionalNotes=" + additionalNotes + ", isBirthday=" + isBirthday + ", phoneNum=" + phoneNum + ", id=" + id + ", editable=" + editable + ", edited=" + edited + '}';
     }
 
 }

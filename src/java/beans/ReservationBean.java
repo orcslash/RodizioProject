@@ -25,7 +25,7 @@ public class ReservationBean implements Serializable
     private String email;
     private String date;
     private String time;
-    private int people = 1;
+    private int people;
     private String additionalNotes;
     private boolean isBirthday;
     private String phoneNum;
@@ -56,10 +56,11 @@ public class ReservationBean implements Serializable
 
     public String createReservation()
     {
+        System.out.println("creating");
+        id = Database.createReservation(new Reservation(name, email, phoneNum, date, time, people, additionalNotes, isBirthday));
+        resetValues();
 
-        id = Database.createReservation(new Reservation(name, email, phoneNum, (date + " " + time), people, additionalNotes, isBirthday));
         Database.dumpTable();
-
         return "success";
 
     }
