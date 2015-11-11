@@ -60,7 +60,7 @@ public class ReservationBean implements Serializable
         id = Database.createReservation(new Reservation(name, email, phoneNum, date, time, people, additionalNotes, isBirthday));
         resetValues();
 
-        Database.dumpTable();
+        Database.dumpReservationTable();
         return "success";
 
     }
@@ -171,7 +171,7 @@ public class ReservationBean implements Serializable
     {
         // try to create new table
 //        Database.dropTable();
-        Database.createTable();
+        Database.createReservationsTable();
 
     }
 

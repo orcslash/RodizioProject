@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Reservation;
+import model.User;
 
 /**
  *
@@ -31,14 +32,53 @@ public class Database
      */
     public static void main(String[] args)
     {
-//        dropTable();
-//        createTable();
+//        dropReservationTable();
+//        createReservationsTable();
 //        addDummyValues();
-        Reservation res = (new Reservation("Lukas", "email", "8888", "04-11-2015", "11:00", 0, null, true));
-        res.setId(createReservation(res));
-        res.setName("ble");
-        updateReservation(res);
-        dumpTable();
+//        dumpReservationTable();
+//        Reservation res = (new Reservation("Lukas", "email", "8888", "04-11-2015", "11:00", 0, null, true));
+//        res.setId(createReservation(res));
+//        res.setName("ble");
+//        updateReservation(res);
+//        dumpTable();
+//        dropUserTable();
+//        createUserTable();
+//        insertUser(new User("sss", "ble"));
+//        dumpUserTable();
+    }
+
+    /**
+     * Checks if user is in the database
+     *
+     * @param user
+     * @return
+     */
+    public static User checkUser(User user)
+    {
+        ArrayList<User> usrs = userQuery("SELECT * FROM USERS WHERE NAME ='" + user.getName() + "' AND PASSWORD = '" + user.getPassword()
+                + "'");
+        if (usrs.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return usrs.get(0);
+        }
+    }
+
+    public static void createUserTable()
+    {
+        executeCommand("CREATE TABLE IF NOT EXISTS USERS("
+                + "id int(20)  PRIMARY KEY,"
+                + "name VARCHAR(60) UNIQUE NOT NULL, "
+                + "password VARCHAR(60) NOT NULL)");
+    }
+
+    public static void insertUser(User user)
+    {
+        executeCommand("INSERT INTO USERS (name, password) VALUES('" + user.getName() + "'," + "'" + user.getPassword()
+                + "')");
     }
 
     public static void deleteReservation(Reservation res)
@@ -62,7 +102,12 @@ public class Database
      */
     public static ArrayList<Reservation> getAllReservations()
     {
-        return query("SELECT * FROM RESERVATIONS;");
+        return reservationQuery("SELECT * FROM RESERVATIONS;");
+    }
+
+    public static ArrayList<User> getAllUsers()
+    {
+        return userQuery("SELECT * FROM USERS;");
     }
 
     /**
@@ -94,7 +139,7 @@ public class Database
     private static int insert(String query)
     {
 
-        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE, TIME,AMOUNT,NOTES,BDAY) "
+        String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
                 + "VALUES(" + query + ")";
 
         return Database.executeCommand(sql);
@@ -136,7 +181,7 @@ public class Database
     /**
      * Creates a new reservations table
      */
-    public static void createTable()
+    public static void createReservationsTable()
     {
         String sql = "CREATE TABLE IF NOT EXISTS RESERVATIONS "
                 + "(ID INTEGER PRIMARY KEY,"
@@ -156,11 +201,19 @@ public class Database
     /**
      * Prints all the reservations returned from the DB
      */
-    public static void dumpTable()
+    public static void dumpReservationTable()
     {
         for (Reservation r : getAllReservations())
         {
             System.out.println(r.toString());
+        }
+    }
+
+    public static void dumpUserTable()
+    {
+        for (User u : getAllUsers())
+        {
+            System.out.println(u.toString());
         }
     }
 
@@ -170,7 +223,7 @@ public class Database
      * @param query
      * @return
      */
-    public static ArrayList<Reservation> query(String query)
+    public static ArrayList<Reservation> reservationQuery(String query)
     {
         ArrayList<Reservation> reservations = new ArrayList<>();
         try
@@ -210,6 +263,38 @@ public class Database
         return reservations;
     }
 
+    public static ArrayList<User> userQuery(String query)
+    {
+        ArrayList<User> users = new ArrayList<>();
+        try
+        {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection(CONNECTION);
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next())
+            {
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+
+                User user = new User(name, password);
+                users.add(user);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch (ClassNotFoundException | SQLException e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return users;
+    }
+
     /**
      * Adds dummy values to the table
      */
@@ -228,9 +313,22 @@ public class Database
     /**
      * Drops the reservation table
      */
-    public static void dropTable()
+    public static void dropReservationTable()
     {
-        String sql = "DROP TABLE IF EXISTS RESERVATIONS";
+        dropTable("reservations");
+    }
+
+    /**
+     * Drops the user table
+     */
+    public static void dropUserTable()
+    {
+        dropTable("users");
+    }
+
+    public static void dropTable(String table)
+    {
+        String sql = "DROP TABLE IF EXISTS " + table;
         executeCommand(sql);
         System.out.println("\nTable dropped");
     }

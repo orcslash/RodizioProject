@@ -38,7 +38,9 @@
 
             <!--logo  with a div as the header-->
             <div id="top" >
-                <h:graphicImage id = "logo" library="resources" name="logo.png" alt="logo"/>
+                <h:link outcome="home">
+                    <h:graphicImage id = "logo" library="resources" name="logo.png" alt="logo"/>
+                </h:link>
             </div>
 
             <!--this is where the content for the page goes-->
@@ -48,9 +50,10 @@
 
             <!--footer-->
             <div id="bottom">
-                Made by students of BAAA
+                <div>
+                    Made by students of BAAA
+                </div>
             </div>
-
         </div>
 
     </h:body>

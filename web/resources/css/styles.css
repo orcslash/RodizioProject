@@ -35,7 +35,26 @@ body {
     color: black;
     text-align: center;
 }
+#loginForm
+{
+    width: 15%;
+    align-items: center
+}
+#loginBtn
+{
+    color: black;
+    float:right;
 
+}
+.form-control
+{
+    width: 30%;
+}
+#loginForm
+{
+    width: 15%;
+    padding: 10px;
+}
 .form
 {
     width: 50%;

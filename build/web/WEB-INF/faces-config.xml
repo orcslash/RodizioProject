@@ -19,6 +19,14 @@
             <from-outcome>submit</from-outcome>
             <to-view-id>/submit.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/submit.xhtml</from-view-id>
@@ -28,6 +36,10 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>cancel</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -43,6 +55,21 @@
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>/StaffPage.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>confirmed</from-outcome>
+            <to-view-id>/StaffPage.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>
