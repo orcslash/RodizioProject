@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"   >
+
+    <head><title>IGNORED</title></head>
+    <body>
+        <ui:composition>
+
+            <div class="form">
+                <h:form >
+                    <h3>#{msgs.title}</h3>
+                    <table >
+                        <tr>
+                            <td>#{msgs.name}: </td>
+                            <td><h:inputText class="form-control" value="#{reservation.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" >
+                                    <f:validateRegex pattern="#{msgs.nameRegex}"  />
+                            
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#{msgs.email}: </td>
+                            <td><h:inputText class="form-control" value="#{reservation.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" >
+                                    <f:validateRegex pattern="#{msgs.emailRegex}" />
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#{msgs.phone}: </td>
+                            <td><h:inputText  class="form-control" value="#{reservation.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}">
+                                    <f:validateRegex pattern="^((\(?\+45\)?)?)(\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2})$" />   
+                                </h:inputText></td>
+                            <tr>
+                                <td>#{msgs.people}: </td>
+                                <td><h:inputText class="form-control" value="#{reservation.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}">
+                                        <f:validateDoubleRange minimum="1" maximum="50"/>
+                                        <f:convertNumber integerOnly="true"/>
+                                    </h:inputText></td>
+                            </tr>
+
+                            <!--TODO find out how to style these input fields-->
+                            <tr>
+                                <td>#{msgs.date}: </td>
+                                <td>
+                                    <h:inputText styleClass="form-control datepicker" value="#{reservation.date}" required="true" requiredMessage="#{msgs.requiredDate}">
+                                    </h:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#{msgs.time}: </td>
+                                <td>
+                                    <h:inputText styleClass="form-control timepicker" value="#{reservation.time}" required="true" requiredMessage="#{msgs.requiredTime}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#{msgs.additionalNotes}: </td>
+                                <td>
+                                    <h:inputTextarea class="form-control" value="#{reservation.additionalNotes}" cols="30" rows="10" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#{msgs.bday}: </td>
+                                <td><h:selectBooleanCheckbox value="#{reservation.isBirthday}"/></td>
+                            </tr>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <h:commandButton class="btn btn-secondary" value="#{msgs.submit}" action="submit"/>
+                            </td>
+                        </tr>
+                    </table>
+                </h:form>
+                <br />
+            </div>
+            <h:messages styleClass="noBulletPoints"/>
+
+        </ui:composition>
+    </body>
+</html>
