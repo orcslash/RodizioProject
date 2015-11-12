@@ -164,6 +164,21 @@ td
  {
     list-style: none;
  }
+ 
+ .formField
+ {
+     margin: 7px auto;
+    
+     
+ }
+ 
+ .BSize
+ {
+     width: 100%;
+     max-height: auto;
+     
+ }
+ 
 
 
 /*all the available settings for accordion*/
