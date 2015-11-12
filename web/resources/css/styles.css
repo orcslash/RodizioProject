@@ -160,6 +160,10 @@ td
     font-family: lato;
     font-size: medium
 }
+.noBulletPoints
+ {
+    list-style: none;
+ }
 
 
 /*all the available settings for accordion*/

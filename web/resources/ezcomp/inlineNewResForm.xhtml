@@ -30,22 +30,33 @@
                 <tbody>
                     <tr>
                         <td>
-                            <h:inputText class="form-control" size="8" value="#{staff.resBean.name}" />
+                            <h:inputText class="form-control" size="8" value="#{staff.resBean.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" >
+                                    <f:validateRegex pattern="#{msgs.nameRegex}"  />
+                            
+                                </h:inputText>
                         </td>
                         <td>
-                            <h:inputText class="form-control" size="3" value="#{staff.resBean.phoneNum}"  />
+                            <h:inputText class="form-control" size="3" value="#{staff.resBean.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" >
+                                    <f:validateRegex pattern="#{msgs.emailRegex}" />
+                                </h:inputText>
+                            
                         </td>
                         <td>
-                            <h:inputText class="form-control" size="3" value="#{staff.resBean.email}" />
+                            <h:inputText  class="form-control" size="3" value="#{staff.resBean.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}">
+                                    <f:validateRegex pattern="^((\(?\+45\)?)?)(\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2})$" />   
+                                </h:inputText>
                         </td>
                         <td>
-                            <h:inputText styleClass="form-control datepicker" size="3" value="#{staff.resBean.date}"  />
+                            <h:inputText styleClass="form-control datepicker" size="3" value="#{staff.resBean.date}"  required="true" requiredMessage="#{msgs.requiredDate}"/>
                         </td>
                         <td>
-                            <h:inputText styleClass="form-control timepicker" size="3" value="#{staff.resBean.time}"/>
+                            <h:inputText styleClass="form-control timepicker" size="3" value="#{staff.resBean.time}" required="true" requiredMessage="#{msgs.requiredTime}"/>
                         </td>
                         <td>
-                            <h:inputText class="form-control" size="3" value="#{staff.resBean.people}"/>
+                            <h:inputText class="form-control" size="3" value="#{staff.resBean.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}">
+                                        <f:validateDoubleRange minimum="1" maximum="50"/>
+                                        <f:convertNumber integerOnly="true"/>
+                                    </h:inputText>
                         </td>
                         <td>
                             <h:selectBooleanCheckbox  styleClass="bdayCheck" value="#{staff.resBean.isBirthday}"  />
@@ -62,5 +73,6 @@
                 </tbody>
             </table>
         </h:form>
+        <h:messages styleClass="noBulletPoints" />
     </cc:implementation>
 </html>
