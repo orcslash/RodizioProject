@@ -2,24 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/web/resources/js/js.js</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/web/StaffPage.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/src/java/beans/ReservationBean.java</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/web/MainLayout.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/web/resources/ezcomp/reservationForm.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/src/java/Services/Database.java</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/web/index.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/web/resources/css/styles.css</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/RodizioProject/web/resources/ezcomp/ReservationTable.xhtml</file>
-        </group>
         <group name="DIP projects">
             <file>file:/C:/Users/L/Documents/GitHub/RodizioProject/web/MainLayout.xhtml</file>
             <file>file:/C:/Users/L/Documents/GitHub/RodizioProject/src/java/beans/StaffBean.java</file>
             <file>file:/C:/Users/L/Documents/GitHub/RodizioProject/src/java/beans/ReservationBean.java</file>
             <file>file:/C:/Users/L/Documents/GitHub/RodizioProject/web/resources/ezcomp/inlineNewResForm.xhtml</file>
             <file>file:/C:/Users/L/Documents/GitHub/RodizioProject/web/resources/ezcomp/ReservationTable.xhtml</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Mikolaj/Desktop/lessons/SDM/RodizioProject/web/resources/css/styles.css</file>
+            <file>file:/C:/Users/Mikolaj/Desktop/lessons/SDM/RodizioProject/web/resources/ezcomp/reservationForm1.xhtml</file>
+            <file>file:/C:/Users/Mikolaj/Desktop/lessons/SDM/RodizioProject/web/resources/ezcomp/reservationForm.xhtml</file>
         </group>
     </open-files>
 </project-private>
