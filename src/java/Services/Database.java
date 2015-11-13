@@ -47,6 +47,19 @@ public class Database
 //        dumpUserTable();
     }
 
+    public static Reservation getReservationByIdAndMail(int id, String email)
+    {
+        ArrayList<Reservation> reserv = reservationQuery("SELECT * FROM RESERVATIONS WHERE ID=" + id + " AND EMAIL=" + "'" + email + "'");
+        if (reserv.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return reserv.get(0);
+        }
+    }
+
     /**
      * Checks if user is in the database
      *
