@@ -1,3 +1,12 @@
+function hide(name)
+{
+       $(name).css({
+           display:"none"
+       });
+        
+    
+}
+/* global SPAN, dataMessage, none */
 
 $(function () {
     $("#accordion").accordion({
@@ -29,6 +38,8 @@ $(function ()
     }
     );
 });
+
+
 
 
 

@@ -15,19 +15,19 @@ and open the template in the editor.
     <body>
         <ui:composition>
 
-            <h:form>
+            <h:form prependId="false">
                 <table>
                     <tr>
                         <td>#{msgs.id}: </td>
-                        <td><h:inputText id="id" value="#{lookup.id}" /></td>
+                        <td><h:inputText id="id" value="#{lookup.id}" styleClass="form-control" /></td>
                     </tr>
                     <tr>
                         <td>#{msgs.email}: </td>
-                        <td><h:inputText id="email" value="#{lookup.email}" /></td>
+                        <td><h:inputText id="email" value="#{lookup.email}" styleClass="form-control"/></td>
                     </tr>
                     <tr>
                         <td>
-                            <h:commandButton value="Search" action="#{lookup.lookup()}"/>
+                            <h:commandButton class="btn btn-secondary" value="Search" action="#{lookup.lookup()}"/>
                             <h:outputText value="#{msgs.resNotFound}" rendered="#{lookup.notFound}"  />
                         </td>
                     </tr>

@@ -11,7 +11,7 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         <div id="loginForm" class="form">
-            <h:form>
+            <h:form prependId="false">
                 <h:outputText value="Username" />
                 <h:inputText class="form-control" id="username" value="#{login.userName}"></h:inputText>
                 <h:message for="username"></h:message>
