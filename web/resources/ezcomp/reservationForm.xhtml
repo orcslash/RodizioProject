@@ -34,17 +34,20 @@
 
                         </tr>
                         <tr>
-                            <td>
-                                <h:inputText  a:placeholder="#{msgs.seldate}" maxlength="10" styleClass="form-control datepicker formField"  value="#{reservation.date}" required="true" requiredMessage="#{msgs.requiredDate}"/>
+                          <td>
+                                <h:inputText a:placeholder="#{msgs.seldate}" id="date" maxlength="10" styleClass="form-control datepicker formField"  value="#{reservation.date}" required="true" requiredMessage="#{msgs.requiredDate}"/>
+                                 <h:message for="date" styleClass="noBulletPoints validateMessage" />
                             </td>
                             <td class="formF">
-                                <h:inputText a:placeholder="#{msgs.seltime}"  maxlength="5" styleClass="form-control timepicker formField" value="#{reservation.time}" required="true" requiredMessage="#{msgs.requiredTime}"/>
+                                <h:inputText a:placeholder="#{msgs.seltime}"  id="time" maxlength="5" styleClass="form-control timepicker formField" value="#{reservation.time}" required="true" requiredMessage="#{msgs.requiredTime}"/>
+                                <h:message for="time" styleClass="noBulletPoints validateMessage"/>
                             </td>
                             <td class="people">
                                 <h:inputText size="1" class="form-control" id="people" value="#{reservation.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}">
                                         <f:validateDoubleRange minimum="1" maximum="50"/>
                                         <f:convertNumber integerOnly="true"/>
                                     </h:inputText>
+                                <h:message for="people" styleClass="noBulletPoints validateMessage"/>
                             </td>    
                             <td class="bdayCheck"> 
                                 <h:selectBooleanCheckbox class="BSize" value="#{reservation.isBirthday}"/>
@@ -65,24 +68,26 @@
                         </tr>
                         <tr>
                                 <td colspan="2">
-                                <h:inputText  a:placeholder="#{msgs.name}"  class="form-control formField" value="#{reservation.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" >
-                                    <f:validateRegex pattern="#{msgs.nameRegex}"  />
-                            
-                                </h:inputText>
+                                    <h:inputText  a:placeholder="#{msgs.name}" id="name" class="form-control formField" value="#{reservation.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" >
+                                        <f:validateRegex pattern="#{msgs.nameRegex}"  />
+                                    </h:inputText>
+                                   <h:message for="name" styleClass="noBulletPoints validateMessage"/> 
                                 </td>
                             
                                 
                         </tr>
                         <tr>
                             <td >
-                                <h:inputText a:placeholder="#{msgs.email}" class="form-control formField" value="#{reservation.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" >
+                                <h:inputText a:placeholder="#{msgs.email}" id="email" class="form-control formField" value="#{reservation.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" >
                                     <f:validateRegex pattern="#{msgs.emailRegex}" />
                                 </h:inputText>
+                                <h:message for="email" styleClass="noBulletPoints validateMessage"/> 
                             </td>
                             <td>
-                                <h:inputText a:placeholder="#{msgs.phone}" class="form-control formField" value="#{reservation.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}">
+                                <h:inputText a:placeholder="#{msgs.phone}" id="phone" class="form-control formField" value="#{reservation.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}">
                                     <f:validateRegex pattern="^((\(?\+45\)?)?)(\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2})$" />   
-                                </h:inputText>      
+                                </h:inputText>    
+                                <h:message for="phone" styleClass="noBulletPoints validateMessage"/> 
                             </td>
                         </tr>
                         <tr>
@@ -95,7 +100,6 @@
                 </h:form>
                 <br />
             </div>
-            <h:messages styleClass="noBulletPoints"/>
         </ui:composition>
     </body>
 </html>
