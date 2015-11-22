@@ -34,7 +34,7 @@ and open the template in the editor.
                 <p>#{msgs.time}: #{reservation.time}</p>
                 <p>#{msgs.additionalNotes}: #{reservation.additionalNotes}</p>
                 <p>#{msgs.bday}: #{reservation.isBirthday}</p>
-                <h:form>
+                <h:form prependId="false">
                     <h:commandButton value="#{msgs.confirm}" action="#{reservation.createReservation()}" />
                     <h:button value="Cancel" outcome="cancel"/>
                 </h:form>

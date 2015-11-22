@@ -194,9 +194,17 @@ td
     padding:10px 50px 20px 10px;
     background:#fff8c4 no-repeat 10px 50%;
     border:1px solid #f2c779;
-   
-    
+}
 
+.inlineValid
+{
+     margin-top:-21px;
+     margin-left:15px;
+    padding:10px 7px 20px 10px;
+}
+
+.left{
+    margin-left: 30px;
 }
  
 

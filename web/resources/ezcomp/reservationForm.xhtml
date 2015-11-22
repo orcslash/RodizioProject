@@ -78,10 +78,10 @@
                         </tr>
                         <tr>
                             <td >
-                                <h:inputText a:placeholder="#{msgs.email}" id="email" class="form-control formField" value="#{reservation.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" onfocus="hide('#emailMessage')" >
+                                <h:inputText a:placeholder="#{msgs.email}" id="email1" class="form-control formField" value="#{reservation.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" onfocus="hide('#emailMessage')" >
                                     <f:validateRegex pattern="#{msgs.emailRegex}" />
                                 </h:inputText>
-                                <h:message id="emailMessage" for="email" styleClass="noBulletPoints validateMessage"/> 
+                                <h:message id="emailMessage" for="email1" styleClass="noBulletPoints validateMessage"/> 
                             </td>
                             <td>
                                 <h:inputText a:placeholder="#{msgs.phone}" id="phone" class="form-control formField" value="#{reservation.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}" onfocus="hide('#phoneMessage')">

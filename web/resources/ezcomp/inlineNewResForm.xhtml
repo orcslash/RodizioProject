@@ -30,37 +30,37 @@
                 <tbody>
                     <tr>
                         <td>
-                            <h:inputText id="name" class="form-control" size="8" value="#{staff.resBean.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" onfocus="hide('#nameMessage')">
+                            <h:inputText  id="name" class="form-control" size="8" value="#{staff.resBean.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" onfocus="hide('#nameMessage')">
                                     <f:validateRegex pattern="#{msgs.nameRegex}"  />
                                 </h:inputText>
-                             <h:message id="nameMessage" for="name" styleClass="noBulletPoints validateMessage" />
+                             <h:message  id="nameMessage" for="name" styleClass="noBulletPoints validateMessage" />
                         </td>
                         <td>
                             <h:inputText id="email" class="form-control" size="3" value="#{staff.resBean.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" onfocus="hide('#emailMessage')">
                                     <f:validateRegex pattern="#{msgs.emailRegex}" />
                                 </h:inputText>
-                            <h:message id="emailMessage" for="email" styleClass="noBulletPoints validateMessage" />
+                            <h:message id="emailMessage" for="email" styleClass="noBulletPoints validateMessage inlineValid " />
                         </td>
                         <td>
                             <h:inputText id="phone" class="form-control" size="3" value="#{staff.resBean.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}" onfocus="hide('#phoneMessage')">
                                     <f:validateRegex pattern="^((\(?\+45\)?)?)(\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2})$" />   
                                 </h:inputText>
-                            <h:message id="phoneMessage" for="phone" styleClass="noBulletPoints validateMessage" />
+                            <h:message id="phoneMessage" for="phone" styleClass="noBulletPoints validateMessage inlineValid" />
                         </td>
                         <td>
                             <h:inputText id="date" styleClass="form-control datepicker" size="3" value="#{staff.resBean.date}"  required="true" requiredMessage="#{msgs.requiredDate}" onfocus="hide('#dateMessage')"/>
-                            <h:message id="dateMessage" for="date" styleClass="noBulletPoints validateMessage" />
+                            <h:message id="dateMessage" for="date" styleClass="noBulletPoints validateMessage inlineValid left" />
                         </td>
                         <td>
                             <h:inputText id="time" styleClass="form-control timepicker" size="3" value="#{staff.resBean.time}" required="true" requiredMessage="#{msgs.requiredTime}" onfocus="hide('#timeMessage')"/>
-                            <h:message id="timeMessage" for="time" styleClass="noBulletPoints validateMessage" />
+                            <h:message id="timeMessage" for="time" styleClass="noBulletPoints validateMessage inlineValid " />
                         </td>
                         <td>
                             <h:inputText id="amount" class="form-control" size="3" value="#{staff.resBean.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('#amountMessage')">
                                         <f:validateDoubleRange minimum="1" maximum="50"/>
                                         <f:convertNumber integerOnly="true"/>
                                     </h:inputText>
-                            <h:message id="amountMessage" for="amount" styleClass="noBulletPoints validateMessage" />
+                            <h:message id="amountMessage" for="amount" styleClass="noBulletPoints validateMessage inlineValid left" />
                         </td>
                         <td>
                             <h:selectBooleanCheckbox  styleClass="bdayCheck" value="#{staff.resBean.isBirthday}"  />
