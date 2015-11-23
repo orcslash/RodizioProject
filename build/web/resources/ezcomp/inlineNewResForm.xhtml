@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:form prependId="false">
+            <table id="inlineForm" class="table">
+                <thead>
+                    <tr>
+                        <th>#{msgs.name}</th>
+                        <th>#{msgs.email}</th>
+                        <th>#{msgs.phone}</th>
+                        <th>#{msgs.date}</th>
+                        <th>#{msgs.time}</th>
+                        <th>#{msgs.people}</th>
+                        <th>#{msgs.bday}</th>
+                        <th>#{msgs.additionalNotes}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h:inputText  id="name" class="form-control" size="8" value="#{staff.resBean.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" onfocus="hide('#j_idt18\\:nameMessage')">
+                                    <f:validateRegex pattern="#{msgs.nameRegex}"  />
+                                </h:inputText>
+                            <h:message id="nameMessage" for="name" styleClass="noBulletPoints validateMessage" />
+                        </td>
+                        <td>
+                            <h:inputText id="email" class="form-control" size="3" value="#{staff.resBean.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" onfocus="hide('#j_idt18\\:emailMessage')">
+                                    <f:validateRegex pattern="#{msgs.emailRegex}" />
+                                </h:inputText>
+                            <h:message id="emailMessage" for="email" styleClass="noBulletPoints validateMessage inlineValid " />
+                        </td>
+                        <td>
+                            <h:inputText id="phone" class="form-control" size="3" value="#{staff.resBean.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}" onfocus="hide('#j_idt18\\:phoneMessage')">
+                                    <f:validateRegex pattern="^((\(?\+45\)?)?)(\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2})$" />   
+                                </h:inputText>
+                            <h:message id="phoneMessage" for="phone" styleClass="noBulletPoints validateMessage inlineValid" />
+                        </td>
+                        <td>
+                            <h:inputText id="date" styleClass="form-control datepicker" size="3" value="#{staff.resBean.date}"  required="true" requiredMessage="#{msgs.requiredDate}" onfocus="hide('#j_idt18\\:dateMessage')"/>
+                            <h:message id="dateMessage" for="date" styleClass="noBulletPoints validateMessage inlineValid left" />
+                        </td>
+                        <td>
+                            <h:inputText id="time" styleClass="form-control timepicker" size="3" value="#{staff.resBean.time}" required="true" requiredMessage="#{msgs.requiredTime}" onfocus="hide('#j_idt18\\:timeMessage')"/>
+                            <h:message id="timeMessage" for="time" styleClass="noBulletPoints validateMessage inlineValid " />
+                        </td>
+                        <td>
+                            <h:inputText id="amount" class="form-control" size="3" value="#{staff.resBean.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('#j_idt18\\:amountMessage')">
+                                        <f:validateDoubleRange minimum="1" maximum="50"/>
+                                        <f:convertNumber integerOnly="true"/>
+                                    </h:inputText>
+                            <h:message id="amountMessage" for="amount" styleClass="noBulletPoints validateMessage inlineValid left" />
+                        </td>
+                        <td>
+                            <h:selectBooleanCheckbox  styleClass="bdayCheck" value="#{staff.resBean.isBirthday}"  />
+                        </td>
+                        <td>
+                            <h:inputText class="form-control" size="3" value="#{staff.resBean.additionalNotes}" />
+                        </td>
+                        <td>
+                            <h:commandButton  value=" #{msgs.save}"  action="#{staff.createReservation()}"  styleClass="btn-primary-outline btn" >
+                                <!--<f:ajax render="reservations" />-->
+                            </h:commandButton>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </h:form>     
+    </cc:implementation>
+</html>

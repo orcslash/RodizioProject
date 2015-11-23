@@ -7,7 +7,10 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ez="http://java.sun.com/jsf/composite/ezcomp" >
+      xmlns:ez="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <head>
         <title></title>
@@ -34,8 +37,18 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
-                <ez:ReservationTable reservations="#{staff.reservations}" title="#{msgs.allReservations}"/>
-
+                <h:form id="form">
+                    <h:panelGrid columns="4" cellpadding="2">
+                        <h:outputLabel value="Date: "/>
+                        <h:inputText styleClass="form-control datepicker" value="#{staff.date}">
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                        </h:inputText>     
+                        <p:commandButton value="Search" actionListener="#{staff.search()}"/>
+                    </h:panelGrid>
+                </h:form>
+                <p:outputPanel autoUpdate="true">
+                    <ez:ReservationTable reservations="#{staff.reservations}" title="#{msgs.allReservations}"/>
+                </p:outputPanel>
             </ui:define>
         </ui:composition>
     </body>

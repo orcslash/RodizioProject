@@ -6,10 +6,13 @@
 package beans;
 
 import Services.Database;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.faces.bean.ManagedProperty;
 import model.Reservation;
 
@@ -37,6 +40,7 @@ public class StaffBean implements Serializable
 
     private Reservation reservation;
     private ArrayList<Reservation> reservations;
+    private Date date;
 
     public String deleteReservation(Reservation res)
     {
@@ -116,5 +120,26 @@ public class StaffBean implements Serializable
     {
         this.reservations = reservations;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
+     public void search(){    
+          SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+          reservations.clear();
+          if(date!=null)
+          {             
+          reservations=Database.getAllReservations(sdf.format(date));
+          }
+          else
+          {
+          reservations=Database.getAllReservations();
+          }
+     }
 
 }

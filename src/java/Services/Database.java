@@ -117,6 +117,10 @@ public class Database
     {
         return reservationQuery("SELECT * FROM RESERVATIONS;");
     }
+    public static ArrayList<Reservation> getAllReservations(String date)
+    {
+    return reservationQuery("SELECT * FROM RESERVATIONS WHERE DATE= '" + date+"' ");
+    }
 
     public static ArrayList<User> getAllUsers()
     {
@@ -316,11 +320,15 @@ public class Database
     {
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
-
+        SimpleDateFormat dateF1= new SimpleDateFormat("26-01-2016");
         String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
                 + "VALUES ( 'Paul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + "','" + timeF.format(new Date(System.currentTimeMillis()))
                 + "', 5, null, 0  );";
         executeCommand(sql);
+         String sql1 = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
+                + "VALUES ( 'Robert', 'eemail@email.com', '888447', '" + dateF1.format(new Date()) + "','" + timeF.format(new Date(System.currentTimeMillis()))
+                + "', 5, null, 0  );";
+         executeCommand(sql1);
         System.out.println("\nRecord created successfully");
     }
 
