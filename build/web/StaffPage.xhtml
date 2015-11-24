@@ -42,6 +42,12 @@ and open the template in the editor.
                 <h:form id="form" >
                     <table>
                         <td>
+                            <p:commandButton   value="#{msgs.past}" actionListener="#{staff.getPastReservations()}"/>
+                        </td>
+                        <td>
+                            <p:commandButton   value="#{msgs.future}" actionListener="#{staff.getFutureReservations()}"/>
+                        </td>
+                        <td>
                             <p:commandButton   value="#{msgs.today}" actionListener="#{staff.getTodaysReservations()}"/>
                         </td>
                         <td>

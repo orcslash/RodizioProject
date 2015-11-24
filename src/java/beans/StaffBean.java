@@ -6,6 +6,7 @@
 package beans;
 
 import Services.Database;
+import static Services.Database.getPastReservations;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -85,6 +86,16 @@ public class StaffBean implements Serializable
     public void setReservation(Reservation reservation)
     {
         this.reservation = reservation;
+    }
+
+    public void getPastReservations()
+    {
+        reservations = Database.getPastReservations();
+    }
+
+    public void getFutureReservations()
+    {
+        reservations = Database.getFutureReservations();
     }
 
     public void getTodaysReservations()

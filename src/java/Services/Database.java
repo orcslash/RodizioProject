@@ -117,9 +117,110 @@ public class Database
     {
         return reservationQuery("SELECT * FROM RESERVATIONS;");
     }
+
     public static ArrayList<Reservation> getReservationsByDate(String date)
     {
-    return reservationQuery("SELECT * FROM RESERVATIONS WHERE DATE= '" + date+"' ");
+        return reservationQuery("SELECT * FROM RESERVATIONS WHERE DATE= '" + date + "' ");
+    }
+
+    public static ArrayList<Reservation> getPastReservations()
+    {
+        return getPastOrFutureReservations("past");
+    }
+
+    public static ArrayList<Reservation> getFutureReservations()
+    {
+        return getPastOrFutureReservations("future");
+    }
+
+    /**
+     * @param pastOrFuture "past" for past reservations, "future" for future
+     * @return
+     */
+    public static ArrayList<Reservation> getPastOrFutureReservations(String pastOrFuture)
+    {
+        // slow workaround for SQLite not having a normal Date datatype
+        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
+        String today = dateF.format(new Date(System.currentTimeMillis()));
+        ArrayList<Reservation> tmp = getAllReservations();
+
+        ArrayList<Reservation> pastReservations = new ArrayList<>();
+        for (Reservation r : tmp)
+        {
+            System.out.print(r);
+            if (compareWIthToday(r, pastOrFuture, today))
+            {
+                pastReservations.add(r);
+            }
+        }
+        return pastReservations;
+    }
+
+    private static boolean compareWIthToday(Reservation r, String pastOrFuture, String today)
+    {
+        if (pastOrFuture.equals("past"))
+        {
+            return compareDates(r.getDate(), today) < 0;
+        }
+
+        if (pastOrFuture.equals("future"))
+        {
+            return compareDates(r.getDate(), today) > 0;
+        }
+
+        return false;
+    }
+
+    /**
+     * Compares two string-dates
+     *
+     * @param d1
+     * @param d2
+     * @return
+     */
+    private static int compareDates(String d1, String d2)
+    {
+        int year1 = Integer.parseInt(d1.substring(6));
+        int year2 = Integer.parseInt(d2.substring(6));
+
+        if (year1 > year2)
+        {
+            System.out.print("year " + 1);
+            return 1;
+        }
+        if (year1 < year2)
+        {
+            System.out.print("year " + (-1));
+            return -1;
+        }
+
+        int month1 = Integer.parseInt(d1.substring(3, 5));
+        int month2 = Integer.parseInt(d2.substring(3, 5));
+
+        if (month1 > month2)
+        {
+            return 1;
+        }
+
+        if (month1 < month2)
+        {
+            return -1;
+        }
+
+        int day1 = Integer.parseInt(d1.substring(0, 2));
+        int day2 = Integer.parseInt(d2.substring(0, 2));
+
+        if (day1 < day2)
+        {
+            return -1;
+        }
+
+        if (day1 > day2)
+        {
+            return 1;
+        }
+
+        return 0;
     }
 
     public static ArrayList<User> getAllUsers()
@@ -320,15 +421,15 @@ public class Database
     {
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat dateF1= new SimpleDateFormat("26-01-2016");
+        SimpleDateFormat dateF1 = new SimpleDateFormat("26-01-2016");
         String sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
                 + "VALUES ( 'Paul', 'email@email.com', '888444', '" + dateF.format(new Date(System.currentTimeMillis())) + "','" + timeF.format(new Date(System.currentTimeMillis()))
                 + "', 5, null, 0  );";
         executeCommand(sql);
-         String sql1 = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
+        String sql1 = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
                 + "VALUES ( 'Robert', 'eemail@email.com', '888447', '" + dateF1.format(new Date()) + "','" + timeF.format(new Date(System.currentTimeMillis()))
                 + "', 5, null, 0  );";
-         executeCommand(sql1);
+        executeCommand(sql1);
         System.out.println("\nRecord created successfully");
     }
 
