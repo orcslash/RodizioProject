@@ -6,12 +6,12 @@
 package beans;
 
 import Services.Database;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.faces.bean.ManagedProperty;
 import model.Reservation;
@@ -28,6 +28,28 @@ public class StaffBean implements Serializable
     @ManagedProperty(value = "#{resBean}")
     private ReservationBean resBean;
 
+    private Reservation reservation;
+    private ArrayList<Reservation> reservations;
+    private Date date;
+    private String tableTitle;
+
+    public String deleteReservation(Reservation res)
+    {
+        Database.deleteReservation(res);
+        getAllReservations();
+        return null;
+    }
+
+    public String getTableTitle()
+    {
+        return tableTitle;
+    }
+
+    public void setTableTitle(String tableTitle)
+    {
+        this.tableTitle = tableTitle;
+    }
+
     public ReservationBean getResBean()
     {
         return resBean;
@@ -36,17 +58,6 @@ public class StaffBean implements Serializable
     public void setResBean(ReservationBean resBean)
     {
         this.resBean = resBean;
-    }
-
-    private Reservation reservation;
-    private ArrayList<Reservation> reservations;
-    private Date date;
-
-    public String deleteReservation(Reservation res)
-    {
-        Database.deleteReservation(res);
-        getAllReservations();
-        return null;
     }
 
     public String saveReservation(Reservation res)
@@ -76,15 +87,16 @@ public class StaffBean implements Serializable
         this.reservation = reservation;
     }
 
-    public Reservation getRes()
+    public void getTodaysReservations()
     {
-        return new Reservation("Lukas", "email", "8888", "04-11-2015", "11:00", 0, null, true);
+        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
+        String today = dateF.format(new Date(System.currentTimeMillis()));
+        reservations = Database.getReservationsByDate(today);
     }
 
-    public ArrayList<Reservation> getAllReservations()
+    public void getAllReservations()
     {
         reservations = Database.getAllReservations();
-        return reservations;
     }
 
     public String createReservation()
@@ -102,13 +114,13 @@ public class StaffBean implements Serializable
         resBean = new ReservationBean();
         // for testing only
 
-        Database.dropReservationTable();
-        Database.createReservationsTable();
-       for (int i = 0; i < 15; i++)
-       {
-            Database.addDummyValues();
-        }
-        getAllReservations();
+//        Database.dropReservationTable();
+//        Database.createReservationsTable();
+//       for (int i = 0; i < 15; i++)
+//       {
+//            Database.addDummyValues();
+//        }
+        getTodaysReservations();
     }
 
     public ArrayList<Reservation> getReservations()
@@ -116,30 +128,23 @@ public class StaffBean implements Serializable
         return reservations;
     }
 
-    public void setReservations(ArrayList<Reservation> reservations)
+    public Date getDate()
     {
-        this.reservations = reservations;
-    }
-
-    public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Date date)
+    {
         this.date = date;
     }
-    
-     public void search(){    
-          SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
-          reservations.clear();
-          if(date!=null)
-          {             
-          reservations=Database.getAllReservations(sdf.format(date));
-          }
-          else
-          {
-          reservations=Database.getAllReservations();
-          }
-     }
+
+    public void search()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        if (date != null)
+        {
+            reservations = Database.getReservationsByDate(sdf.format(date));
+        }
+    }
 
 }

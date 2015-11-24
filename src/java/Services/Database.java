@@ -117,7 +117,7 @@ public class Database
     {
         return reservationQuery("SELECT * FROM RESERVATIONS;");
     }
-    public static ArrayList<Reservation> getAllReservations(String date)
+    public static ArrayList<Reservation> getReservationsByDate(String date)
     {
     return reservationQuery("SELECT * FROM RESERVATIONS WHERE DATE= '" + date+"' ");
     }

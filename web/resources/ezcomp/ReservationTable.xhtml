@@ -8,7 +8,6 @@
     <!-- INTERFACE -->
     <cc:interface>
         <cc:attribute name="reservations" type="java.util.ArrayList"/>
-        <cc:attribute name="title" type="String"/>
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -21,7 +20,7 @@
                          styleClass="table table-hover  table-responsive">
 
                 <!--Table name-->
-                <f:facet  name="caption">All the reservations</f:facet>
+                <f:facet  name="caption">#{staff.tableTitle}</f:facet>
 
                 <!--Declaration of columns with headers-->
                 <!--ID not editable-->

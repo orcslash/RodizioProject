@@ -10,7 +10,8 @@ and open the template in the editor.
       xmlns:ez="http://java.sun.com/jsf/composite/ezcomp"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <head>
         <title></title>
@@ -37,17 +38,28 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
-                <h:form id="form">
-                    <h:panelGrid columns="4" cellpadding="2">
-                        <h:outputLabel value="Date: "/>
-                        <h:inputText styleClass="form-control datepicker" value="#{staff.date}">
-                            <f:convertDateTime pattern="dd-MM-yyyy" />
-                        </h:inputText>     
-                        <p:commandButton value="Search" actionListener="#{staff.search()}"/>
-                    </h:panelGrid>
+
+                <h:form id="form" >
+                    <table>
+                        <td>
+                            <p:commandButton   value="#{msgs.today}" actionListener="#{staff.getTodaysReservations()}"/>
+                        </td>
+                        <td>
+                            <p:commandButton  value="#{msgs.allReservations}" actionListener="#{staff.getAllReservations()}"/>
+                        </td>
+                        <td>
+                            <h:inputText   a:placeholder="#{msgs.seldate}" styleClass="form-control datepicker" value="#{staff.date}"  >
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:inputText>
+                        </td>
+                        <td>
+                            <p:commandButton  value="#{msgs.search}" actionListener="#{staff.search()}"/>
+                        </td>
+                    </table>
                 </h:form>
+
                 <p:outputPanel autoUpdate="true">
-                    <ez:ReservationTable reservations="#{staff.reservations}" title="#{msgs.allReservations}"/>
+                    <ez:ReservationTable reservations="#{staff.reservations}" />
                 </p:outputPanel>
             </ui:define>
         </ui:composition>
