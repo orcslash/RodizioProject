@@ -24,6 +24,19 @@ public class Reservation
     private boolean editable;
     private boolean edited;
 
+    public Reservation(Reservation o)
+    {
+        this.name = o.getName();
+        email = o.getEmail();
+        date = o.getDate();
+        time = o.getTime();
+        people = o.getPeople();
+        additionalNotes = o.getAdditionalNotes();
+        isBirthday = o.isIsBirthday();
+        phoneNum = o.getPhoneNum();
+        id = o.getId();
+    }
+
     public boolean isEditable()
     {
         return editable;

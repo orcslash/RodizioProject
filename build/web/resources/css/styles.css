@@ -120,6 +120,13 @@ td
 }
 
 
+/*this is a bad workaround but I really don't feel like refactoring this right now*/
+#accordionWrapperLU
+{
+    width: 30%;
+    margin: 50px auto;
+}
+
 #accordionWrapper  #accordion {
     width: 80%;
     margin: 50px auto;
@@ -133,6 +140,13 @@ td
     border: none;
     outline: none;
 }
+
+#accordionWrapperLU .accordion .ui-accordion-header, .noStyleAccordion .ui-accordion-content {
+    padding: 0;
+    background: none;
+    border: none;
+    outline: none;
+}
 :focus, :active {
     outline: 0;
 }
@@ -141,6 +155,20 @@ td
     outline: black;
 }
 
+#accordionWrapperLU .accordion  .ui-accordion-icons .ui-state-active
+{
+    outline: black;
+}
+
+
+
+#accordionWrapperLU  .ui-accordion .ui-accordion-header
+{
+    background-color: #F7941E;
+    height: 35px;
+    padding-top: 10px;
+
+}
 #accordionWrapper  .ui-accordion .ui-accordion-header
 {
     background-color: #F7941E;
@@ -148,9 +176,15 @@ td
     padding-top: 10px;
 
 }
+
+#accordionWrapperLU .ui-accordion .ui-accordion-content
+{
+    background: gray;
+    outline: none;
+    border: none;
+}
 #accordionWrapper .ui-accordion .ui-accordion-content
 {
-    background-color: pink;
     background: gray;
     outline: none;
     border: none;

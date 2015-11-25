@@ -5,15 +5,39 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
     <head>
-        <title>IGNORED</title>
+        <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div>
-            FOUND!
 
-        </div>
+        <!--use the template-->
+        <ui:composition template="MainLayout.xhtml">
+
+            <!--define the title from messages-->
+            <ui:define name="title">
+                #{msgs.lookup}
+            </ui:define>
+
+            <!--add the form that is saved as a custom component in a different file-->
+            <ui:define name="content">
+
+                <ezcomp:reservationForm reservation="#{lookup.res}"
+                                        bean="#{lookup}">
+                    <h:commandButton class="btn btn-secondary" value="#{msgs.delete}" action="#{lookup.delete()}"/>
+                    &#160;
+                    <h:commandButton class="btn btn-secondary" value="#{msgs.cancel}" action="#{lookup.cancel()}"/>
+                </ezcomp:reservationForm>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
     </body>
 </html>

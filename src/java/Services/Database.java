@@ -49,6 +49,7 @@ public class Database
 
     public static Reservation getReservationByIdAndMail(int id, String email)
     {
+        System.out.println("DB SEARCH ");
         ArrayList<Reservation> reserv = reservationQuery("SELECT * FROM RESERVATIONS WHERE ID=" + id + " AND EMAIL=" + "'" + email + "'");
         if (reserv.isEmpty())
         {
@@ -101,10 +102,10 @@ public class Database
 
     public static void updateReservation(Reservation res)
     {
-        executeCommand("UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "' ,PHONE='" + res.getPhoneNum()
+        executeCommand("UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "',PHONE='" + res.getPhoneNum()
                 + "',DATE='" + res.getDate() + "',TIME='" + res.getTime() + "',AMOUNT='" + res.getPeople()
-                + "',NOTES='" + res.getAdditionalNotes() + "',BDAY='" + (res.isIsBirthday() ? 1 : 0)
-                + "' WHERE ID=" + res.getId()
+                + "',NOTES=" + (res.getAdditionalNotes() == null ? " null " : "'" + res.getAdditionalNotes() + "'") + ",BDAY='" + (res.isIsBirthday() ? 1 : 0)
+                + "' WHERE ID=" + res.getId() + ";"
         );
     }
 
@@ -284,7 +285,6 @@ public class Database
             ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid() AS id;");
 
             id = rs.getInt("id");
-            System.out.println("returned id " + id);
 
             stmt.close();
             c.commit();

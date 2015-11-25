@@ -40,6 +40,11 @@ public class ReservationBean implements Serializable
         this.id = id;
     }
 
+    public String submit()
+    {
+        return "submit";
+    }
+
     @Override
     public String toString()
     {
@@ -63,7 +68,6 @@ public class ReservationBean implements Serializable
         id = Database.createReservation(new Reservation(name, email, phoneNum, date, time, people, additionalNotes, isBirthday));
         resetValues();
 
-//        Database.dumpReservationTable();
         return "success";
 
     }

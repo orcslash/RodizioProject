@@ -1,39 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <head>
-        <title>IGNORED</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <ui:composition>
 
-            <h:form prependId="false">
-                <table>
-                    <tr>
-                        <td>#{msgs.id}: </td>
-                        <td><h:inputText id="id" value="#{lookup.id}" styleClass="form-control" /></td>
-                    </tr>
-                    <tr>
-                        <td>#{msgs.email}: </td>
-                        <td><h:inputText id="email" value="#{lookup.email}" styleClass="form-control"/></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h:commandButton class="btn btn-secondary" value="Search" action="#{lookup.lookup()}"/>
-                            <h:outputText value="#{msgs.resNotFound}" rendered="#{lookup.notFound}"  />
-                        </td>
-                    </tr>
-                </table>
-            </h:form>
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
 
-        </ui:composition>
-    </body>
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form prependId="false">
+            <table>
+                <tr>
+                    <td>#{msgs.id}: </td>
+                    <td><h:inputText id="id" value="#{lookup.id}" styleClass="form-control" /></td>
+                </tr>
+                <tr>
+                    <td>#{msgs.email}: </td>
+                    <td><h:inputText id="email" value="#{lookup.email}" styleClass="form-control"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:commandButton class="btn btn-secondary" value="Search" action="#{lookup.lookup()}"/>
+                        <h:outputText value="#{msgs.resNotFound}" rendered="#{lookup.notFound}"  />
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </cc:implementation>
 </html>

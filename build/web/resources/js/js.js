@@ -1,19 +1,19 @@
 function hide(name)
 {
-       $(name).css({
-           display:"none"
-       });
-        
-    
+    $(name).css({
+        display: "none"
+    });
+
+
 }
 /* global SPAN, dataMessage, none */
 
 $(function () {
-    $("#accordion").accordion({
+    $(".accordion").accordion({
         active: false,
         collapsible: true
     });
-    $("#accordion").accordion({
+    $(".accordion").accordion({
         heightStyle: "content",
         autoHeight: false,
         clearStyle: true

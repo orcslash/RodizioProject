@@ -7,11 +7,8 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ez="http://java.sun.com/jsf/composite/ezcomp"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
     <head>
         <title></title>
@@ -28,41 +25,15 @@ and open the template in the editor.
             <!--add the list that is saved as a custom component in a different file-->
             <ui:define name="content" >
 
-                <div id="accordionWrapper">
-                    <div id="accordion" class="accordion">
-                        <h3>#{msgs.addNew}</h3>
-                        <div class="accordion_content" >
+                <ez:Accordion
+                    accordionID="accordion"
+                    wrapperId="accordionWrapper"
+                    title="#{msgs.addNew}">
 
-                            <!--new res form-->
-                            <ez:inlineNewResForm />
-                        </div>
-                    </div>
-                </div>
+                    <ez:inlineNewResForm />
+                </ez:Accordion>
 
-                <h:form id="form" >
-                    <table>
-                        <td>
-                            <p:commandButton   value="#{msgs.past}" actionListener="#{staff.getPastReservations()}"/>
-                        </td>
-                        <td>
-                            <p:commandButton   value="#{msgs.future}" actionListener="#{staff.getFutureReservations()}"/>
-                        </td>
-                        <td>
-                            <p:commandButton   value="#{msgs.today}" actionListener="#{staff.getTodaysReservations()}"/>
-                        </td>
-                        <td>
-                            <p:commandButton  value="#{msgs.allReservations}" actionListener="#{staff.getAllReservations()}"/>
-                        </td>
-                        <td>
-                            <h:inputText   a:placeholder="#{msgs.seldate}" styleClass="form-control datepicker" value="#{staff.date}"  >
-                                <f:convertDateTime pattern="dd-MM-yyyy" />
-                            </h:inputText>
-                        </td>
-                        <td>
-                            <p:commandButton  value="#{msgs.search}" actionListener="#{staff.search()}"/>
-                        </td>
-                    </table>
-                </h:form>
+                <ez:reservationTableNavigation/>
 
                 <p:outputPanel autoUpdate="true">
                     <ez:ReservationTable reservations="#{staff.reservations}" />
