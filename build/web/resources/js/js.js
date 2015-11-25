@@ -25,10 +25,18 @@ $(function () {
  */
 $(function ()
 {
-    $('.datepicker').datepicker(
-            {
-                dateFormat: "dd-mm-yy"
-            });
+    var dp_now = new Date();
+    var dp_today = new Date(dp_now.getFullYear(), dp_now.getMonth(), dp_now.getDate());
+    $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        minDate: dp_today,
+        maxDate: '+3m'
+    });
+
+
+    $('.datepicker1').datepicker({
+        format: 'dd-mm-yyyy'
+    });
 
     // min and max selectable time
     $('.timepicker').timepicker({
