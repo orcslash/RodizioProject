@@ -19,7 +19,6 @@ body {
 }
 #wrapper
 {
-    /*display: table;*/
     min-height:100%;
     position:relative;
     min-width:100%;
@@ -120,7 +119,6 @@ td
 }
 
 
-/*this is a bad workaround but I really don't feel like refactoring this right now*/
 #accordionWrapperLU
 {
     width: 30%;
@@ -217,8 +215,6 @@ td
     max-height: auto;
 
 }
-
-
 
 .validateMessage
 {

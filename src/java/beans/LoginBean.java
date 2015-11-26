@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import Services.Authentification;
@@ -11,10 +6,6 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import model.User;
 
-/**
- *
- * @author L
- */
 @Named(value = "login")
 @SessionScoped
 public class LoginBean implements Serializable
@@ -24,11 +15,6 @@ public class LoginBean implements Serializable
     private String userPass;
     private User currentUser;
 
-    /**
-     * Validates user input
-     *
-     * @return
-     */
     public String validateUser()
     {
         if (userName.length() == 0 || userPass.length() == 0)
@@ -72,9 +58,6 @@ public class LoginBean implements Serializable
         this.userPass = userPass;
     }
 
-    /**
-     * Creates a new instance of LoginBean
-     */
     public LoginBean()
     {
 

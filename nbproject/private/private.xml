@@ -12,6 +12,8 @@
             <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/index.xhtml</file>
             <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/resources/ezcomp/ReservationTable.xhtml</file>
         </group>
-        <group name="DIP projects"/>
+        <group name="DIP projects">
+            <file>file:/C:/Users/L/Documents/GitHub/RodizioProject/web/resources/ezcomp/reservationForm.xhtml</file>
+        </group>
     </open-files>
 </project-private>

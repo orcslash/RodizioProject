@@ -12,10 +12,6 @@ import java.util.Date;
 import model.Reservation;
 import model.User;
 
-/**
- *
- * @author L
- */
 public class Database
 {
 
@@ -23,13 +19,6 @@ public class Database
     static Statement stmt = null;
     private static final String CONNECTION = "jdbc:sqlite:RodizioDB.db";
 
-    /*
-    If  this is not working for you, you need to add SQLITE libarary to your libraries.
-    Get the latest one from here https://bitbucket.org/xerial/sqlite-jdbc/downloads
-    More thorough instructions here - http://www.tutorialspoint.com/sqlite/sqlite_java.htm
-    To make a new database file, if it's not passed with git or if you dropped the tables,
-    uncomment createTable();
-     */
     public static void main(String[] args)
     {
 //        dropReservationTable();
@@ -61,12 +50,6 @@ public class Database
         }
     }
 
-    /**
-     * Checks if user is in the database
-     *
-     * @param user
-     * @return
-     */
     public static User checkUser(User user)
     {
         ArrayList<User> usrs = userQuery("SELECT * FROM USERS WHERE NAME ='" + user.getName() + "' AND PASSWORD = '" + user.getPassword()
@@ -109,11 +92,6 @@ public class Database
         );
     }
 
-    /**
-     * Returns all the reservations from the DB
-     *
-     * @return
-     */
     public static ArrayList<Reservation> getAllReservations()
     {
         return reservationQuery("SELECT * FROM RESERVATIONS;");
@@ -136,7 +114,6 @@ public class Database
 
     /**
      * @param pastOrFuture "past" for past reservations, "future" for future
-     * @return
      */
     public static ArrayList<Reservation> getPastOrFutureReservations(String pastOrFuture)
     {
@@ -172,13 +149,6 @@ public class Database
         return false;
     }
 
-    /**
-     * Compares two string-dates
-     *
-     * @param d1
-     * @param d2
-     * @return
-     */
     private static int compareDates(String d1, String d2)
     {
         int year1 = Integer.parseInt(d1.substring(6));
@@ -229,13 +199,6 @@ public class Database
         return userQuery("SELECT * FROM USERS;");
     }
 
-    /**
-     * Creates reservation in the DB returns the ID of the newly created
-     * reservation
-     *
-     * @param res
-     * @return
-     */
     public static int createReservation(Reservation res)
     {
         String query = " '" + res.getName() + "',"
@@ -250,11 +213,6 @@ public class Database
         return insert(query);
     }
 
-    /**
-     * Executes the query and inserts values
-     *
-     * @param query
-     */
     private static int insert(String query)
     {
 
@@ -297,9 +255,6 @@ public class Database
         return id;
     }
 
-    /**
-     * Creates a new reservations table
-     */
     public static void createReservationsTable()
     {
         String sql = "CREATE TABLE IF NOT EXISTS RESERVATIONS "
@@ -317,9 +272,6 @@ public class Database
         System.out.println("\nTable created successfully");
     }
 
-    /**
-     * Prints all the reservations returned from the DB
-     */
     public static void dumpReservationTable()
     {
         for (Reservation r : getAllReservations())
@@ -336,12 +288,6 @@ public class Database
         }
     }
 
-    /**
-     * Prints all the values of the reservations table
-     *
-     * @param query
-     * @return
-     */
     public static ArrayList<Reservation> reservationQuery(String query)
     {
         ArrayList<Reservation> reservations = new ArrayList<>();
@@ -414,9 +360,6 @@ public class Database
         return users;
     }
 
-    /**
-     * Adds dummy values to the table
-     */
     public static void addDummyValues()
     {
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
@@ -433,17 +376,11 @@ public class Database
         System.out.println("\nRecord created successfully");
     }
 
-    /**
-     * Drops the reservation table
-     */
     public static void dropReservationTable()
     {
         dropTable("reservations");
     }
 
-    /**
-     * Drops the user table
-     */
     public static void dropUserTable()
     {
         dropTable("users");

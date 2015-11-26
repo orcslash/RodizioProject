@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import Services.Database;
@@ -11,10 +6,6 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import model.Reservation;
 
-/**
- *
- * @author L
- */
 @Named(value = "reservation")
 @SessionScoped
 public class ReservationBean implements Serializable
@@ -74,8 +65,6 @@ public class ReservationBean implements Serializable
 
     /**
      * checks if all the required fields are not null or empty
-     *
-     * @return
      */
     private boolean validate()
     {
@@ -192,9 +181,6 @@ public class ReservationBean implements Serializable
         this.phoneNum = phoneNum;
     }
 
-    /**
-     * Creates a new instance of ReservationBean
-     */
     public ReservationBean()
     {
         // try to create new table

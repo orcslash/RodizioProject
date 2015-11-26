@@ -6,13 +6,11 @@
 package beans;
 
 import Services.Database;
-import static Services.Database.getPastReservations;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import javax.faces.bean.ManagedProperty;
 import model.Reservation;
@@ -117,9 +115,6 @@ public class StaffBean implements Serializable
         return null;
     }
 
-    /**
-     * Creates a new instance of StaffBean
-     */
     public StaffBean()
     {
         resBean = new ReservationBean();
