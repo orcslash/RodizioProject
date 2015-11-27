@@ -38,7 +38,6 @@ public class Database
 
     public static Reservation getReservationByIdAndMail(int id, String email)
     {
-        System.out.println("DB SEARCH ");
         ArrayList<Reservation> reserv = reservationQuery("SELECT * FROM RESERVATIONS WHERE ID=" + id + " AND EMAIL=" + "'" + email + "'");
         if (reserv.isEmpty())
         {
@@ -256,7 +255,6 @@ public class Database
             stmt = c.createStatement();
 
             // insert values in the DB
-            System.out.println(command);
             stmt.executeUpdate(command);
 
             // return the ID of the last inserted record
@@ -288,8 +286,6 @@ public class Database
                 + " NOTES        TEXT, "
                 + " BDAY        BOOLEAN NOT NULL)";
         executeCommand(sql);
-
-        System.out.println("\nTable created successfully");
     }
 
     public static void dumpReservationTable()
@@ -332,7 +328,7 @@ public class Database
         } catch (ClassNotFoundException | SQLException e)
         {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            throw new SqlException();
         }
         return reservations;
     }
@@ -380,7 +376,7 @@ public class Database
         } catch (ClassNotFoundException | SQLException e)
         {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            throw new SqlException(); //            System.exit(0);
         }
         return users;
     }
@@ -398,7 +394,6 @@ public class Database
                 + "VALUES ( 'Robert', 'eemail@email.com', '888447', '" + dateF1.format(new Date()) + "','" + timeF.format(new Date(System.currentTimeMillis()))
                 + "', 5, null, 0  );";
         executeCommand(sql1);
-        System.out.println("\nRecord created successfully");
     }
 
     public static void dropReservationTable()
@@ -415,6 +410,10 @@ public class Database
     {
         String sql = "DROP TABLE IF EXISTS " + table;
         executeCommand(sql);
-        System.out.println("\nTable dropped");
+    }
+
+    public static class SqlException extends RuntimeException
+    {
+
     }
 }
