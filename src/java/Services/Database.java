@@ -121,8 +121,8 @@ public class Database
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
         String today = dateF.format(new Date(System.currentTimeMillis()));
         ArrayList<Reservation> tmp = getAllReservations();
-
         ArrayList<Reservation> pastReservations = new ArrayList<>();
+
         for (Reservation r : tmp)
         {
             System.out.print(r);
@@ -151,22 +151,25 @@ public class Database
 
     private static int compareDates(String d1, String d2)
     {
-        int year1 = Integer.parseInt(d1.substring(6));
-        int year2 = Integer.parseInt(d2.substring(6));
+        if (d1.equals(d2))
+        {
+            return 0;
+        }
+
+        int year1 = parseYear(d1);
+        int year2 = parseYear(d2);
 
         if (year1 > year2)
         {
-            System.out.print("year " + 1);
             return 1;
         }
         if (year1 < year2)
         {
-            System.out.print("year " + (-1));
             return -1;
         }
 
-        int month1 = Integer.parseInt(d1.substring(3, 5));
-        int month2 = Integer.parseInt(d2.substring(3, 5));
+        int month1 = parseMonth(d1);
+        int month2 = parseMonth(d2);
 
         if (month1 > month2)
         {
@@ -178,8 +181,8 @@ public class Database
             return -1;
         }
 
-        int day1 = Integer.parseInt(d1.substring(0, 2));
-        int day2 = Integer.parseInt(d2.substring(0, 2));
+        int day1 = parseDay(d1);
+        int day2 = parseDay(d2);
 
         if (day1 < day2)
         {
@@ -190,8 +193,25 @@ public class Database
         {
             return 1;
         }
-
         return 0;
+    }
+
+    private static int parseDay(String d1) throws NumberFormatException
+    {
+        int day1 = Integer.parseInt(d1.substring(0, 2));
+        return day1;
+    }
+
+    private static int parseMonth(String d1) throws NumberFormatException
+    {
+        int month1 = Integer.parseInt(d1.substring(3, 5));
+        return month1;
+    }
+
+    private static int parseYear(String date) throws NumberFormatException
+    {
+        int year = Integer.parseInt(date.substring(6));
+        return year;
     }
 
     public static ArrayList<User> getAllUsers()
@@ -302,18 +322,7 @@ public class Database
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next())
             {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String date = rs.getString("date");
-                String time = rs.getString("time");
-                int amount = rs.getInt("amount");
-                String notes = rs.getString("notes");
-                boolean bday = rs.getBoolean("bday");
-
-                Reservation tmp = new Reservation(name, email, phone, date, time, amount, notes, bday);
-                tmp.setId(id);
+                Reservation tmp = parseReservationValues(rs);
                 reservations.add(tmp);
             }
 
@@ -326,6 +335,22 @@ public class Database
             System.exit(0);
         }
         return reservations;
+    }
+
+    private static Reservation parseReservationValues(ResultSet rs) throws SQLException
+    {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String email = rs.getString("email");
+        String phone = rs.getString("phone");
+        String date = rs.getString("date");
+        String time = rs.getString("time");
+        int amount = rs.getInt("amount");
+        String notes = rs.getString("notes");
+        boolean bday = rs.getBoolean("bday");
+        Reservation tmp = new Reservation(name, email, phone, date, time, amount, notes, bday);
+        tmp.setId(id);
+        return tmp;
     }
 
     public static ArrayList<User> userQuery(String query)

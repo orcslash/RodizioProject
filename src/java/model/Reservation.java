@@ -203,7 +203,9 @@ public class Reservation
     @Override
     public String toString()
     {
-        return "Reservation{" + "name=" + name + ", email=" + email + ", date=" + date + ", time=" + time + ", people=" + people + ", additionalNotes=" + additionalNotes + ", isBirthday=" + isBirthday + ", phoneNum=" + phoneNum + ", id=" + id + ", editable=" + editable + ", edited=" + edited + '}';
+        return "Reservation{" + "name=" + name + ", email=" + email + ", date=" + date + ", time=" + time + ", people="
+                + people + ", additionalNotes=" + additionalNotes + ", isBirthday=" + isBirthday + ", phoneNum=" + phoneNum
+                + ", id=" + id + ", editable=" + editable + ", edited=" + edited + '}';
     }
 
 }

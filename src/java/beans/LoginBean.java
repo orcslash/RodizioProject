@@ -1,6 +1,7 @@
 package beans;
 
 import Services.Authentification;
+import Services.Session;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -23,19 +24,29 @@ public class LoginBean implements Serializable
         }
         if ((currentUser = Authentification.authenticate(new User(userName, userName))) != null)
         {
+            Session.getSession().setAttribute("username", currentUser.getName());
             return "confirmed";
         }
         return null;
     }
 
+    public String logout()
+    {
+        Session.getSession().invalidate();
+        resetFields();
+        return "login";
+    }
+
+    private void resetFields()
+    {
+        this.userName = null;
+        this.currentUser = null;
+        this.userPass = null;
+    }
+
     public User getCurrentUser()
     {
         return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser)
-    {
-        this.currentUser = currentUser;
     }
 
     public String getUserName()
@@ -60,7 +71,6 @@ public class LoginBean implements Serializable
 
     public LoginBean()
     {
-
 //        Database.createUserTable();
 //        ArrayList<User> users = new ArrayList<>();
 //        users.add(new User("admin", "admin"));

@@ -10,6 +10,7 @@
     <cc:interface>
         <cc:attribute name="reservation"/>
         <cc:attribute name="bean"/>
+        <cc:attribute name="title"/>
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -17,7 +18,7 @@
 
         <div class="form">
             <h:form prependId="false">
-                <h3>#{msgs.title}</h3>
+                <h3>#{cc.attrs.title}</h3>
                 <table  id="newResForm">
                     <tr>
                         <td>

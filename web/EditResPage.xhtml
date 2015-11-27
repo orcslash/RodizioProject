@@ -19,7 +19,8 @@
             <ui:define name="content">
 
                 <ezcomp:reservationForm reservation="#{lookup.res}"
-                                        bean="#{lookup}">
+                                        bean="#{lookup}"
+                                        title="#{msgs.editRes}">
                     <h:commandButton class="btn btn-secondary" value="#{msgs.delete}" action="#{lookup.delete()}"/>
                     &#160;
                     <h:commandButton class="btn btn-secondary" value="#{msgs.cancel}" action="#{lookup.cancel()}"/>
