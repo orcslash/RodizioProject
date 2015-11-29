@@ -1,3 +1,6 @@
+
+
+
 function hide(name)
 {
     $(name).css({
@@ -6,6 +9,17 @@ function hide(name)
 
 
 }
+
+function show(nam)
+{
+    $(nam).css({
+        display: "table-row"
+    });
+
+
+}
+
+
 /* global SPAN, dataMessage, none */
 
 $(function () {

@@ -2,18 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/StaffPage.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/resources/ezcomp/reservationForm.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/resources/js/js.js</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/resources/ezcomp/inlineNewResForm.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/resources/ezcomp/LookupForm.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/resources/ezcomp/loginForm.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/index.xhtml</file>
-            <file>file:/C:/Users/Mikolaj/Desktop/lessons/dip/RodizioProject/web/resources/ezcomp/ReservationTable.xhtml</file>
-        </group>
         <group name="DIP projects">
             <file>file:/C:/Users/L/Documents/GitHub/RodizioProject/web/resources/ezcomp/reservationForm.xhtml</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Mikolaj/Desktop/pr/RodizioProject/web/StaffPage.xhtml</file>
+            <file>file:/C:/Users/Mikolaj/Desktop/pr/RodizioProject/src/java/beans/LoginBean.java</file>
         </group>
     </open-files>
 </project-private>

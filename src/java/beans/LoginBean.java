@@ -1,10 +1,12 @@
 package beans;
 
 import Services.Authentification;
+import Services.Database;
 import Services.Session;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import model.User;
 
 @Named(value = "login")
@@ -71,18 +73,17 @@ public class LoginBean implements Serializable
 
     public LoginBean()
     {
-//        Database.createUserTable();
-//        ArrayList<User> users = new ArrayList<>();
-//        users.add(new User("admin", "admin"));
-//        users.add(new User("admin1", "admin"));
-//        users.add(new User("admin2", "admin"));
-//        users.add(new User("admin3", "admin"));
-//        users.add(new User("qq", "qq"));
-//
-//        for (User u : users)
-//        {
-//            Database.insertUser(u);
-//        }
+ //      Database.createUserTable();
+ //      ArrayList<User> users = new ArrayList<>();
+  //      users.add(new User("admin", "admin"));
+    //    users.add(new User("admin1", "admin"));
+    //    users.add(new User("admin2", "admin"));
+   //    users.add(new User("admin3", "admin"));
+     //   users.add(new User("qq", "qq"));
+    //   for (User u : users)
+    //   {
+    //       Database.insertUser(u);
+    //    }
     }
 
 }

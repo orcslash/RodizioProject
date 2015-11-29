@@ -247,6 +247,12 @@ td
     margin-left: 30px;
 }
 
+.logoutbtn
+{
+   padding: 0px;
+   margin: 0px;
+}
+
 
 
 /*all the available settings for accordion*/

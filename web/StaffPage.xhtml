@@ -11,13 +11,13 @@
     </head>
     <body>
         <ui:composition template="MainLayout.xhtml">
-
+      
             <ui:define name="title">
                 #{msgs.staffPage}
             </ui:define>
 
-            <ui:define name="headerChild">
-                <h:form prependId="false">
+            <ui:define name="headerChild" >
+                <h:form prependId="false" >
                     <h:commandButton value="#{msgs.logout}" action="#{login.logout()}" id="logoutButton" styleClass="btn logoutbtn"/>
                 </h:form>
             </ui:define>
