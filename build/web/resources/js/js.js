@@ -42,14 +42,14 @@ $(function ()
     var dp_now = new Date();
     var dp_today = new Date(dp_now.getFullYear(), dp_now.getMonth(), dp_now.getDate());
     $('.datepicker').datepicker({
-        format: 'dd-mm-yyyy',
+        dateFormat: 'dd-mm-yy',
         minDate: dp_today,
         maxDate: '+3m'
     });
 
 
     $('.datepicker1').datepicker({
-        format: 'dd-mm-yyyy'
+        dateFormat: 'dd-mm-yy'
     });
 
     // min and max selectable time
