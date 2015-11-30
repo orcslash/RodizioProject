@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Reservation;
+import model.User;
 
 public class SQLiteDatabase extends RodizioDatabase
 {
@@ -36,7 +37,7 @@ public class SQLiteDatabase extends RodizioDatabase
         sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
-        return updateDatabaseWithPreparedStmnt(sql, res);
+        return updateDatabaseWithPreparedStmnt(res);
     }
 
     @Override
@@ -106,21 +107,21 @@ public class SQLiteDatabase extends RodizioDatabase
         updateDatabase(sql);
     }
 
-    private int updateDatabaseWithPreparedStmnt(String sql, Reservation res)
+    private int updateDatabaseWithPreparedStmnt(Reservation res)
     {
         createConnection();
-        int id = executeReservationInsert(sql, res);
+        int id = executeReservationInsert(res);
         closeConnection();
 
         return id;
     }
 
-    private int executeReservationInsert(String sql1, Reservation res)
+    private int executeReservationInsert(Reservation res)
     {
         int id = 0;
         try
         {
-            preparedStmnt = connection.prepareStatement(sql1);
+            preparedStmnt = connection.prepareStatement(sql);
             preparedStmnt.setString(1, res.getName());
             preparedStmnt.setString(2, res.getEmail());
             preparedStmnt.setString(3, res.getPhoneNum());
@@ -140,12 +141,60 @@ public class SQLiteDatabase extends RodizioDatabase
         return id;
     }
 
+    @Override
+    public Reservation getReservationById(int id)
+    {
+        sql = "SELECT * FROM RESERVATIONS WHERE ID = " + id;
+        return reservationQuery().get(0);
+    }
+
+    @Override
+    public ArrayList<Reservation> getAllReservations()
+    {
+        sql = "SELECT * FROM RESERVATIONS";
+        return reservationQuery();
+    }
+
+    private ArrayList<Reservation> reservationQuery()
+    {
+
+        createConnection();
+        createStatement();
+
+        ArrayList<Reservation> reservations = executeReservationQuery();
+
+        closeConnection();
+        return reservations;
+    }
+
+    private ArrayList<Reservation> executeReservationQuery()
+    {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        try
+        {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
+                Reservation tmp = parseReservationValues(rs);
+                reservations.add(tmp);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return reservations;
+    }
+
     private int getLastInsertedIndex() throws SQLException
     {
         int id;
         createStatement();
         ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid() AS id;");
         id = rs.getInt("id");
+        stmt.close();
         return id;
     }
 
@@ -199,8 +248,7 @@ public class SQLiteDatabase extends RodizioDatabase
         }
     }
 
-    @Override
-    public void createConnection()
+    private void createConnection()
     {
         try
         {
@@ -211,8 +259,7 @@ public class SQLiteDatabase extends RodizioDatabase
         }
     }
 
-    @Override
-    public void closeConnection()
+    private void closeConnection()
     {
         try
         {
@@ -221,6 +268,76 @@ public class SQLiteDatabase extends RodizioDatabase
         {
             Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private Reservation parseReservationValues(ResultSet rs) throws SQLException
+    {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String email = rs.getString("email");
+        String phone = rs.getString("phone");
+        String date = rs.getString("date");
+        String time = rs.getString("time");
+        int amount = rs.getInt("amount");
+        String notes = rs.getString("notes");
+        boolean bday = rs.getBoolean("bday");
+        Reservation tmp = new Reservation(name, email, phone, date, time, amount, notes, bday);
+        tmp.setId(id);
+        return tmp;
+    }
+
+    @Override
+    public Reservation getReservationByIdAndMail(int id, String email)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Reservation> getFutureReservations()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Reservation> getPastReservations()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Reservation> getTodaysReservations()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Reservation> getReservationsByDate(String date)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateReservation(Reservation res)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteReservation(Reservation res)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<User> getAllUsers()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User checkUser(User user)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -35,25 +35,20 @@ public class TestRodizioDatabase
     @AfterClass
     public static void tearDownClass()
     {
-//        database.dropAllTables();
+        database.dropAllTables();
     }
 
     @Before
     public void setUp()
     {
         database.createAllTables();
+        insertTestReservationValues(5);
     }
 
     @After
     public void tearDown()
     {
-    }
-
-    @Test
-    public void testOpenAndCloseConnection()
-    {
-        database.createConnection();
-        database.closeConnection();
+        database.dropAllTables();
     }
 
     @Test
@@ -89,12 +84,42 @@ public class TestRodizioDatabase
     @Test
     public void testInsertReservation()
     {
+        Reservation res = prepareTestReservation();
+        assertFalse(database.insertReservation(res) == 0);
+    }
+
+    @Test
+    public void testGetReservationByID()
+    {
+        int id = database.insertReservation(prepareTestReservation());
+        Reservation tmp = database.getReservationById(id);
+        assertTrue(tmp != null);
+    }
+
+    @Test
+    public void testGetAllReservations()
+    {
+        assertTrue(database.getAllReservations().size() > 0);
+    }
+
+    private static Reservation prepareTestReservation()
+    {
         SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
-
         Reservation res = new Reservation("Test Subject", "test@test.com", "88 88 88 88", dateF.format(new Date(System.currentTimeMillis())),
                 timeF.format(new Date(System.currentTimeMillis())), 2, "", true);
-        assertFalse(database.insertReservation(res) == 0);
+        return res;
+    }
+
+    private static void insertTestReservationValues(int amount)
+    {
+        Reservation res = prepareTestReservation();
+
+        for (int i = 0; i < amount; i++)
+        {
+            database.insertReservation(res);
+        }
+
     }
 
     private static boolean tableExists(String tableName)
