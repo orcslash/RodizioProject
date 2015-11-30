@@ -13,10 +13,11 @@ import java.util.logging.Logger;
 import model.Reservation;
 import model.User;
 
-public class SQLiteDatabase extends RodizioDatabase
+public class RodizioDB extends RodizioDBAbstract
 {
 
     private final String connectionURL;
+    private final String driver;
     private Connection connection;
     private Statement stmt = null;
     private PreparedStatement preparedStmnt;
@@ -25,10 +26,11 @@ public class SQLiteDatabase extends RodizioDatabase
     /**
      * Source file has to end with .db
      */
-    public SQLiteDatabase(String sourceFile)
+    public RodizioDB(String sourceFile, String driver)
     {
+        this.driver = driver;
+        connectionURL = sourceFile;
         registerDriver();
-        connectionURL = "jdbc:sqlite:" + sourceFile;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class SQLiteDatabase extends RodizioDatabase
             }
         } catch (SQLException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return tables;
     }
@@ -136,7 +138,7 @@ public class SQLiteDatabase extends RodizioDatabase
 
         } catch (SQLException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
@@ -183,7 +185,7 @@ public class SQLiteDatabase extends RodizioDatabase
             stmt.close();
         } catch (SQLException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return reservations;
     }
@@ -215,7 +217,7 @@ public class SQLiteDatabase extends RodizioDatabase
 
         } catch (SQLException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -223,10 +225,10 @@ public class SQLiteDatabase extends RodizioDatabase
     {
         try
         {
-            Class.forName("org.sqlite.JDBC");
+            Class.forName(driver);
         } catch (ClassNotFoundException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -244,7 +246,7 @@ public class SQLiteDatabase extends RodizioDatabase
             stmt = connection.createStatement();
         } catch (SQLException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -255,7 +257,7 @@ public class SQLiteDatabase extends RodizioDatabase
             connection = DriverManager.getConnection(connectionURL);
         } catch (SQLException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -266,7 +268,7 @@ public class SQLiteDatabase extends RodizioDatabase
             connection.close();
         } catch (SQLException ex)
         {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import model.Reservation;
 import model.User;
 
-public abstract class RodizioDatabase
+public abstract class RodizioDBAbstract
 {
 
     public abstract void createReservationsTable();

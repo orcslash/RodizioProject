@@ -5,8 +5,8 @@
  */
 package test;
 
-import Services.RodizioDatabase;
-import Services.SQLiteDatabase;
+import Services.RodizioDBAbstract;
+import Services.RodizioDBFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.Reservation;
@@ -24,12 +24,12 @@ import static org.junit.Assert.*;
 public class TestRodizioDatabase
 {
 
-    private static RodizioDatabase database;
+    private static RodizioDBAbstract database;
 
     @BeforeClass
     public static void setUpClass()
     {
-        database = new SQLiteDatabase("Test.db");
+        database = RodizioDBFactory.getRodizioDB("sqlite");
     }
 
     @AfterClass
