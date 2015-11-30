@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Reservation;
 
 public class SQLiteDatabase extends RodizioDatabase
 {
@@ -30,10 +31,26 @@ public class SQLiteDatabase extends RodizioDatabase
     }
 
     @Override
+    public int insertReservation(Reservation res)
+    {
+        sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+        return updateDatabaseWithPreparedStmnt(sql, res);
+    }
+
+    @Override
     public void dropTable(String table)
     {
-        sql = "DROP TABLE " + table;
+        sql = "DROP TABLE IF EXISTS " + table;
         updateDatabase(sql);
+    }
+
+    @Override
+    public void dropAllTables()
+    {
+        dropTable("USERS");
+        dropTable("RESERVATIONS");
     }
 
     @Override
@@ -89,19 +106,64 @@ public class SQLiteDatabase extends RodizioDatabase
         updateDatabase(sql);
     }
 
+    private int updateDatabaseWithPreparedStmnt(String sql, Reservation res)
+    {
+        createConnection();
+        int id = executeReservationInsert(sql, res);
+        closeConnection();
+
+        return id;
+    }
+
+    private int executeReservationInsert(String sql1, Reservation res)
+    {
+        int id = 0;
+        try
+        {
+            preparedStmnt = connection.prepareStatement(sql1);
+            preparedStmnt.setString(1, res.getName());
+            preparedStmnt.setString(2, res.getEmail());
+            preparedStmnt.setString(3, res.getPhoneNum());
+            preparedStmnt.setString(4, res.getDate());
+            preparedStmnt.setString(5, res.getTime());
+            preparedStmnt.setInt(6, res.getPeople());
+            preparedStmnt.setString(7, res.getAdditionalNotes());
+            preparedStmnt.setBoolean(8, res.isIsBirthday());
+            preparedStmnt.executeUpdate();
+
+            id = getLastInsertedIndex();
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
+    private int getLastInsertedIndex() throws SQLException
+    {
+        int id;
+        createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid() AS id;");
+        id = rs.getInt("id");
+        return id;
+    }
+
     private void updateDatabase(String sql)
     {
         createConnection();
         createStatement();
-        executeUpdateStatement(sql);
+        executeAndCloseUpdateStatement(sql);
         closeConnection();
     }
 
-    private void executeUpdateStatement(String sql)
+    private void executeAndCloseUpdateStatement(String sql)
     {
         try
         {
             stmt.executeUpdate(sql);
+            stmt.close();
+
         } catch (SQLException ex)
         {
             Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
@@ -117,6 +179,13 @@ public class SQLiteDatabase extends RodizioDatabase
         {
             Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void createAllTables()
+    {
+        createReservationsTable();
+        createUsersTable();
     }
 
     private void createStatement()

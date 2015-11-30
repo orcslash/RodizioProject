@@ -7,6 +7,9 @@ package test;
 
 import Services.RodizioDatabase;
 import Services.SQLiteDatabase;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import model.Reservation;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,7 +21,7 @@ import static org.junit.Assert.*;
  *
  * @author L
  */
-public class TestSQLiteDB
+public class TestRodizioDatabase
 {
 
     private static RodizioDatabase database;
@@ -32,12 +35,13 @@ public class TestSQLiteDB
     @AfterClass
     public static void tearDownClass()
     {
-        dropAllTables();
+//        database.dropAllTables();
     }
 
     @Before
     public void setUp()
     {
+        database.createAllTables();
     }
 
     @After
@@ -74,14 +78,28 @@ public class TestSQLiteDB
         assertFalse(tableExists("RESERVATIONS"));
     }
 
+    @Test
+    public void testDropAllTables()
+    {
+        database.createAllTables();
+        database.dropAllTables();
+        assertTrue(database.getTableNames().isEmpty());
+    }
+
+    @Test
+    public void testInsertReservation()
+    {
+        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
+
+        Reservation res = new Reservation("Test Subject", "test@test.com", "88 88 88 88", dateF.format(new Date(System.currentTimeMillis())),
+                timeF.format(new Date(System.currentTimeMillis())), 2, "", true);
+        assertFalse(database.insertReservation(res) == 0);
+    }
+
     private static boolean tableExists(String tableName)
     {
         return database.getTableNames().contains(tableName);
     }
 
-    private static void dropAllTables()
-    {
-        database.dropTable("RESERVATIONS");
-        database.dropTable("USERS");
-    }
 }
