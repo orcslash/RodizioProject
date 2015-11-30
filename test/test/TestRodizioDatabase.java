@@ -10,6 +10,7 @@ import Services.RodizioDBFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.Reservation;
+import model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -155,6 +156,40 @@ public class TestRodizioDatabase
         res.setId(database.insertReservation(res));
         database.deleteReservation(res);
         assertTrue(database.getReservationById(res.getId()) == null);
+    }
+
+    @Test
+    public void testInsertUser()
+    {
+        User user = new User("admin", "admin");
+        database.insertUser(user);
+
+    }
+
+    @Test
+    public void testGetAllUsers()
+    {
+        insertTestUserValues(5);
+        assertTrue(database.getAllUsers().size() >= 5);
+    }
+
+    @Test
+    public void testCheckUser()
+    {
+        User user = new User("Test", "test");
+        database.insertUser(user);
+        assertTrue(database.checkUser(user) != null);
+        user.setName("TestWrong");
+        assertTrue(database.checkUser(user) == null);
+
+    }
+
+    private void insertTestUserValues(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            database.insertUser(new User("Test" + i, "test"));
+        }
     }
 
     private Reservation pastOrFutureRes(String pastOrFuture)

@@ -68,31 +68,43 @@ public class RodizioDB extends RodizioDBAbstract
         return tables;
     }
 
-    private ArrayList<String> getTableNamesFromDatabase()
+    @Override
+    public User checkUser(User user)
     {
-        ArrayList<String> tables = new ArrayList<>();
-        try
+        sql = "SELECT * FROM USERS WHERE NAME ='" + user.getName() + "' AND PASSWORD = '" + user.getPassword()
+                + "'";
+        ArrayList<User> users = userQuery();
+        if (users.isEmpty())
         {
-            DatabaseMetaData md = connection.getMetaData();
-            ResultSet rs = md.getTables(null, null, "%", null);
-            while (rs.next())
-            {
-                tables.add(rs.getString(3));
-            }
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return tables;
+        else
+        {
+            return users.get(0);
+        }
+    }
+
+    @Override
+    public void insertUser(User user)
+    {
+        sql = "INSERT INTO USERS (name, password) VALUES('" + user.getName() + "'," + "'" + user.getPassword()
+                + "')";
+        updateDatabase();
+    }
+
+    @Override
+    public void deleteUser(User user)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void createUsersTable()
     {
-        sql = "CREATE TABLE IF NOT EXISTS USERS("
-                + "id int(20)  PRIMARY KEY,"
-                + "name VARCHAR(60) UNIQUE NOT NULL, "
-                + "password VARCHAR(60) NOT NULL)";
+        sql = "CREATE TABLE IF NOT EXISTS USERS"
+                + "(ID INTEGER PRIMARY KEY,"
+                + "NAME VARCHAR(60) UNIQUE NOT NULL, "
+                + "PASSWORD VARCHAR(60) NOT NULL)";
         updateDatabase();
     }
 
@@ -112,13 +124,98 @@ public class RodizioDB extends RodizioDBAbstract
         updateDatabase();
     }
 
-    private int updateDatabaseWithPreparedStmnt(Reservation res)
+    @Override
+    public Reservation getReservationById(int id)
     {
-        createConnection();
-        int id = executeReservationInsert(res);
-        closeConnection();
+        sql = "SELECT * FROM RESERVATIONS WHERE ID = " + id;
+        ArrayList<Reservation> tmpList = reservationQuery();
+        if (tmpList.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return tmpList.get(0);
+        }
+    }
 
-        return id;
+    @Override
+    public ArrayList<Reservation> getAllReservations()
+    {
+        sql = "SELECT * FROM RESERVATIONS";
+        return reservationQuery();
+    }
+
+    @Override
+    public Reservation getReservationByIdAndMail(int id, String email)
+    {
+        Reservation res = getReservationById(id);
+        if (res == null || !res.getEmail().equals(email))
+        {
+            return null;
+        }
+        else
+        {
+            return res;
+        }
+
+    }
+
+    @Override
+    public ArrayList<Reservation> getFutureReservations()
+    {
+        return getPastOrFutureReservations("future");
+    }
+
+    @Override
+    public ArrayList<Reservation> getPastReservations()
+    {
+        return getPastOrFutureReservations("past");
+    }
+
+    @Override
+    public ArrayList<Reservation> getReservationsByDate(String date)
+    {
+        sql = "SELECT * FROM RESERVATIONS WHERE DATE= '" + date + "' ";
+        return reservationQuery();
+    }
+
+    @Override
+    public ArrayList<Reservation> getTodaysReservations()
+    {
+        return getReservationsByDate(DATEF.format(new Date()));
+    }
+
+    @Override
+    public void updateReservation(Reservation res)
+    {
+        sql = "UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "',PHONE='" + res.getPhoneNum()
+                + "',DATE='" + res.getDate() + "',TIME='" + res.getTime() + "',AMOUNT='" + res.getPeople()
+                + "',NOTES=" + (res.getAdditionalNotes() == null ? " null " : "'" + res.getAdditionalNotes() + "'") + ",BDAY='" + (res.isIsBirthday() ? 1 : 0)
+                + "' WHERE ID=" + res.getId() + ";";
+        updateDatabase();
+    }
+
+    @Override
+    public void deleteReservation(Reservation res)
+    {
+        sql = "DELETE FROM RESERVATIONS WHERE ID = " + res.getId();
+        updateDatabase();
+    }
+
+    @Override
+    public ArrayList<User> getAllUsers()
+    {
+        sql = "SELECT *  FROM USERS";
+        return userQuery();
+
+    }
+
+    @Override
+    public void createAllTables()
+    {
+        createReservationsTable();
+        createUsersTable();
     }
 
     private int executeReservationInsert(Reservation res)
@@ -146,28 +243,6 @@ public class RodizioDB extends RodizioDBAbstract
         return id;
     }
 
-    @Override
-    public Reservation getReservationById(int id)
-    {
-        sql = "SELECT * FROM RESERVATIONS WHERE ID = " + id;
-        ArrayList<Reservation> tmpList = reservationQuery();
-        if (tmpList.isEmpty())
-        {
-            return null;
-        }
-        else
-        {
-            return tmpList.get(0);
-        }
-    }
-
-    @Override
-    public ArrayList<Reservation> getAllReservations()
-    {
-        sql = "SELECT * FROM RESERVATIONS";
-        return reservationQuery();
-    }
-
     private ArrayList<Reservation> reservationQuery()
     {
 
@@ -178,6 +253,39 @@ public class RodizioDB extends RodizioDBAbstract
 
         closeConnection();
         return reservations;
+    }
+
+    private ArrayList<User> userQuery()
+    {
+
+        createConnection();
+        createStatement();
+
+        ArrayList<User> users = executeUserQuery();
+
+        closeConnection();
+        return users;
+    }
+
+    private ArrayList<User> executeUserQuery()
+    {
+        ArrayList<User> users = new ArrayList<>();
+        try
+        {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
+                User tmp = parseUserValues(rs);
+                users.add(tmp);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return users;
     }
 
     private ArrayList<Reservation> executeReservationQuery()
@@ -243,13 +351,6 @@ public class RodizioDB extends RodizioDBAbstract
         }
     }
 
-    @Override
-    public void createAllTables()
-    {
-        createReservationsTable();
-        createUsersTable();
-    }
-
     private void createStatement()
     {
         try
@@ -299,85 +400,12 @@ public class RodizioDB extends RodizioDBAbstract
         return tmp;
     }
 
-    @Override
-    public Reservation getReservationByIdAndMail(int id, String email)
+    private User parseUserValues(ResultSet rs) throws SQLException
     {
-        Reservation res = getReservationById(id);
-        if (res == null || !res.getEmail().equals(email))
-        {
-            return null;
-        }
-        else
-        {
-            return res;
-        }
-
-    }
-
-    @Override
-    public ArrayList<Reservation> getFutureReservations()
-    {
-        return getPastOrFutureReservations("future");
-    }
-
-    @Override
-    public ArrayList<Reservation> getPastReservations()
-    {
-        return getPastOrFutureReservations("past");
-    }
-
-    @Override
-    public ArrayList<Reservation> getReservationsByDate(String date)
-    {
-        sql = "SELECT * FROM RESERVATIONS WHERE DATE= '" + date + "' ";
-        return reservationQuery();
-    }
-
-    @Override
-    public ArrayList<Reservation> getTodaysReservations()
-    {
-        return getReservationsByDate(DATEF.format(new Date()));
-    }
-
-    @Override
-    public void updateReservation(Reservation res)
-    {
-        sql = "UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "',PHONE='" + res.getPhoneNum()
-                + "',DATE='" + res.getDate() + "',TIME='" + res.getTime() + "',AMOUNT='" + res.getPeople()
-                + "',NOTES=" + (res.getAdditionalNotes() == null ? " null " : "'" + res.getAdditionalNotes() + "'") + ",BDAY='" + (res.isIsBirthday() ? 1 : 0)
-                + "' WHERE ID=" + res.getId() + ";";
-        updateDatabase();
-    }
-
-    @Override
-    public void deleteReservation(Reservation res)
-    {
-        sql = "DELETE FROM RESERVATIONS WHERE ID = " + res.getId();
-        updateDatabase();
-    }
-
-    @Override
-    public ArrayList<User> getAllUsers()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public User checkUser(User user)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void insertUser(User user)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void deleteUser(User user)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String name = rs.getString("name");
+        String password = rs.getString("password");
+        User tmp = new User(name, password);
+        return tmp;
     }
 
     /**
@@ -461,6 +489,33 @@ public class RodizioDB extends RodizioDBAbstract
             return 1;
         }
         return 0;
+    }
+
+    private int updateDatabaseWithPreparedStmnt(Reservation res)
+    {
+        createConnection();
+        int id = executeReservationInsert(res);
+        closeConnection();
+
+        return id;
+    }
+
+    private ArrayList<String> getTableNamesFromDatabase()
+    {
+        ArrayList<String> tables = new ArrayList<>();
+        try
+        {
+            DatabaseMetaData md = connection.getMetaData();
+            ResultSet rs = md.getTables(null, null, "%", null);
+            while (rs.next())
+            {
+                tables.add(rs.getString(3));
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tables;
     }
 
     private int parseDay(String d1) throws NumberFormatException
