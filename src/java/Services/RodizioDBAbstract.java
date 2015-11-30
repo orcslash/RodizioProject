@@ -43,4 +43,8 @@ public abstract class RodizioDBAbstract
 
     public abstract User checkUser(User user);
 
+    public abstract void insertUser(User user);
+
+    public abstract void deleteUser(User user);
+
 }

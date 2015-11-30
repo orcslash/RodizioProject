@@ -25,6 +25,7 @@ public class TestRodizioDatabase
 {
 
     private static RodizioDBAbstract database;
+    private static final SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
 
     @BeforeClass
     public static void setUpClass()
@@ -102,9 +103,77 @@ public class TestRodizioDatabase
         assertTrue(database.getAllReservations().size() > 0);
     }
 
+    @Test
+    public void testGetReservationByIdAndMail()
+    {
+        Reservation res = prepareTestReservation();
+        res.setId(database.insertReservation(res));
+        Reservation tmp = database.getReservationByIdAndMail(res.getId(), res.getEmail());
+        assertTrue(tmp.getId() == res.getId() && tmp.getEmail().equals(res.getEmail()));
+    }
+
+    @Test
+    public void testGetFutureReservations()
+    {
+        database.insertReservation(pastOrFutureRes("future"));
+        assertTrue(database.getFutureReservations().size() > 0);
+    }
+
+    @Test
+    public void testGetPastReservations()
+    {
+        database.insertReservation(pastOrFutureRes("past"));
+        assertTrue(database.getPastReservations().size() > 0);
+    }
+
+    @Test
+    public void testGetReservationByDate()
+    {
+        assertTrue(database.getReservationsByDate(dateF.format(new Date())).size() > 0);
+    }
+
+    @Test
+    public void testGetTodaysReservations()
+    {
+        assertTrue(database.getTodaysReservations().size() > 0);
+    }
+
+    @Test
+    public void testUpdateReservation()
+    {
+        Reservation res = database.getReservationById(1);
+        res.setName("New name");
+        database.updateReservation(res);
+        Reservation tmp = database.getReservationById(res.getId());
+        assertTrue(res.getName().equals(tmp.getName()));
+    }
+
+    @Test
+    public void testDeleteReservation()
+    {
+        Reservation res = prepareTestReservation();
+        res.setId(database.insertReservation(res));
+        database.deleteReservation(res);
+        assertTrue(database.getReservationById(res.getId()) == null);
+    }
+
+    private Reservation pastOrFutureRes(String pastOrFuture)
+    {
+        Reservation res = prepareTestReservation();
+
+        if (pastOrFuture.equalsIgnoreCase("future"))
+        {
+            res.setDate(dateF.format(new Date().getTime() + (1000 * 60 * 60 * 24)));
+        }
+        else
+        {
+            res.setDate(dateF.format(new Date().getTime() - (1000 * 60 * 60 * 24)));
+        }
+        return res;
+    }
+
     private static Reservation prepareTestReservation()
     {
-        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
         Reservation res = new Reservation("Test Subject", "test@test.com", "88 88 88 88", dateF.format(new Date(System.currentTimeMillis())),
                 timeF.format(new Date(System.currentTimeMillis())), 2, "", true);

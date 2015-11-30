@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Reservation;
@@ -22,14 +24,15 @@ public class RodizioDB extends RodizioDBAbstract
     private Statement stmt = null;
     private PreparedStatement preparedStmnt;
     String sql;
+    private static final SimpleDateFormat DATEF = new SimpleDateFormat("dd-MM-yyyy");
 
     /**
      * Source file has to end with .db
      */
-    public RodizioDB(String sourceFile, String driver)
+    public RodizioDB(String sourcePath, String driver)
     {
         this.driver = driver;
-        connectionURL = sourceFile;
+        connectionURL = sourcePath;
         registerDriver();
     }
 
@@ -46,7 +49,7 @@ public class RodizioDB extends RodizioDBAbstract
     public void dropTable(String table)
     {
         sql = "DROP TABLE IF EXISTS " + table;
-        updateDatabase(sql);
+        updateDatabase();
     }
 
     @Override
@@ -90,7 +93,7 @@ public class RodizioDB extends RodizioDBAbstract
                 + "id int(20)  PRIMARY KEY,"
                 + "name VARCHAR(60) UNIQUE NOT NULL, "
                 + "password VARCHAR(60) NOT NULL)";
-        updateDatabase(sql);
+        updateDatabase();
     }
 
     @Override
@@ -106,7 +109,7 @@ public class RodizioDB extends RodizioDBAbstract
                 + " AMOUNT            INT     NOT NULL, "
                 + " NOTES        TEXT, "
                 + " BDAY        BOOLEAN NOT NULL)";
-        updateDatabase(sql);
+        updateDatabase();
     }
 
     private int updateDatabaseWithPreparedStmnt(Reservation res)
@@ -147,7 +150,15 @@ public class RodizioDB extends RodizioDBAbstract
     public Reservation getReservationById(int id)
     {
         sql = "SELECT * FROM RESERVATIONS WHERE ID = " + id;
-        return reservationQuery().get(0);
+        ArrayList<Reservation> tmpList = reservationQuery();
+        if (tmpList.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return tmpList.get(0);
+        }
     }
 
     @Override
@@ -200,15 +211,15 @@ public class RodizioDB extends RodizioDBAbstract
         return id;
     }
 
-    private void updateDatabase(String sql)
+    private void updateDatabase()
     {
         createConnection();
         createStatement();
-        executeAndCloseUpdateStatement(sql);
+        executeAndCloseUpdateStatement();
         closeConnection();
     }
 
-    private void executeAndCloseUpdateStatement(String sql)
+    private void executeAndCloseUpdateStatement()
     {
         try
         {
@@ -291,43 +302,58 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public Reservation getReservationByIdAndMail(int id, String email)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Reservation res = getReservationById(id);
+        if (res == null || !res.getEmail().equals(email))
+        {
+            return null;
+        }
+        else
+        {
+            return res;
+        }
+
     }
 
     @Override
     public ArrayList<Reservation> getFutureReservations()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return getPastOrFutureReservations("future");
     }
 
     @Override
     public ArrayList<Reservation> getPastReservations()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<Reservation> getTodaysReservations()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return getPastOrFutureReservations("past");
     }
 
     @Override
     public ArrayList<Reservation> getReservationsByDate(String date)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sql = "SELECT * FROM RESERVATIONS WHERE DATE= '" + date + "' ";
+        return reservationQuery();
+    }
+
+    @Override
+    public ArrayList<Reservation> getTodaysReservations()
+    {
+        return getReservationsByDate(DATEF.format(new Date()));
     }
 
     @Override
     public void updateReservation(Reservation res)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sql = "UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "',PHONE='" + res.getPhoneNum()
+                + "',DATE='" + res.getDate() + "',TIME='" + res.getTime() + "',AMOUNT='" + res.getPeople()
+                + "',NOTES=" + (res.getAdditionalNotes() == null ? " null " : "'" + res.getAdditionalNotes() + "'") + ",BDAY='" + (res.isIsBirthday() ? 1 : 0)
+                + "' WHERE ID=" + res.getId() + ";";
+        updateDatabase();
     }
 
     @Override
     public void deleteReservation(Reservation res)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sql = "DELETE FROM RESERVATIONS WHERE ID = " + res.getId();
+        updateDatabase();
     }
 
     @Override
@@ -340,6 +366,119 @@ public class RodizioDB extends RodizioDBAbstract
     public User checkUser(User user)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void insertUser(User user)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteUser(User user)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * @param pastOrFuture "past" for past reservations, "future" for future
+     */
+    private ArrayList<Reservation> getPastOrFutureReservations(String pastOrFuture)
+    {
+        // slow workaround for SQLite not having a normal Date datatype
+        SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
+        String today = dateF.format(new Date(System.currentTimeMillis()));
+        ArrayList<Reservation> tmp = getAllReservations();
+        ArrayList<Reservation> pastReservations = new ArrayList<>();
+
+        for (Reservation r : tmp)
+        {
+            if (compareWIthToday(r, pastOrFuture, today))
+            {
+                pastReservations.add(r);
+            }
+        }
+        return pastReservations;
+    }
+
+    private boolean compareWIthToday(Reservation r, String pastOrFuture, String today)
+    {
+        if (pastOrFuture.equals("past"))
+        {
+            return compareDates(r.getDate(), today) < 0;
+        }
+
+        if (pastOrFuture.equals("future"))
+        {
+            return compareDates(r.getDate(), today) > 0;
+        }
+
+        return false;
+    }
+
+    private int compareDates(String d1, String d2)
+    {
+        if (d1.equals(d2))
+        {
+            return 0;
+        }
+
+        int year1 = parseYear(d1);
+        int year2 = parseYear(d2);
+
+        if (year1 > year2)
+        {
+            return 1;
+        }
+        if (year1 < year2)
+        {
+            return -1;
+        }
+
+        int month1 = parseMonth(d1);
+        int month2 = parseMonth(d2);
+
+        if (month1 > month2)
+        {
+            return 1;
+        }
+
+        if (month1 < month2)
+        {
+            return -1;
+        }
+
+        int day1 = parseDay(d1);
+        int day2 = parseDay(d2);
+
+        if (day1 < day2)
+        {
+            return -1;
+        }
+
+        if (day1 > day2)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    private int parseDay(String d1) throws NumberFormatException
+    {
+        int day1 = Integer.parseInt(d1.substring(0, 2));
+        return day1;
+    }
+
+    private int parseMonth(String d1) throws NumberFormatException
+    {
+        int month1 = Integer.parseInt(d1.substring(3, 5));
+        return month1;
+    }
+
+    private int parseYear(String date) throws NumberFormatException
+    {
+        int year = Integer.parseInt(date.substring(6));
+        return year;
     }
 
 }
