@@ -218,6 +218,59 @@ public class RodizioDB extends RodizioDBAbstract
         createUsersTable();
     }
 
+    @Override
+    public void dumpReservationTable()
+    {
+        for (Reservation r : getAllReservations())
+        {
+            System.out.println(r.toString());
+        }
+    }
+
+    @Override
+    public void dumpUserTable()
+    {
+        for (User u : getAllUsers())
+        {
+            System.out.println(u.toString());
+        }
+    }
+
+    @Override
+    public void addDummyValues()
+    {
+        insertUser(new User("qq", "qq"));
+        for (int i = 0; i < 10; i++)
+        {
+            insertReservation(pastOrFutureRes("past"));
+            insertReservation(pastOrFutureRes("future"));
+            insertUser(new User("Admin" + i, "admin"));
+        }
+    }
+
+    private Reservation pastOrFutureRes(String pastOrFuture)
+    {
+        Reservation res = prepareTestReservation();
+
+        if (pastOrFuture.equalsIgnoreCase("future"))
+        {
+            res.setDate(DATEF.format(new Date().getTime() + (1000 * 60 * 60 * 24)));
+        }
+        else
+        {
+            res.setDate(DATEF.format(new Date().getTime() - (1000 * 60 * 60 * 24)));
+        }
+        return res;
+    }
+
+    private Reservation prepareTestReservation()
+    {
+        SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
+        Reservation res = new Reservation("Test Subject", "test@test.com", "88 88 88 88", DATEF.format(new Date(System.currentTimeMillis())),
+                timeF.format(new Date(System.currentTimeMillis())), 2, "", true);
+        return res;
+    }
+
     private int executeReservationInsert(Reservation res)
     {
         int id = 0;
@@ -367,6 +420,7 @@ public class RodizioDB extends RodizioDBAbstract
         try
         {
             connection = DriverManager.getConnection(connectionURL);
+
         } catch (SQLException ex)
         {
             Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);

@@ -47,4 +47,10 @@ public abstract class RodizioDBAbstract
 
     public abstract void deleteUser(User user);
 
+    public abstract void dumpReservationTable();
+
+    public abstract void dumpUserTable();
+
+    public abstract void addDummyValues();
+
 }

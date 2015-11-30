@@ -26,12 +26,12 @@ public class TestRodizioDatabase
 {
 
     private static RodizioDBAbstract database;
-    private static final SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
+    private static final SimpleDateFormat DATEF = new SimpleDateFormat("dd-MM-yyyy");
 
     @BeforeClass
     public static void setUpClass()
     {
-        database = RodizioDBFactory.getRodizioDB("sqlite");
+        database = RodizioDBFactory.getRodizioDB("sqlite", "Test.db");
     }
 
     @AfterClass
@@ -130,7 +130,7 @@ public class TestRodizioDatabase
     @Test
     public void testGetReservationByDate()
     {
-        assertTrue(database.getReservationsByDate(dateF.format(new Date())).size() > 0);
+        assertTrue(database.getReservationsByDate(DATEF.format(new Date())).size() > 0);
     }
 
     @Test
@@ -198,11 +198,11 @@ public class TestRodizioDatabase
 
         if (pastOrFuture.equalsIgnoreCase("future"))
         {
-            res.setDate(dateF.format(new Date().getTime() + (1000 * 60 * 60 * 24)));
+            res.setDate(DATEF.format(new Date().getTime() + (1000 * 60 * 60 * 24)));
         }
         else
         {
-            res.setDate(dateF.format(new Date().getTime() - (1000 * 60 * 60 * 24)));
+            res.setDate(DATEF.format(new Date().getTime() - (1000 * 60 * 60 * 24)));
         }
         return res;
     }
@@ -210,7 +210,7 @@ public class TestRodizioDatabase
     private static Reservation prepareTestReservation()
     {
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm");
-        Reservation res = new Reservation("Test Subject", "test@test.com", "88 88 88 88", dateF.format(new Date(System.currentTimeMillis())),
+        Reservation res = new Reservation("Test Subject", "test@test.com", "88 88 88 88", DATEF.format(new Date(System.currentTimeMillis())),
                 timeF.format(new Date(System.currentTimeMillis())), 2, "", true);
         return res;
     }
