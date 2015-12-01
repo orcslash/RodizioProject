@@ -163,7 +163,6 @@ public class TestRodizioDatabase
     {
         User user = new User("admin", "admin");
         database.insertUser(user);
-
     }
 
     @Test
@@ -181,7 +180,6 @@ public class TestRodizioDatabase
         assertTrue(database.checkUser(user) != null);
         user.setName("TestWrong");
         assertTrue(database.checkUser(user) == null);
-
     }
 
     private void insertTestUserValues(int amount)

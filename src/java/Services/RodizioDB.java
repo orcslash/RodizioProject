@@ -298,7 +298,6 @@ public class RodizioDB extends RodizioDBAbstract
 
     private ArrayList<Reservation> reservationQuery()
     {
-
         createConnection();
         createStatement();
 
@@ -310,7 +309,6 @@ public class RodizioDB extends RodizioDBAbstract
 
     private ArrayList<User> userQuery()
     {
-
         createConnection();
         createStatement();
 
