@@ -36,19 +36,19 @@
                     </tr>
                     <tr>
                         <td>
-                            <h:inputText a:placeholder="#{msgs.seldate}" id="date" maxlength="10" styleClass="form-control datepicker formField"  value="#{cc.attrs.reservation.date}" required="true" requiredMessage="#{msgs.requiredDate}" onfocus="hide('#dateMessage')"/>
-                            <h:message id="dateMessage" for="date" styleClass="noBulletPoints validateMessage" />
+                            <h:inputText a:placeholder="#{msgs.seldate}" id="date" maxlength="10" styleClass="form-control datepicker formField"  value="#{cc.attrs.reservation.date}" required="true" requiredMessage="#{msgs.requiredDate}" onfocus="hide('.dateMessage')"/>
+                            <h:message id="dateMessage" for="date" styleClass="dateMessage noBulletPoints validateMessage" />
                         </td>
                         <td class="formF">
-                            <h:inputText a:placeholder="#{msgs.seltime}"  id="time" maxlength="5" styleClass="form-control timepicker formField" value="#{cc.attrs.reservation.time}" required="true" requiredMessage="#{msgs.requiredTime}" onfocus="hide('#timeMessage')"/>
-                            <h:message id="timeMessage" for="time" styleClass="noBulletPoints validateMessage"/>
+                            <h:inputText a:placeholder="#{msgs.seltime}"  id="time" maxlength="5" styleClass="form-control timepicker formField" value="#{cc.attrs.reservation.time}" required="true" requiredMessage="#{msgs.requiredTime}" onfocus="hide('.timeMessage')"/>
+                            <h:message id="timeMessage" for="time" styleClass="timeMessage noBulletPoints validateMessage"/>
                         </td>
                         <td class="people">
-                            <h:inputText size="1" class="form-control" id="people" value="#{cc.attrs.reservation.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('#amountMessage')">
+                            <h:inputText size="1" class="form-control" id="people" value="#{cc.attrs.reservation.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('.amountMessage')">
                                 <f:validateDoubleRange minimum="1" maximum="50"/>
                                 <f:convertNumber integerOnly="true"/>
                             </h:inputText>
-                            <h:message id="amountMessage" for="people" styleClass="noBulletPoints validateMessage"/>
+                            <h:message id="amountMessage" for="people" styleClass="amountMessage noBulletPoints validateMessage"/>
                         </td>
                         <td class="bdayCheck">
                             <h:selectBooleanCheckbox class="BSize" value="#{cc.attrs.reservation.isBirthday}"/>
@@ -68,24 +68,24 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <h:inputText  a:placeholder="#{msgs.name}" id="name" class="form-control formField" value="#{cc.attrs.reservation.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" onfocus="hide('#nameMessage')" >
+                            <h:inputText  a:placeholder="#{msgs.name}" id="name" class="form-control formField" value="#{cc.attrs.reservation.name}" required="true" requiredMessage="#{msgs.requiredName}" validatorMessage="#{msgs.invalidName}" onfocus="hide('.nameMessage')" >
                                 <f:validateRegex pattern="#{msgs.nameRegex}"  />
                             </h:inputText>
-                            <h:message id="nameMessage" for="name" styleClass="noBulletPoints validateMessage"/>
+                            <h:message id="nameMessage" for="name" styleClass="nameMessage  noBulletPoints validateMessage"/>
                         </td>
                     </tr>
                     <tr>
                         <td >
-                            <h:inputText a:placeholder="#{msgs.email}" id="email1" class="form-control formField" value="#{cc.attrs.reservation.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" onfocus="hide('#emailMessage')" >
+                            <h:inputText a:placeholder="#{msgs.email}" id="email1" class="form-control formField" value="#{cc.attrs.reservation.email}" required="true" requiredMessage="#{msgs.requiredEmail}" validatorMessage="#{msgs.invalidEmail}" onfocus="hide('.emailMessage')" >
                                 <f:validateRegex pattern="#{msgs.emailRegex}" />
                             </h:inputText>
-                            <h:message id="emailMessage" for="email1" styleClass="noBulletPoints validateMessage"/>
+                            <h:message id="emailMessage" for="email1" styleClass="emailMessage noBulletPoints validateMessage"/>
                         </td>
                         <td>
-                            <h:inputText a:placeholder="#{msgs.phone}" id="phone" class="form-control formField" value="#{cc.attrs.reservation.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}" onfocus="hide('#phoneMessage')">
+                            <h:inputText a:placeholder="#{msgs.phone}" id="phone" class="form-control formField" value="#{cc.attrs.reservation.phoneNum}" required="true" requiredMessage="#{msgs.requiredPhoneNumber}" validatorMessage="#{msgs.invalidPhoneNumber}" onfocus="hide('.phoneMessage')">
                                 <f:validateRegex pattern="^((\(?\+45\)?)?)(\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2})$" />
                             </h:inputText>
-                            <h:message id="phoneMessage" for="phone" styleClass="noBulletPoints validateMessage"/>
+                            <h:message id="phoneMessage" for="phone" styleClass="phoneMessage noBulletPoints validateMessage"/>
                         </td>
                     </tr>
                     <tr>
