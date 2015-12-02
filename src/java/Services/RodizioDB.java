@@ -790,4 +790,5 @@ public class RodizioDB extends RodizioDBAbstract
         int year = Integer.parseInt(date.substring(6));
         return year;
     }
+
 }

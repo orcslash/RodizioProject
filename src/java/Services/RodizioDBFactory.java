@@ -1,11 +1,10 @@
 package Services;
 
-import static Services.Constants.MYSQLDATABASE;
-import static Services.Constants.MYSQLHOST;
-import static Services.Constants.MYSQLPASSWORD;
-import static Services.Constants.MYSQLPORT;
-import static Services.Constants.MYSQLUSER;
-
+//import static Services.Constants.MYSQLDATABASE;
+//import static Services.Constants.MYSQLHOST;
+//import static Services.Constants.MYSQLPASSWORD;
+//import static Services.Constants.MYSQLPORT;
+//import static Services.Constants.MYSQLUSER;
 public class RodizioDBFactory
 {
 
@@ -21,10 +20,12 @@ public class RodizioDBFactory
 
     public static RodizioDB getRodizioDB(String DBType)
     {
-        if (DBType.equalsIgnoreCase("mysql"))
-        {
-            return new MySQLDB(MYSQLHOST + ":" + MYSQLPORT + "/" + MYSQLDATABASE, MYSQLUSER, MYSQLPASSWORD);
-        }
-        return null;
+
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        if (DBType.equalsIgnoreCase("mysql"))
+//        {
+//            return new MySQLDB(MYSQLHOST + ":" + MYSQLPORT + "/" + MYSQLDATABASE, MYSQLUSER, MYSQLPASSWORD);
+//        }
+//        return null;
     }
 }
