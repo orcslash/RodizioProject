@@ -118,9 +118,9 @@ public class StaffBean implements Serializable
     public StaffBean()
     {
         resBean = new ReservationBean();
-        Database.createReservationsTable();
-        Database.createUserTable();
-        Database.addDummyValues();
+//        Database.createReservationsTable();
+//        Database.createUserTable();
+//        Database.addDummyValues();
 
         this.getTodaysReservations();
     }

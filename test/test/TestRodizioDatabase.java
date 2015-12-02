@@ -5,6 +5,11 @@
  */
 package test;
 
+import Services.Constants;
+import static Services.Constants.MYSQLDATABASE;
+import static Services.Constants.MYSQLHOST;
+import static Services.Constants.MYSQLPASSWORD;
+import static Services.Constants.MYSQLUSER;
 import Services.RodizioDBAbstract;
 import Services.RodizioDBFactory;
 import java.text.SimpleDateFormat;
@@ -31,7 +36,9 @@ public class TestRodizioDatabase
     @BeforeClass
     public static void setUpClass()
     {
-        database = RodizioDBFactory.getRodizioDB("sqlite", "Test.db");
+//        database = RodizioDBFactory.getRodizioDB("sqlite", "Test.db");
+        database = RodizioDBFactory.getRodizioDB("mysql", MYSQLHOST + ":" + "/" + MYSQLDATABASE, MYSQLUSER, MYSQLPASSWORD);
+//        "jdbc:mysql:// hostname:port/dbname","username", "password"
     }
 
     @AfterClass

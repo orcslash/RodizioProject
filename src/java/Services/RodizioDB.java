@@ -18,9 +18,9 @@ import model.User;
 public class RodizioDB extends RodizioDBAbstract
 {
 
-    private final String connectionURL;
+    protected final String connectionURL;
     private final String driver;
-    private Connection connection;
+    protected Connection connection;
     private Statement stmt = null;
     private PreparedStatement preparedStmnt;
     String sql;
@@ -29,10 +29,10 @@ public class RodizioDB extends RodizioDBAbstract
     /**
      * Source file has to end with .db
      */
-    public RodizioDB(String sourcePath, String driver)
+    public RodizioDB(String connectionURL, String driver)
     {
         this.driver = driver;
-        connectionURL = sourcePath;
+        this.connectionURL = connectionURL;
         registerDriver();
     }
 
@@ -413,7 +413,7 @@ public class RodizioDB extends RodizioDBAbstract
         }
     }
 
-    private void createConnection()
+    protected void createConnection()
     {
         try
         {
@@ -587,5 +587,4 @@ public class RodizioDB extends RodizioDBAbstract
         int year = Integer.parseInt(date.substring(6));
         return year;
     }
-
 }
