@@ -171,6 +171,15 @@ public class TestRodizioDatabase
     }
 
     @Test
+    public void testDeleteUser()
+    {
+        User user = new User("admin", "admin");
+        database.insertUser(user);
+        database.deleteUser(user);
+        assertTrue(database.checkUser(user) == null);
+    }
+
+    @Test
     public void testGetAllUsers()
     {
         insertTestUserValues(5);

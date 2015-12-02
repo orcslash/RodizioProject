@@ -83,15 +83,13 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public void insertUser(User user)
     {
-        String sql1 = "INSERT INTO USERS (name, password) VALUES('" + user.getName() + "'," + "'" + user.getPassword()
-                + "')";
-        updateDatabase(sql1);
+        executeStatementForUserTableUpdate("insert", user);
     }
 
     @Override
     public void deleteUser(User user)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        executeStatementForUserTableUpdate("delete", user);
     }
 
     @Override
@@ -102,6 +100,7 @@ public class RodizioDB extends RodizioDBAbstract
                 + "NAME VARCHAR(60) UNIQUE NOT NULL, "
                 + "PASSWORD VARCHAR(60) NOT NULL)";
         updateDatabase(sql1);
+
     }
 
     @Override
@@ -123,8 +122,11 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public Reservation getReservationById(int id)
     {
-        sql = "SELECT * FROM RESERVATIONS WHERE ID = " + id;
-        ArrayList<Reservation> tmpList = reservationQuery();
+        createConnection();
+
+        PreparedStatement preparedStatement = prepareStatementForReservationQuery(id);
+
+        ArrayList<Reservation> tmpList = reservationQuery(preparedStatement);
         if (tmpList.isEmpty())
         {
             return null;
@@ -185,28 +187,29 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public void updateReservation(Reservation res)
     {
-
-        createConnection();
-        PreparedStatement preparedStatement = prepareUpdateReservationStatement(res);
-
-        executeAndCloseUpdateStatement(preparedStatement);
-        closeConnection();
-
+        executeStatementForReservationrTableUpdate("update", res);
     }
 
     @Override
     public void deleteReservation(Reservation res)
     {
-        String sql1 = "DELETE FROM RESERVATIONS WHERE ID = " + res.getId();
-        updateDatabase(sql1);
+        executeStatementForReservationrTableUpdate("delete", res);
     }
 
     @Override
     public ArrayList<User> getAllUsers()
     {
-//        sql = "SELECT *  FROM USERS";
-//        return userQuery();
-        return null;
+        createConnection();
+        String sql1 = "SELECT *  FROM USERS";
+        PreparedStatement preparedStatement = null;
+        try
+        {
+            preparedStatement = connection.prepareStatement(sql1);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userQuery(preparedStatement);
 
     }
 
@@ -245,6 +248,132 @@ public class RodizioDB extends RodizioDBAbstract
             insertReservation(pastOrFutureRes("future"));
             insertUser(new User("Admin" + i, "admin"));
         }
+    }
+
+    private ArrayList<Reservation> executeReservationQuery(PreparedStatement preparedStatement)
+    {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        try
+        {
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next())
+            {
+                Reservation tmp = parseReservationValues(rs);
+                reservations.add(tmp);
+            }
+
+            rs.close();
+            preparedStatement.close();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return reservations;
+    }
+
+    private PreparedStatement prepareStatementForReservationQuery(int id)
+    {
+        PreparedStatement preparedStatement = null;
+        try
+        {
+            String sql1 = "SELECT * FROM RESERVATIONS WHERE ID = ?";
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setInt(1, id);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return preparedStatement;
+    }
+
+    private void executeStatementForReservationrTableUpdate(String action, Reservation res)
+    {
+        createConnection();
+
+        PreparedStatement preparedStatement = prepareStatmentForReservationTableUpdate(action, res);
+
+        executeAndCloseUpdateStatement(preparedStatement);
+    }
+
+    private PreparedStatement prepareStatmentForReservationTableUpdate(String action, Reservation res)
+    {
+        if (action.equalsIgnoreCase("update"))
+        {
+            return prepareUpdateReservationStatement(res);
+        }
+        if (action.equalsIgnoreCase("delete"))
+        {
+            return prepareDeleteReservationStatement(res);
+        }
+        return null;
+    }
+
+    private PreparedStatement prepareDeleteReservationStatement(Reservation res)
+    {
+        PreparedStatement preparedStatement = null;
+        try
+        {
+            String sql1 = "DELETE FROM RESERVATIONS WHERE ID = ?";
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setInt(1, res.getId());
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return preparedStatement;
+    }
+
+    private PreparedStatement prepareStatmentForUserTableUpdate(String action, User user)
+    {
+        if (action.equalsIgnoreCase("insert"))
+        {
+            return prepareInsertUserStatement(user);
+        }
+        if (action.equalsIgnoreCase("delete"))
+        {
+            return prepareDeleteUserStatement(user);
+        }
+        return null;
+    }
+
+    private void executeStatementForUserTableUpdate(String action, User user)
+    {
+        createConnection();
+
+        PreparedStatement preparedStatement = prepareStatmentForUserTableUpdate(action, user);
+
+        executeAndCloseUpdateStatement(preparedStatement);
+    }
+
+    private PreparedStatement prepareDeleteUserStatement(User user)
+    {
+        PreparedStatement preparedStatement = null;
+        try
+        {
+            String sql1 = "DELETE FROM USERS WHERE NAME = ?";
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setString(1, user.getName());
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return preparedStatement;
+    }
+
+    private PreparedStatement prepareInsertUserStatement(User user)
+    {
+        PreparedStatement preparedStatement = null;
+        try
+        {
+            String sql1 = "INSERT INTO USERS (name, password) VALUES(?,?)";
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getPassword());
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return preparedStatement;
     }
 
     private PreparedStatement prepareUpdateReservationStatement(Reservation res)
@@ -340,6 +469,15 @@ public class RodizioDB extends RodizioDBAbstract
         return id;
     }
 
+    private ArrayList<Reservation> reservationQuery(PreparedStatement preparedStatement)
+    {
+
+        ArrayList<Reservation> reservations = executeReservationQuery(preparedStatement);
+
+        closeConnection();
+        return reservations;
+    }
+
     private ArrayList<Reservation> reservationQuery()
     {
         createConnection();
@@ -358,27 +496,6 @@ public class RodizioDB extends RodizioDBAbstract
         try
         {
             ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-            {
-                User tmp = parseUserValues(rs);
-                users.add(tmp);
-            }
-
-            rs.close();
-            stmt.close();
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return users;
-    }
-
-    private ArrayList<User> executeUserQuery()
-    {
-        ArrayList<User> users = new ArrayList<>();
-        try
-        {
-            ResultSet rs = stmt.executeQuery(sql);
             while (rs.next())
             {
                 User tmp = parseUserValues(rs);
@@ -443,6 +560,9 @@ public class RodizioDB extends RodizioDBAbstract
         } catch (SQLException ex)
         {
             Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            closeConnection();
         }
     }
 
