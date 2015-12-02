@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 public class MySQLDB extends RodizioDB
 {
 
-    private String user;
-    private String password;
+    private final String user;
+    private final String password;
 
     /**
      * @param connectionURL host:port/dbName
@@ -32,16 +32,6 @@ public class MySQLDB extends RodizioDB
         {
             Logger.getLogger(MySQLDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void setUser(String user)
-    {
-        this.user = user;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
     }
 
 }

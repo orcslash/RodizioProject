@@ -35,8 +35,8 @@ public class TestRodizioDatabase
     @BeforeClass
     public static void setUpClass()
     {
-//        database = RodizioDBFactory.getRodizioDB("sqlite", "Test.db");
-        database = RodizioDBFactory.getRodizioDB("mysql");
+        database = RodizioDBFactory.getRodizioDB("sqlite", "Test.db");
+//        database = RodizioDBFactory.getRodizioDB("mysql");
     }
 
     @AfterClass

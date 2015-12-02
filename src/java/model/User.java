@@ -1,6 +1,6 @@
 package model;
 
-public class User
+public class User extends Object
 {
 
     private String name;

@@ -22,7 +22,6 @@ public class RodizioDB extends RodizioDBAbstract
     private final String driver;
     protected Connection connection;
     private Statement stmt = null;
-    private PreparedStatement preparedStmnt;
     String sql;
     private static final SimpleDateFormat DATEF = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -39,17 +38,19 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public int insertReservation(Reservation res)
     {
-        sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
-                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        createConnection();
+        PreparedStatement preparedStmnt = prepareStatementForReservationInsert(res);
+        int id = executeReservationInsert(preparedStmnt);
+        closeConnection();
 
-        return updateDatabaseWithPreparedStmnt(res);
+        return id;
     }
 
     @Override
     public void dropTable(String table)
     {
-        sql = "DROP TABLE IF EXISTS " + table;
-        updateDatabase();
+        String sql1 = "DROP TABLE IF EXISTS " + table;
+        updateDatabase(sql1);
     }
 
     @Override
@@ -71,25 +72,20 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public User checkUser(User user)
     {
-        sql = "SELECT * FROM USERS WHERE NAME ='" + user.getName() + "' AND PASSWORD = '" + user.getPassword()
-                + "'";
-        ArrayList<User> users = userQuery();
-        if (users.isEmpty())
-        {
-            return null;
-        }
-        else
-        {
-            return users.get(0);
-        }
+        createConnection();
+        PreparedStatement preparedStmnt = prepareUserCheckStatement(user);
+        ArrayList<User> users = userQuery(preparedStmnt);
+        closeConnection();
+
+        return returnedUserArrayCheck(users);
     }
 
     @Override
     public void insertUser(User user)
     {
-        sql = "INSERT INTO USERS (name, password) VALUES('" + user.getName() + "'," + "'" + user.getPassword()
+        String sql1 = "INSERT INTO USERS (name, password) VALUES('" + user.getName() + "'," + "'" + user.getPassword()
                 + "')";
-        updateDatabase();
+        updateDatabase(sql1);
     }
 
     @Override
@@ -101,17 +97,17 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public void createUsersTable()
     {
-        sql = "CREATE TABLE IF NOT EXISTS USERS"
+        String sql1 = "CREATE TABLE IF NOT EXISTS USERS"
                 + "(ID INTEGER PRIMARY KEY,"
                 + "NAME VARCHAR(60) UNIQUE NOT NULL, "
                 + "PASSWORD VARCHAR(60) NOT NULL)";
-        updateDatabase();
+        updateDatabase(sql1);
     }
 
     @Override
     public void createReservationsTable()
     {
-        sql = "CREATE TABLE IF NOT EXISTS RESERVATIONS "
+        String sql1 = "CREATE TABLE IF NOT EXISTS RESERVATIONS "
                 + "(ID INTEGER PRIMARY KEY,"
                 + "NAME           VARCHAR(25)    NOT NULL, "
                 + "EMAIL           VARCHAR(25)    NOT NULL, "
@@ -121,7 +117,7 @@ public class RodizioDB extends RodizioDBAbstract
                 + " AMOUNT            INT     NOT NULL, "
                 + " NOTES        TEXT, "
                 + " BDAY        BOOLEAN NOT NULL)";
-        updateDatabase();
+        updateDatabase(sql1);
     }
 
     @Override
@@ -189,25 +185,28 @@ public class RodizioDB extends RodizioDBAbstract
     @Override
     public void updateReservation(Reservation res)
     {
-        sql = "UPDATE RESERVATIONS SET NAME='" + res.getName() + "',EMAIL='" + res.getEmail() + "',PHONE='" + res.getPhoneNum()
-                + "',DATE='" + res.getDate() + "',TIME='" + res.getTime() + "',AMOUNT='" + res.getPeople()
-                + "',NOTES=" + (res.getAdditionalNotes() == null ? " null " : "'" + res.getAdditionalNotes() + "'") + ",BDAY='" + (res.isIsBirthday() ? 1 : 0)
-                + "' WHERE ID=" + res.getId() + ";";
-        updateDatabase();
+
+        createConnection();
+        PreparedStatement preparedStatement = prepareUpdateReservationStatement(res);
+
+        executeAndCloseUpdateStatement(preparedStatement);
+        closeConnection();
+
     }
 
     @Override
     public void deleteReservation(Reservation res)
     {
-        sql = "DELETE FROM RESERVATIONS WHERE ID = " + res.getId();
-        updateDatabase();
+        String sql1 = "DELETE FROM RESERVATIONS WHERE ID = " + res.getId();
+        updateDatabase(sql1);
     }
 
     @Override
     public ArrayList<User> getAllUsers()
     {
-        sql = "SELECT *  FROM USERS";
-        return userQuery();
+//        sql = "SELECT *  FROM USERS";
+//        return userQuery();
+        return null;
 
     }
 
@@ -248,6 +247,60 @@ public class RodizioDB extends RodizioDBAbstract
         }
     }
 
+    private PreparedStatement prepareUpdateReservationStatement(Reservation res)
+    {
+        PreparedStatement preparedStatement = null;
+        try
+        {
+            String sql1 = "UPDATE RESERVATIONS SET NAME=?,EMAIL=?,PHONE=?,DATE=?,TIME=?,AMOUNT=?,NOTES=?,BDAY= ? WHERE ID=?;";
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setString(1, res.getName());
+            preparedStatement.setString(2, res.getEmail());
+            preparedStatement.setString(3, res.getPhoneNum());
+            preparedStatement.setString(4, res.getDate());
+            preparedStatement.setString(5, res.getTime());
+            preparedStatement.setInt(6, res.getPeople());
+            preparedStatement.setString(7, res.getAdditionalNotes());
+            preparedStatement.setBoolean(8, res.isIsBirthday());
+            preparedStatement.setInt(9, res.getId());
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return preparedStatement;
+    }
+
+    private User returnedUserArrayCheck(ArrayList<User> users)
+    {
+        if (users.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return users.get(0);
+        }
+    }
+
+    private PreparedStatement prepareUserCheckStatement(User user)
+    {
+        PreparedStatement preparedStmnt = null;
+        try
+        {
+            String sql1 = "SELECT * FROM USERS WHERE NAME = ?  AND PASSWORD = ?";
+            preparedStmnt = connection.prepareStatement(sql1);
+            preparedStmnt.setString(1, user.getName());
+            preparedStmnt.setString(2, user.getPassword());
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return preparedStmnt;
+    }
+
     private Reservation pastOrFutureRes(String pastOrFuture)
     {
         Reservation res = prepareTestReservation();
@@ -271,20 +324,11 @@ public class RodizioDB extends RodizioDBAbstract
         return res;
     }
 
-    private int executeReservationInsert(Reservation res)
+    private int executeReservationInsert(PreparedStatement preparedStmnt)
     {
         int id = 0;
         try
         {
-            preparedStmnt = connection.prepareStatement(sql);
-            preparedStmnt.setString(1, res.getName());
-            preparedStmnt.setString(2, res.getEmail());
-            preparedStmnt.setString(3, res.getPhoneNum());
-            preparedStmnt.setString(4, res.getDate());
-            preparedStmnt.setString(5, res.getTime());
-            preparedStmnt.setInt(6, res.getPeople());
-            preparedStmnt.setString(7, res.getAdditionalNotes());
-            preparedStmnt.setBoolean(8, res.isIsBirthday());
             preparedStmnt.executeUpdate();
 
             id = getLastInsertedIndex();
@@ -307,14 +351,25 @@ public class RodizioDB extends RodizioDBAbstract
         return reservations;
     }
 
-    private ArrayList<User> userQuery()
+    private ArrayList<User> userQuery(PreparedStatement stmt)
     {
-        createConnection();
-        createStatement();
 
-        ArrayList<User> users = executeUserQuery();
+        ArrayList<User> users = new ArrayList<>();
+        try
+        {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                User tmp = parseUserValues(rs);
+                users.add(tmp);
+            }
 
-        closeConnection();
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return users;
     }
 
@@ -370,19 +425,32 @@ public class RodizioDB extends RodizioDBAbstract
         return id;
     }
 
-    private void updateDatabase()
+    private void updateDatabase(String sql1)
     {
         createConnection();
         createStatement();
-        executeAndCloseUpdateStatement();
+        executeAndCloseUpdateStatement(sql1);
         closeConnection();
     }
 
-    private void executeAndCloseUpdateStatement()
+    private void executeAndCloseUpdateStatement(PreparedStatement stmnt)
     {
         try
         {
-            stmt.executeUpdate(sql);
+            stmnt.executeUpdate();
+            stmnt.close();
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void executeAndCloseUpdateStatement(String sql1)
+    {
+        try
+        {
+            stmt.executeUpdate(sql1);
             stmt.close();
 
         } catch (SQLException ex)
@@ -496,6 +564,30 @@ public class RodizioDB extends RodizioDBAbstract
         return false;
     }
 
+    private PreparedStatement prepareStatementForReservationInsert(Reservation res)
+    {
+        sql = "INSERT INTO RESERVATIONS (NAME,EMAIL,PHONE,DATE,TIME,AMOUNT,NOTES,BDAY) "
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStmnt = null;
+        try
+        {
+            preparedStmnt = connection.prepareStatement(sql);
+            preparedStmnt.setString(1, res.getName());
+            preparedStmnt.setString(2, res.getEmail());
+            preparedStmnt.setString(3, res.getPhoneNum());
+            preparedStmnt.setString(4, res.getDate());
+            preparedStmnt.setString(5, res.getTime());
+            preparedStmnt.setInt(6, res.getPeople());
+            preparedStmnt.setString(7, res.getAdditionalNotes());
+            preparedStmnt.setBoolean(8, res.isIsBirthday());
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(RodizioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return preparedStmnt;
+    }
+
     private int compareDates(String d1, String d2)
     {
         if (d1.equals(d2))
@@ -541,15 +633,6 @@ public class RodizioDB extends RodizioDBAbstract
             return 1;
         }
         return 0;
-    }
-
-    private int updateDatabaseWithPreparedStmnt(Reservation res)
-    {
-        createConnection();
-        int id = executeReservationInsert(res);
-        closeConnection();
-
-        return id;
     }
 
     private ArrayList<String> getTableNamesFromDatabase()
