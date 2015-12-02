@@ -12,11 +12,7 @@ public class MySQLDB extends RodizioDB
     private String password;
 
     /**
-     *
      * @param connectionURL host:port/dbName
-     * @param driver
-     * @param user
-     * @param password
      */
     public MySQLDB(String connectionURL, String user, String password)
     {

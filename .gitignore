@@ -44,5 +44,5 @@ Temporary Items
 /dist/
 
 # MyFiles
-/src/java/Services/Constants.class
-/build/web/WEB-INF/classes/Services/Constants.class
+
+/src/java/Services/Constants.java

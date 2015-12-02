@@ -1,5 +1,11 @@
 package Services;
 
+import static Services.Constants.MYSQLDATABASE;
+import static Services.Constants.MYSQLHOST;
+import static Services.Constants.MYSQLPASSWORD;
+import static Services.Constants.MYSQLPORT;
+import static Services.Constants.MYSQLUSER;
+
 public class RodizioDBFactory
 {
 
@@ -13,11 +19,11 @@ public class RodizioDBFactory
         return null;
     }
 
-    public static RodizioDB getRodizioDB(String DBType, String connectionInfo, String user, String password)
+    public static RodizioDB getRodizioDB(String DBType)
     {
         if (DBType.equalsIgnoreCase("mysql"))
         {
-            return new MySQLDB(connectionInfo, user, password);
+            return new MySQLDB(MYSQLHOST + ":" + MYSQLPORT + "/" + MYSQLDATABASE, MYSQLUSER, MYSQLPASSWORD);
         }
         return null;
     }

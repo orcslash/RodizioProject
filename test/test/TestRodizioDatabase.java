@@ -6,7 +6,6 @@
 package test;
 
 import Services.Constants;
-import static Services.Constants.MYSQLDATABASE;
 import static Services.Constants.MYSQLHOST;
 import static Services.Constants.MYSQLPASSWORD;
 import static Services.Constants.MYSQLUSER;
@@ -37,8 +36,7 @@ public class TestRodizioDatabase
     public static void setUpClass()
     {
 //        database = RodizioDBFactory.getRodizioDB("sqlite", "Test.db");
-        database = RodizioDBFactory.getRodizioDB("mysql", MYSQLHOST + ":" + "/" + MYSQLDATABASE, MYSQLUSER, MYSQLPASSWORD);
-//        "jdbc:mysql:// hostname:port/dbname","username", "password"
+        database = RodizioDBFactory.getRodizioDB("mysql");
     }
 
     @AfterClass
