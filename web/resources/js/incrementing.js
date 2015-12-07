@@ -1,8 +1,8 @@
-$('#people').val(1);
+
 
 $(function() {
 
-  $(".numbers-row").append('<div class="inc button btn">+</div><div class="dec button btn">-</div>');
+  $(".numbers-row").append('<div class="button inc">+</div><div class="button dec">-</div>');
 
   $(".button").on("click", function() {
 
@@ -13,10 +13,10 @@ $(function() {
   	  var newVal = parseFloat(oldValue) + 1;
   	} else {
 	   // Don't allow decrementing below zero
-      if (oldValue > 0) {
+      if (oldValue > 1) {
         var newVal = parseFloat(oldValue) - 1;
 	    } else {
-        newVal = 0;
+        newVal = 1;
       }
 	  }
 

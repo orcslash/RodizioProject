@@ -55,8 +55,8 @@
                             <h:inputText id="time" styleClass="form-control timepicker" size="3" value="#{staff.resBean.time}" required="true" requiredMessage="#{msgs.requiredTime}" onfocus="hide('.timeMessage')"/>
                             <h:message id="timeMessage" for="time" styleClass="timeMessage noBulletPoints validateMessage inlineValid " />
                         </td>
-                        <td>
-                            <h:inputText id="amount" class="form-control" size="3" value="#{staff.resBean.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('.amountMessage')">
+                        <td class="numbers-row">
+                            <h:inputText id="amount" styleClass="form-control spinerAdjustment" size="3" value="#{staff.resBean.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('.amountMessage')">
                                         <f:validateDoubleRange minimum="1" maximum="50"/>
                                         <f:convertNumber integerOnly="true"/>
                                     </h:inputText>

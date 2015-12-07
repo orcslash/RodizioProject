@@ -45,9 +45,8 @@
                             <h:message id="timeMessage" for="time" styleClass="timeMessage noBulletPoints validateMessage"/>
                         </td>
                         <td class="people numbers-row">
-                            <h:inputText size="1" class="people form-control" id="people" value="#{cc.attrs.reservation.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('.peopleMessage')" 
-                                         style="float: left;
-                                         max-width: 40px;"> 
+                            <h:inputText size="1" class="people " id="people" value="#{cc.attrs.reservation.people}" required="true" requiredMessage="#{msgs.requiredNumberOfPeople}" validatorMessage="#{msgs.invalidAmount}" onfocus="hide('.peopleMessage')" 
+                                         styleClass="spinerAdjustment form-control"> 
                                 <f:validateDoubleRange minimum="1" maximum="50"/>
                                 <f:convertNumber integerOnly="true"/>
                                 
