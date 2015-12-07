@@ -183,11 +183,8 @@ public class ReservationBean implements Serializable
 
     public ReservationBean()
     {
-        this.people=1;
-        // try to create new table
-//        Database.dropTable();
-//        Database.createReservationsTable();
-
+        this.people = 1;
+        Database.createReservationsTable();
     }
 
 }
