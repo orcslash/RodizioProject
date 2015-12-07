@@ -227,6 +227,7 @@ td
     position:absolute;
     margin-top:-21px;
     margin-left:30px;
+    z-index: 1000;
     max-height: 3%;
     color:#555;
     border-radius:3px;
@@ -252,6 +253,14 @@ td
    padding: 0px;
    margin: 0px;
 }
+
+.button
+{
+    background: #E6E6E6;
+    position: relative;
+    max-height:34px
+}
+
 
 
 
