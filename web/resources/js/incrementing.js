@@ -1,3 +1,5 @@
+$('#people').val(1);
+
 $(function() {
 
   $(".numbers-row").append('<div class="inc button btn">+</div><div class="dec button btn">-</div>');
